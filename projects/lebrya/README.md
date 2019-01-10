@@ -1,2 +1,1 @@
-Name: Bryan Le
-ONID: lebrya
+"This is my assignment-1 submission!" 
