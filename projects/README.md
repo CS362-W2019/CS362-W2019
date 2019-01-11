@@ -1,1 +1,1 @@
-Name: Zachary Bellone ONID: bellonez
+Here, You should create a directory with your ONID similar to instructor's ONID.
