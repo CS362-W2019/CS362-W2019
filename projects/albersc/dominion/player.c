@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 	int randomSeed = atoi(argv[1]);
 
 	//Default cards, as defined in playDom
-	int kCards[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy};
+	int kCards[10] = {adventurer, remodel, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy};
 
 	struct gameState g;
 	struct gameState * game = &g;
