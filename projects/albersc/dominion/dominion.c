@@ -1250,7 +1250,7 @@ int updateCoins(int player, struct gameState *state, int bonus)
 int playSmithy(int currentPlayer, struct gameState *state, int handPos)
 {
   //+3 Cards
-  for (int i = 0; i < 3; i++)
+  for (int i = 0; i <= 3; i++)
   {
     drawCard(currentPlayer, state);
   }
@@ -1274,7 +1274,8 @@ int playAdventurer(int drawntreasure, struct gameState *state, int currentPlayer
       shuffle(currentPlayer, state);
     }
     drawCard(currentPlayer, state);
-    cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1]; //top card of hand is most recently drawn card.
+
+    cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]]; //top card of hand is most recently drawn card.
     
     if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
     {
@@ -1302,7 +1303,7 @@ int playRemodel(int j, struct gameState *state, int currentPlayer, int choice1, 
 {
   j = state->hand[currentPlayer][choice1];  //store card we will trash
 
-  if ( (getCost(state->hand[currentPlayer][choice1]) + 2) > getCost(choice2) )
+  if ( (getCost(state->hand[currentPlayer][choice1]) + 2) < getCost(choice2) )
   {
     return -1;
   }
@@ -1330,7 +1331,7 @@ int playRemodel(int j, struct gameState *state, int currentPlayer, int choice1, 
 int playVillage(int currentPlayer, struct gameState *state, int handPos)
 {
   //+1 Card
-  drawCard(currentPlayer, state);
+  drawCard(currentPlayer, state+1);
   
   //+2 Actions
   state->numActions = state->numActions + 2;
