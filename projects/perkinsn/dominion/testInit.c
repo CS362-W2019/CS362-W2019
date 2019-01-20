@@ -6,7 +6,7 @@
 #include <string.h>
 
 int main (int argc, char** argv) {
-
+  printf("Starting testInit\n");
   struct gameState G;
   
   int i;
