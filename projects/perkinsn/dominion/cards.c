@@ -48,3 +48,31 @@ int playSmithy(struct gameState* state, int handPos)
 
     return 0;
 }
+
+int playCouncilRoom(struct gameState* state, int handPos)
+{
+    int currentPlayer = state->whoseTurn;
+
+    //+4 Cards
+    for (int i = 0; i < 4; i++)
+	{
+	  drawCard(currentPlayer, state);
+	}
+			
+    //+1 Buy
+    state->numBuys++;
+        
+    //Each other player draws a card
+    for (int i = 0; i < state->numPlayers; i++)
+	{
+	  if ( i != currentPlayer )
+	    {
+	      drawCard(i, state);
+	    }
+	}
+			
+    //put played card in played card pile
+    discardCard(handPos, currentPlayer, state, 0);
+        
+    return 0;
+}
