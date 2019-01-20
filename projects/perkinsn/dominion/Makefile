@@ -10,7 +10,6 @@ BINARIES=playdom player testDrawCard badTestDrawCard testBuyCard
 all: $(BINARIES)
 
 $(BINARIES): % : %.c $(OBJS)
-	echo $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ 
 
 -include $(wildcard *.d)
