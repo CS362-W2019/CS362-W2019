@@ -22,10 +22,15 @@ $(BINARIES): % : %.c $(OBJS)
 
 .PHONY=runtests
 runtests: $(TESTS)
-	./testBuyCard &> unittestresult.out
-	./testDrawCard &> unittestresult.out
-	./testShuffle &> unittestresult.out
-	# ./testInit &> unittestresult.out
+	rm -f unittestresult.out
+	./testBuyCard  >> unittestresult.out
+	echo >> unittestresult.out
+	./testDrawCard >> unittestresult.out
+	echo >> unittestresult.out
+	./testShuffle  >> unittestresult.out
+	echo >> unittestresult.out
+	./testInit -1  >> unittestresult.out
+	echo >> unittestresult.out
 	$(GCOV) dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
