@@ -1,9 +1,12 @@
 #include "dominion.h"
 #include "dominion_helpers.h"
+#include "rngs.h"
+
 #include <string.h>
 #include <stdio.h>
 #include <assert.h>
-#include "rngs.h"
+#include <stdlib.h>
+#include <math.h>
 
 #define DEBUG 0
 #define NOISY_TEST 1
