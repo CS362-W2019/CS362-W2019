@@ -4,6 +4,8 @@ player
 testDrawCard
 testBuyCard
 badTestDrawCard
+testShuffle
+testInit
 
 
 # Created by https://www.gitignore.io/api/c,gcov,macos,visualstudiocode
