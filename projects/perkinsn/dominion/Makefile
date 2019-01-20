@@ -6,7 +6,8 @@ CFLAGS=-Wall -fpic -std=c99 -MMD -MP -fprofile-arcs -ftest-coverage
 # modify these variables as source/binary files are added or removed
 SRCS=cards.c dominion.c interface.c rngs.c
 OBJS=$(SRCS:.c=.o)
-BINARIES=playdom player testDrawCard badTestDrawCard testBuyCard
+TESTS=testDrawCard testBuyCard testShuffle testInit
+BINARIES=$(TESTS) playdom player
 
 # default action to build all binaries
 .PHONY=all
@@ -20,8 +21,11 @@ $(BINARIES): % : %.c $(OBJS)
 -include $(wildcard *.d)
 
 .PHONY=runtests
-runtests: testDrawCard 
+runtests: $(TESTS)
+	./testBuyCard &> unittestresult.out
 	./testDrawCard &> unittestresult.out
+	./testShuffle &> unittestresult.out
+	# ./testInit &> unittestresult.out
 	$(GCOV) dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 

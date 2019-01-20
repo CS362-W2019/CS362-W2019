@@ -12,7 +12,7 @@
 #define DEBUG 0
 #define NOISY_TEST 1
 
-int checkDrawCard(int p, struct gameState *post) {
+void checkDrawCard(int p, struct gameState *post) {
   struct gameState pre;
   memcpy (&pre, post, sizeof(struct gameState));
 
@@ -45,7 +45,7 @@ int checkDrawCard(int p, struct gameState *post) {
 
 int main () {
 
-  int i, n, r, p, deckCount, discardCount, handCount;
+  int i, n, p, deckCount, discardCount, handCount;
 
   int k[10] = {adventurer, council_room, feast, gardens, mine,
 	       remodel, smithy, village, baron, great_hall};
@@ -81,7 +81,7 @@ int main () {
       for (discardCount = 0; discardCount < 5; discardCount++) {
 	for (handCount = 0; handCount < 5; handCount++) {
 	  memset(&G, 23, sizeof(struct gameState)); 
-	  r = initializeGame(2, k, 1, &G);
+	  initializeGame(2, k, 1, &G);
 	  G.deckCount[p] = deckCount;
 	  memset(G.deck[p], 0, sizeof(int) * deckCount);
 	  G.discardCount[p] = discardCount;

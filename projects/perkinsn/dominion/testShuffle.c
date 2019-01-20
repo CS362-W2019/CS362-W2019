@@ -1,14 +1,21 @@
 #include "dominion.h"
+
 #include <stdio.h>
 #include <assert.h>
-
-int compare(const int* a, const int* b);
+#include <stdlib.h>
+#include <string.h>
 
 int main () {
+  printf("Starting testShuffle\n");
+
+  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+           sea_hag, tribute, smithy};
+
   struct gameState G;
   struct gameState G2;
 
   // Initialize G.
+  initializeGame(2, k, -1, &G);
 
   memcpy (&G2, &G, sizeof(struct gameState));
 
@@ -22,6 +29,9 @@ int main () {
   } else
     assert (ret == -1);
 
-  assert(memcmp(&G, &G2, sizeof(struct gameState)) == 0);  
+  assert(memcmp(&G, &G2, sizeof(struct gameState)) == 0);
 
+  printf("PASS\n");
+
+  return 0;
 }
