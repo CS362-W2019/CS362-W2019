@@ -202,3 +202,18 @@ int playRemodel(struct gameState* state, int handPos, int choice1, int choice2)
 
     return 0;
 }
+
+int playGreatHall(struct gameState* state, int handPos)
+{
+    int currentPlayer = state->whoseTurn;
+
+    //+1 Card
+    drawCard(currentPlayer, state);
+        
+    //+1 Actions
+    state->numActions++;
+        
+    //discard card from hand
+    discardCard(handPos, currentPlayer, state, 0);
+    return 0;
+}
