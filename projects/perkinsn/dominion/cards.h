@@ -11,5 +11,6 @@ int playMine(struct gameState* state, int handPos, int choice1, int choice2);
 int playRemodel(struct gameState* state, int handPos, int choice1, int choice2);
 int playGreatHall(struct gameState* state, int handPos);
 int playGardens(struct gameState* state);
+int playVillage(struct gameState* state, int handPos);
 
 #endif
