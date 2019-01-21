@@ -38,4 +38,4 @@ runtests: $(TESTS)
 clean:
 	rm -f *.o *.exe *.gcov *.gcda *.gcno *.so *.out *.d
 	rm -rf *.dSYM
-	rm -f playdom player testDrawCard badTestDrawCard testBuyCard
+	rm -f playdom player testDrawCard badTestDrawCard testBuyCard testInit testShuffle
