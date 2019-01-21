@@ -217,3 +217,8 @@ int playGreatHall(struct gameState* state, int handPos)
     discardCard(handPos, currentPlayer, state, 0);
     return 0;
 }
+
+int playGardens(struct gameState* state)
+{
+    return -1;
+}

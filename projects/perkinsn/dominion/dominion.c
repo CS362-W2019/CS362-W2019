@@ -672,7 +672,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return playFeast(state, choice1);
 			
     case gardens:
-      return -1;
+      return playGardens(state);
 			
     case mine:
       return playMine(state, handPos, choice1, choice2);
