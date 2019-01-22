@@ -55,7 +55,7 @@ int playCouncilRoom(struct gameState* state, int handPos)
     //+4 Cards
     for (int i = 0; i < 4; i++)
 	{
-	  drawCard(currentPlayer, state);
+	    drawCard(currentPlayer, state);
 	}
 			
     //+1 Buy
@@ -64,14 +64,11 @@ int playCouncilRoom(struct gameState* state, int handPos)
     //Each other player draws a card
     for (int i = 0; i < state->numPlayers; i++)
 	{
-	  if ( i != currentPlayer )
+	    if ( i != currentPlayer )
 	    {
-	      drawCard(i, state);
+	        drawCard(i, state);
 	    }
 	}
-			
-    //put played card in played card pile
-    discardCard(handPos, currentPlayer, state, 0);
         
     return 0;
 }
