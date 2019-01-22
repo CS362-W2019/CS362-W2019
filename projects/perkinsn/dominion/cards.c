@@ -90,7 +90,7 @@ int playFeast(struct gameState* state, int choice)
     updateCoins(currentPlayer, state, 5);
     int x = 1; //Condition to loop on
 
-    while(x == 1) {//Buy one card
+    while(x = 1) {//Buy one card
         if (supplyCount(choice, state) <= 0){
             if (DEBUG) {
                 printf("None of that card left, sorry!\n");
