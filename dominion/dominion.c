@@ -643,6 +643,8 @@ int getCost(int cardNumber)
   return -1;
 }
 
+//assignemnt 2
+//refactor code in cardEffect
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
   int i;
