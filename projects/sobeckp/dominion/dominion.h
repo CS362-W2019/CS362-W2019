@@ -132,6 +132,14 @@ int playSmithy(int handPos, int currentPlayer, struct gameState *state);
 /*plays the smithy card*/
 
 int playAdventurer(int currentPlayer, struct gameState *state);
-// plays the adventurer card
+/* plays the adventurer card */
 
+int playGardens();
+/* plays the garden card and returns -1 */
+
+int playVillage(int handPos, int currentPlayer, struct gameState *state);
+/* plays the village card */
+
+int playMine(int handPos, int currentPlayer, struct gameState *state,  int choice1, int choice2);
+/* plays the mine card */
 #endif

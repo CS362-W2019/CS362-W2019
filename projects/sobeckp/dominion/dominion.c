@@ -745,42 +745,10 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 			
     case gardens:
-      return -1;
+      return playGardens();
 			
     case mine:
-      j = state->hand[currentPlayer][choice1];  //store card we will trash
-
-      if (state->hand[currentPlayer][choice1] < copper || state->hand[currentPlayer][choice1] > gold)
-	{
-	  return -1;
-	}
-		
-      if (choice2 > treasure_map || choice2 < curse)
-	{
-	  return -1;
-	}
-
-      if ( (getCost(state->hand[currentPlayer][choice1]) + 3) > getCost(choice2) )
-	{
-	  return -1;
-	}
-
-      gainCard(choice2, state, 2, currentPlayer);
-
-      //discard card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-
-      //discard trashed card
-      for (i = 0; i < state->handCount[currentPlayer]; i++)
-	{
-	  if (state->hand[currentPlayer][i] == j)
-	    {
-	      discardCard(i, currentPlayer, state, 0);			
-	      break;
-	    }
-	}
-			
-      return 0;
+      return playMine(handPos, currentPlayer, state,  choice1, choice2);
 			
     case remodel:
       j = state->hand[currentPlayer][choice1];  //store card we will trash
@@ -809,19 +777,10 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case smithy:
-      playSmithy(handPos, currentPlayer, state);
-      return 0;
+      return playSmithy(handPos, currentPlayer, state);;
 		
     case village:
-      //+1 Card
-      drawCard(currentPlayer, state);
-			
-      //+2 Actions
-      state->numActions = state->numActions + 2;
-			
-      //discard played card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
+      return playVillage(handPos, currentPlayer, state);
 		
     case baron:
       state->numBuys++;//Increase buys by 1!
@@ -1338,6 +1297,60 @@ int playAdventurer(int currentPlayer, struct gameState *state){
 	state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
 	z=z-1;
       }
+      return 0;
+}
+
+int playGardens() {
+  return -1;
+}
+
+int playVillage(int handPos, int currentPlayer, struct gameState *state){
+      //+1 Card
+      drawCard(currentPlayer, state);
+			
+      //+2 Actions
+      state->numActions = state->numActions + 2;
+			
+      //discard played card from hand
+      discardCard(handPos, currentPlayer, state, 0);
+      return 0;
+}
+
+int playMine(int handPos, int currentPlayer, struct gameState *state,  int choice1, int choice2) {
+  int i;
+  int j;
+  j = state->hand[currentPlayer][choice1];  //store card we will trash
+
+      if (state->hand[currentPlayer][choice1] < copper || state->hand[currentPlayer][choice1] > gold)
+	{
+	  return -1;
+	}
+		
+      if (choice2 > treasure_map || choice2 < curse)
+	{
+	  return -1;
+	}
+
+      if ( (getCost(state->hand[currentPlayer][choice1]) + 3) > getCost(choice2) )
+	{
+	  return -1;
+	}
+
+      gainCard(choice2, state, 2, currentPlayer);
+
+      //discard card from hand
+      discardCard(handPos, currentPlayer, state, 0);
+
+      //discard trashed card
+      for (i = 0; i < state->handCount[currentPlayer]; i++)
+	{
+	  if (state->hand[currentPlayer][i] == j)
+	    {
+	      discardCard(i, currentPlayer, state, 0);			
+	      break;
+	    }
+	}
+			
       return 0;
 }
 
