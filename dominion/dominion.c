@@ -645,8 +645,13 @@ int getCost(int cardNumber)
   return -1;
 }
 
+<<<<<<< HEAD
 //TERA!!!
 //assignemnt 2 REFACTOR HERE !!!!
+=======
+//assignemnt 2
+//refactor code in cardEffect
+>>>>>>> a625878115922eeab1e28fa87e0eee8c0ee01245
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
   int i;
