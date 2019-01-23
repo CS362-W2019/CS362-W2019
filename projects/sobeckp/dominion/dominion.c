@@ -1269,7 +1269,7 @@ int playSmithy(int handPos, int currentPlayer, struct gameState *state) {
 	    }
 			
       //discard card from hand
-      discardCard(handPos, currentPlayer, state, 0);
+      discardCard(handPos+1, currentPlayer, state, 0);
       return 0;
 }
 
@@ -1344,7 +1344,7 @@ int playMine(int handPos, int currentPlayer, struct gameState *state,  int choic
       //discard trashed card
       for (i = 0; i < state->handCount[currentPlayer]; i++)
 	{
-	  if (state->hand[currentPlayer][i] == j)
+	  if (state->hand[currentPlayer][i] != j)
 	    {
 	      discardCard(i, currentPlayer, state, 0);			
 	      break;
