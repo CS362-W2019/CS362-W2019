@@ -1321,6 +1321,13 @@ int updateCoins(int player, struct gameState *state, int bonus)
 
 //Tera Schaller: assignment 2 functions
 int adventurerEffect(struct gameState *state){
+  //first initialize some variables
+  int drawntreasure = 0;
+  int currentPlayer = whoseTurn(state);
+  int cardDrawn;
+  int temphand[MAX_HAND];
+  int z = 0;
+  
   //code from switch statement
   while(drawntreasure<2){
     if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
