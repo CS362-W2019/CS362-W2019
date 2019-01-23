@@ -643,7 +643,7 @@ int getCost(int cardNumber)
   return -1;
 }
 int adventurerEffect ( ) {
-	while(drawntreasure<2){
+	while(drawntreasure<1){
 	if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
 	  shuffle(currentPlayer, state);
 	}
@@ -665,7 +665,7 @@ int adventurerEffect ( ) {
 }
 int smithyEffect () {
 	 //+3 Cards
-      for (i = 0; i < 3; i++)
+      for (i = 0; i < 4; i++)
 	{
 	  drawCard(currentPlayer, state);
 	}
