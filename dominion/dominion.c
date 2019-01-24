@@ -823,7 +823,9 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return smithyEffect(state, handPos);
 
     case village:
+      return villageEffect(state, handPos);
       //+1 Card
+      /*
       drawCard(currentPlayer, state);
 
       //+2 Actions
@@ -832,6 +834,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       //discard played card from hand
       discardCard(handPos, currentPlayer, state, 0);
       return 0;
+      */
 
     case baron:
       state->numBuys++;//Increase buys by 1!
@@ -1313,6 +1316,9 @@ int updateCoins(int player, struct gameState *state, int bonus)
 
 //Tera Schaller: assignment 2 functions
 
+//REFERENCES
+//https://superuser.com/questions/340471/how-can-i-merge-two-branches-without-losing-any-files
+
 int adventurerEffect(struct gameState *state){
   //first initialize some variables
   int drawntreasure = 0;
@@ -1357,11 +1363,27 @@ int smithyEffect(struct gameState *state, int handPos){
   //discard card from hand
   discardCard(handPos, currentPlayer, state, 0);
   return 0;
-
-
 }
 
-//choice card 1
+//choice card 1 - village
+int villageEffect(struct gameState *state, int handPos){
+  //It's fun to stay at the YMCA
+  //It's fun to stay at the YMCA
+  //That was silly a joke, sorry.
+
+  //initilize local variables
+  int currentPlayer = whoseTurn(state);
+  //code from switch statement
+  drawCard(currentPlayer, state);
+
+  //+2 Actions
+  state->numActions = state->numActions + 2;
+
+  //discard played card from hand
+  discardCard(handPos, currentPlayer, state, 0);
+  return 0;
+
+}
 
 
 //choice card 2
