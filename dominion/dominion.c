@@ -645,13 +645,13 @@ int getCost(int cardNumber)
   return -1;
 }
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //TERA!!!
 //assignemnt 2 REFACTOR HERE !!!!
 =======
 //assignemnt 2
 //refactor code in cardEffect
->>>>>>> a625878115922eeab1e28fa87e0eee8c0ee01245
+//>>>>>>> a625878115922eeab1e28fa87e0eee8c0ee01245
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
   int i;
@@ -820,15 +820,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 
     case smithy:
-      //+3 Cards
-      for (i = 0; i < 3; i++)
-	{
-	  drawCard(currentPlayer, state);
-	}
-
-      //discard card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
+      return smithyEffect(state, handPos);
 
     case village:
       //+1 Card
@@ -1320,6 +1312,7 @@ int updateCoins(int player, struct gameState *state, int bonus)
 }
 
 //Tera Schaller: assignment 2 functions
+
 int adventurerEffect(struct gameState *state){
   //first initialize some variables
   int drawntreasure = 0;
@@ -1327,7 +1320,7 @@ int adventurerEffect(struct gameState *state){
   int cardDrawn;
   int temphand[MAX_HAND];
   int z = 0;
-  
+
   //code from switch statement
   while(drawntreasure<2){
     if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
@@ -1348,7 +1341,34 @@ int adventurerEffect(struct gameState *state){
     z=z-1;
   }
   return 0;
+} //end adventurerEffect
+
+//smithyEffect
+int smithyEffect(struct gameState *state, int handPos){
+  //initilize local variables
+  int currentPlayer = whoseTurn(state);
+  //code from switch statement
+  //+3 Cards
+  for (i = 0; i < 3; i++)
+  {
+    drawCard(currentPlayer, state);
+  }
+
+  //discard card from hand
+  discardCard(handPos, currentPlayer, state, 0);
+  return 0;
+
+
 }
+
+//choice card 1
+
+
+//choice card 2
+
+
+//choice card 3
+
 
 
 //end Tera's assignment 2 functions
