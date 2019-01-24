@@ -929,9 +929,11 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 		
     case smithy:
 		  smithyEffect(); 
+		  return 0; 
      
     case village:
       villageEffect(); 
+		  return 0; 
 		
     case baron:
       state->numBuys++;//Increase buys by 1!
@@ -1071,6 +1073,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 		
     case tribute:
       tributeEffect(); 
+	return 0; 
 		
     case ambassador:
       j = 0;		//used to check if player has enough cards to discard
@@ -1208,6 +1211,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 		
     case sea_hag:
       seahagEffect(); 
+		  return 0; 
 		
     case treasure_map:
       //search hand for another treasure_map
