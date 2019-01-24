@@ -1302,7 +1302,7 @@ int adventurerEffect(struct gameState *state){
   int z = 0;
 
   //code from switch statement
-  while(drawntreasure<2){
+  while(drawntreasure<=2){
     if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
       shuffle(currentPlayer, state);
     }
