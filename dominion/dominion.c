@@ -1166,6 +1166,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 
     case sea_hag:
+      return sea_hagEffect(state);
+    /*
       for (i = 0; i < state->numPlayers; i++){
 	if (i != currentPlayer){
 	  state->discard[i][state->discardCount[i]] = state->deck[i][state->deckCount[i]--];			    state->deckCount[i]--;
@@ -1174,6 +1176,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	}
       }
       return 0;
+      */
 
     case treasure_map:
       //search hand for another treasure_map
@@ -1416,8 +1419,21 @@ int remodelEffect(struct gameState *state, int handPos, int choice1, int choice2
 
 }
 
-
-//choice card 3
+//choice card 3 - sea_hag
+int sea_hagEffect(struct gameState *state){
+  //initilize local variables
+  int currentPlayer = whoseTurn(state);
+  //switch statement code
+  for (int i = 0; i < state->numPlayers; i++){
+    if (i != currentPlayer){
+      state->discard[i][state->discardCount[i]] = state->deck[i][state->deckCount[i]--];
+      state->deckCount[i]--;
+      state->discardCount[i]++;
+      state->deck[i][state->deckCount[i]--] = curse;//Top card now a curse
+    }
+  }
+  return 0;
+}
 
 
 
