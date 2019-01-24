@@ -648,7 +648,7 @@ int getCost(int cardNumber)
 //<<<<<<< HEAD
 //TERA!!!
 //assignemnt 2 REFACTOR HERE !!!!
-=======
+//=======
 //assignemnt 2
 //refactor code in cardEffect
 //>>>>>>> a625878115922eeab1e28fa87e0eee8c0ee01245
@@ -795,46 +795,12 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
     case remodel:
       return remodelEffect(state, handPos, choice1, choice2);
-    /*
-      j = state->hand[currentPlayer][choice1];  //store card we will trash
 
-      if ( (getCost(state->hand[currentPlayer][choice1]) + 2) > getCost(choice2) )
-	{
-	  return -1;
-	}
-
-      gainCard(choice2, state, 0, currentPlayer);
-
-      //discard card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-
-      //discard trashed card
-      for (i = 0; i < state->handCount[currentPlayer]; i++)
-	{
-	  if (state->hand[currentPlayer][i] == j)
-	    {
-	      discardCard(i, currentPlayer, state, 0);
-	      break;
-	    }
-	}
-      return 0;
-      */
     case smithy:
       return smithyEffect(state, handPos);
 
     case village:
       return villageEffect(state, handPos);
-      //+1 Card
-      /*
-      drawCard(currentPlayer, state);
-
-      //+2 Actions
-      state->numActions = state->numActions + 2;
-
-      //discard played card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
-      */
 
     case baron:
       state->numBuys++;//Increase buys by 1!
@@ -1167,16 +1133,6 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
     case sea_hag:
       return sea_hagEffect(state);
-    /*
-      for (i = 0; i < state->numPlayers; i++){
-	if (i != currentPlayer){
-	  state->discard[i][state->discardCount[i]] = state->deck[i][state->deckCount[i]--];			    state->deckCount[i]--;
-	  state->discardCount[i]++;
-	  state->deck[i][state->deckCount[i]--] = curse;//Top card now a curse
-	}
-      }
-      return 0;
-      */
 
     case treasure_map:
       //search hand for another treasure_map
@@ -1317,11 +1273,26 @@ int updateCoins(int player, struct gameState *state, int bonus)
   return 0;
 }
 
-//Tera Schaller: assignment 2 functions
+/*************************************************************************
+//Terezie (Tera) Schaller: assignment 2 functions
+//January 24, 2019
+//CS 362, WINTER 2019
+//refactored functions
+//derived from switch statement code
 
 //REFERENCES
 //https://superuser.com/questions/340471/how-can-i-merge-two-branches-without-losing-any-files
+//https://www.youtube.com/watch?v=FyAAIHHClqI
+**************************************************************************/
 
+/*************************************************************************
+** FUNCTION: adventurerEffect
+** DESCRIPTION: draws cards from the player's deck until 2 treasure cards are Found
+** Treasure cards are added to hand and other cards are discarded
+** PARAMETERS: struct gameState *state
+** PRECONDITION: valid game in play
+** POSTCONDITION: player's deck and hand altered
+**************************************************************************/
 int adventurerEffect(struct gameState *state){
   //first initialize some variables
   int drawntreasure = 0;
@@ -1352,13 +1323,21 @@ int adventurerEffect(struct gameState *state){
   return 0;
 } //end adventurerEffect
 
+/*************************************************************************
+** FUNCTION: smithyEffect
+** DESCRIPTION: draws 3 cards from the deck and adds them to the player's hand
+** PARAMETERS: truct gameState *state, int handPos
+** PRECONDITION: valid game and current player
+** POSTCONDITION: player's hand is increased by three
+**************************************************************************/
+
 //smithyEffect
 int smithyEffect(struct gameState *state, int handPos){
   //initilize local variables
   int currentPlayer = whoseTurn(state);
   //code from switch statement
   //+3 Cards
-  for (i = 0; i < 3; i++)
+  for (int i = 0; i < 3; i++)
   {
     drawCard(currentPlayer, state);
   }
@@ -1368,12 +1347,16 @@ int smithyEffect(struct gameState *state, int handPos){
   return 0;
 }
 
+/*************************************************************************
+** FUNCTION: villageEffect
+** DESCRIPTION: draws 1 card, adds 2 additional actions
+** PARAMETERS: struct gameState *state, int handPos
+** PRECONDITION: valid game
+** POSTCONDITION: player's hand increased by one, actions by 2
+**************************************************************************/
+
 //choice card 1 - village
 int villageEffect(struct gameState *state, int handPos){
-  //It's fun to stay at the YMCA
-  //It's fun to stay at the YMCA
-  //That was silly a joke, sorry.
-
   //initilize local variables
   int currentPlayer = whoseTurn(state);
   //code from switch statement
@@ -1387,6 +1370,15 @@ int villageEffect(struct gameState *state, int handPos){
   return 0;
 
 }
+
+/*************************************************************************
+** FUNCTION: remodelEffect
+** DESCRIPTION: permanently discard a card from the player's hand and allow
+** player to select a new card worht up to +2 the value of the discarded card
+** PARAMETERS: struct gameState *state, int handPos, int choice1, int choice2
+** PRECONDITION: active game, 2 cards chosen
+** POSTCONDITION: hand is altered to replace trashed card with new card
+**************************************************************************/
 
 //choice card 2 - remodel
 int remodelEffect(struct gameState *state, int handPos, int choice1, int choice2){
@@ -1419,6 +1411,15 @@ int remodelEffect(struct gameState *state, int handPos, int choice1, int choice2
 
 }
 
+/*************************************************************************
+** FUNCTION: sea_hagEffect
+** DESCRIPTION: for every other player, removes the top card on their deck
+** and replaces it with a curse
+** PARAMETERS: struct gameState *state
+** PRECONDITION: valid game state
+** POSTCONDITION: all other players have a curse as the top card on their deck
+**************************************************************************/
+
 //choice card 3 - sea_hag
 int sea_hagEffect(struct gameState *state){
   //initilize local variables
@@ -1435,9 +1436,6 @@ int sea_hagEffect(struct gameState *state){
   return 0;
 }
 
-
-
 //end Tera's assignment 2 functions
-
 
 //end of dominion.c
