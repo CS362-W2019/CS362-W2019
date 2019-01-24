@@ -648,8 +648,6 @@ int funcAdventurer(struct gameState *state)
 {
     
   int currentPlayer = whoseTurn(state);
-  int nextPlayer = currentPlayer + 1;
-
   int temphand[MAX_HAND];// moved above the if statement
   int drawntreasure=0;
   int cardDrawn;
@@ -662,7 +660,8 @@ int funcAdventurer(struct gameState *state)
           shuffle(currentPlayer, state);
         }
         drawCard(currentPlayer, state);
-        cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
+        //was cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];
+        cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]];//top card of hand is most recently drawn card.
         if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
           drawntreasure++;
         else
@@ -688,7 +687,8 @@ int funcSmithy(struct gameState *state, int handPos)
     int i = 0;
     int currentPlayer = whoseTurn(state);
       //+3 Cards
-      for (i = 0; i < 3; i++)
+    //BUG, <= was previouls <
+      for (i = 0; i <= 3; i++)
 	{
 	  drawCard(currentPlayer, state);
 	}
@@ -704,14 +704,15 @@ int funcGreatHall(struct gameState *state, int currentPlayer, int handPos)
           drawCard(currentPlayer, state);
 
           //+1 Actions
-          state->numActions++;
+            //bug at -- instead of ++
+          state->numActions--;
 
           //discard card from hand
           discardCard(handPos, currentPlayer, state, 0);
           return 0;
         }
 
- int funcSteward(struct gameState *state, int choice1, int choice2, int choice3, int handPos)
+ int funcSteward(struct gameState *state, int choice1, int choice2, int choice3, int handPos, int currentPlayer)
    {
           if (choice1 == 1)
         {
@@ -736,10 +737,10 @@ int funcGreatHall(struct gameState *state, int currentPlayer, int handPos)
           return 0;
     }
 
-  int funcSalvager(struct gameState *state, int choice1, int currentPlayer)
+  int funcSalvager(struct gameState *state, int choice1, int currentPlayer, int handPos)
         {
           //+1 buy
-          state->numBuys++;
+          //state->numBuys++;
 
           if (choice1)
         {
@@ -748,7 +749,7 @@ int funcGreatHall(struct gameState *state, int currentPlayer, int handPos)
           //trash card
           discardCard(choice1, currentPlayer, state, 1);	
         }
-
+        state->numBuys++;//added this here, logic out of order
           //discard card
           discardCard(handPos, currentPlayer, state, 0);
           return 0;
@@ -766,9 +767,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
   int tributeRevealedCards[2] = {-1, -1};
   int temphand[MAX_HAND];// moved above the if statement
-  int drawntreasure=0;
-  int cardDrawn;
-  int z = 0;// this is the counter for the temp hand
+  //int z = 0;// this is the counter for the temp hand
   if (nextPlayer > (state->numPlayers - 1)){
     nextPlayer = 0;
   }
@@ -1042,7 +1041,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 //modified per assignment 2		
     case steward:
-          return funcSteward(state, choice1, choice2, choice3, handPos);
+          return funcSteward(state, choice1, choice2, choice3, handPos, currentPlayer);
           
     case tribute:
       if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1){
@@ -1224,7 +1223,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
           
     //per assignmen2	
     case salvager:
-    return funcSalvager(state, choice1, currentPlayer); 
+    return funcSalvager(state, choice1, currentPlayer, handPos); 
           
 	
     case sea_hag:
