@@ -742,9 +742,6 @@ int mine_card(int currentPlayer, struct gameState *state, int handPos, int choic
 
     //discard card from hand
     discardCard(handPos, currentPlayer, state, 0);
-    //BUG discard multipel cards from hand, making this card underpowered for origin player.
-    discardCard(handPos, currentPlayer, state, 0);
-    discardCard(handPos, currentPlayer, state, 0);
 
     //discard trashed card
     for (i = 0; i < state->handCount[currentPlayer]; i++)
