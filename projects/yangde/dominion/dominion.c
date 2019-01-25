@@ -667,7 +667,8 @@ int adventurer_card(int currentPlayer, struct gameState *state){
     int temphand[MAX_HAND];
     int z = 0;
 
-    while(drawntreasure<2){
+    //BUG instead of two drawn treasures, you draw one.  Thereby making this card have less value
+    while(drawntreasure<1){
         if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
             shuffle(currentPlayer, state);
         }
@@ -706,6 +707,8 @@ int council_room_card(int currentPlayer, struct gameState *state, int handPos){
     {
         if ( i != currentPlayer )
         {
+            //BUG each player draws two cards, making this a bad card for the origin player
+            drawCard(i, state);
             drawCard(i, state);
         }
     }
@@ -739,6 +742,9 @@ int mine_card(int currentPlayer, struct gameState *state, int handPos, int choic
 
     //discard card from hand
     discardCard(handPos, currentPlayer, state, 0);
+    //BUG discard multipel cards from hand, making this card underpowered for origin player.
+    discardCard(handPos, currentPlayer, state, 0);
+    discardCard(handPos, currentPlayer, state, 0);
 
     //discard trashed card
     for (i = 0; i < state->handCount[currentPlayer]; i++)
@@ -757,10 +763,13 @@ int village_card(int currentPlayer, struct gameState *state, int handPos){
     drawCard(currentPlayer, state);
 
     //+2 Actions
-    state->numActions = state->numActions + 2;
+
+    //BUG + 10 actions, making this card super over poweed
+    state->numActions = state->numActions + 10;
 
     //discard played card from hand
-    discardCard(handPos, currentPlayer, state, 0);
+    //BUG no longer have to discard played card from hand due to lazy commenting
+    //discardCard(handPos, currentPlayer, state, 0);
     return 0;
 }
 
