@@ -1,1 +1,1 @@
-Name: Laura Lund, ONID: lundl
+This is my Assignment 2 submission.
