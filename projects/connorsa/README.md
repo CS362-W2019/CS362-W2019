@@ -1,2 +1,2 @@
-Name: Sarah Connor, ONID: connorsa
-This is my assignment-1 submission!
+This is my assignment-2 submission
+Sarah Connor CS362
