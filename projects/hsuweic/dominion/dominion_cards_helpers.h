@@ -4,6 +4,6 @@
 #include "dominion.h"
 
 void playAdventurer(struct gameState*, int*, int,  int, int);
-
+void playCouncilRoom(struct gameState*, int, int);
 
 #endif
