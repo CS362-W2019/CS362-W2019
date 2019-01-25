@@ -687,6 +687,33 @@ int adventurer_card(int currentPlayer, struct gameState *state){
 
     return 0;
 }
+
+int council_room_card(int currentPlayer, struct gameState *state, int handPos){
+    //+4 Cards
+    int i;
+
+    for (i = 0; i < 4; i++)
+    {
+        drawCard(currentPlayer, state);
+    }
+
+    //+1 Buy
+    state->numBuys++;
+
+    //Each other player draws a card
+    for (i = 0; i < state->numPlayers; i++)
+    {
+        if ( i != currentPlayer )
+        {
+            drawCard(i, state);
+        }
+    }
+
+    //put played card in played card pile
+    discardCard(handPos, currentPlayer, state, 0);
+    return 0;
+}
+
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
     int i;
@@ -714,28 +741,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
             return adventurer_card(currentPlayer, state);
 
         case council_room:
-            //+4 Cards
-            for (i = 0; i < 4; i++)
-            {
-                drawCard(currentPlayer, state);
-            }
-
-            //+1 Buy
-            state->numBuys++;
-
-            //Each other player draws a card
-            for (i = 0; i < state->numPlayers; i++)
-            {
-                if ( i != currentPlayer )
-                {
-                    drawCard(i, state);
-                }
-            }
-
-            //put played card in played card pile
-            discardCard(handPos, currentPlayer, state, 0);
-
-            return 0;
+            return council_room_card(currentPlayer,state,handPos);
 
         case feast:
             //gain card with cost up to 5
