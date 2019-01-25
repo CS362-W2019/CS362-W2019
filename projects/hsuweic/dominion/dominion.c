@@ -649,7 +649,6 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   int i;
   int j;
   int k;
-  int x;
   int index;
   int currentPlayer = whoseTurn(state);
   int nextPlayer = currentPlayer + 1;
@@ -667,24 +666,19 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
-        playAdventurer(state, temphand, drawntreasure, currentPlayer, z);
-        return 0;
+        return playAdventurer(state, temphand, drawntreasure, currentPlayer, z);
 
     case council_room:
-        playCouncilRoom(state, currentPlayer, handPos);
-		return 0;
+		return playCouncilRoom(state, currentPlayer, handPos);
 			
     case feast:
-        playFeast(state, temphand, currentPlayer, choice1);
-        return 0;
+        return playFeast(state, temphand, currentPlayer, choice1);
 			
     case gardens:
-        playGardens(); // TODO
-        return -1;
+        return playGardens(); // TODO
 			
     case mine:
-        playMine(state , j, choice1, choice2, currentPlayer, handPos);
-        return 0;
+        return playMine(state, choice1, choice2, currentPlayer, handPos);
 			
     case remodel:
       j = state->hand[currentPlayer][choice1];  //store card we will trash
@@ -713,8 +707,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case smithy:
-        playSmithy(state, currentPlayer, handPos);
-        return 0;
+        return playSmithy(state, currentPlayer, handPos);
 		
     case village:
       //+1 Card
@@ -1208,7 +1201,7 @@ int updateCoins(int player, struct gameState *state, int bonus)
 /****************************
  ** PlayCard Implementations
  ***************************/
-void playAdventurer(struct gameState *state, 
+int playAdventurer(struct gameState *state, 
                     int *temphand, 
                     int drawntreasure, 
                     int currentPlayer, 
@@ -1247,9 +1240,10 @@ void playAdventurer(struct gameState *state,
 	    state->discard[currentPlayer][state->discardCount[currentPlayer]++] = temphand[tempCounter-1]; 
 	    tempCounter--;
     }
+    return 0;
 }
 
-void playCouncilRoom(struct gameState *state, 
+int playCouncilRoom(struct gameState *state, 
                      int currentPlayer,
                      int handPos)
 {
@@ -1273,9 +1267,10 @@ void playCouncilRoom(struct gameState *state,
 			
     /* put played card in played card pile */
     discardCard(handPos, currentPlayer, state, 0);
+    return 0;
 }
 
-void playFeast(struct gameState *state,
+int playFeast(struct gameState *state,
                int *temphand,
                int currentPlayer, 
                int choice1)
@@ -1338,21 +1333,23 @@ void playFeast(struct gameState *state,
 	    state->hand[currentPlayer][i] = temphand[i];
 	    temphand[i] = -1;
     }
+    return 0;
 }
 
-void playGardens()
+int playGardens()
 {
     // TODO
+    return -1;
+
 }
 
-void playMine(struct gameState *state,
-              int trashCard,
+int playMine(struct gameState *state,
               int choice1,
               int choice2,
               int currentPlayer,
               int handPos)
 {
-    trashCard = state->hand[currentPlayer][choice1];  //store card we will trash
+    int trashCard = state->hand[currentPlayer][choice1];  //store card we will trash
     
     if (state->hand[currentPlayer][choice1] < copper || state->hand[currentPlayer][choice1] > gold)
 	{
@@ -1382,10 +1379,11 @@ void playMine(struct gameState *state,
 	        discardCard(i, currentPlayer, state, 0);			
 	        break;
 	    }
-	}			
+	}
+    return 0;			
 }
 
-void playSmithy(struct gameState *state,
+int playSmithy(struct gameState *state,
                 int currentPlayer,
                 int handPos)
 {
@@ -1397,6 +1395,7 @@ void playSmithy(struct gameState *state,
 			
     //discard card from hand
     discardCard(handPos, currentPlayer, state, 0);
+    return 0;
 }
 
 

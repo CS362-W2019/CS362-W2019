@@ -3,11 +3,11 @@
 
 #include "dominion.h"
 
-void playAdventurer(struct gameState*, int*, int,  int, int);
-void playCouncilRoom(struct gameState*, int, int);
-void playFeast(struct gameState*, int*, int, int);
-void playGardens();
-void playMine(struct gameState*, int, int, int, int, int);
-void playSmithy(struct gameState*, int, int);
+int playAdventurer(struct gameState*, int*, int,  int, int);
+int playCouncilRoom(struct gameState*, int, int);
+int playFeast(struct gameState*, int*, int, int);
+int playGardens();
+int playMine(struct gameState*, int, int, int, int);
+int playSmithy(struct gameState*, int, int);
 
 #endif
