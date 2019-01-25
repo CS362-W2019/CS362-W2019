@@ -8,6 +8,6 @@ void playCouncilRoom(struct gameState*, int, int);
 void playFeast(struct gameState*, int*, int, int);
 void playGardens();
 void playMine(struct gameState*, int, int, int, int, int);
-
+void playSmithy(struct gameState*, int, int);
 
 #endif
