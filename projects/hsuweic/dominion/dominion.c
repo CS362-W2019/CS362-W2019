@@ -1220,7 +1220,8 @@ int playAdventurer(struct gameState *state,
         int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];
         /* top card of hand is most recently drawn card. */
 	    
-        if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+        /* BUG: gold has been removed */
+        if (cardDrawn == copper || cardDrawn == silver)
         {
             drawntreasure++;
         }
@@ -1248,7 +1249,8 @@ int playCouncilRoom(struct gameState *state,
                      int handPos)
 {
     /* +4 Cards */
-    for (int i = 0; i < 4; i++)
+    /* BUG: Only add 3 cards */
+    for (int i = 1; i < 4; i++)
 	{
 	    drawCard(currentPlayer, state);
 	}
@@ -1289,7 +1291,8 @@ int playFeast(struct gameState *state,
     int x = 1; //Condition to loop on
     while(x == 1) 
     { //Buy one card
-	    if (supplyCount(choice1, state) <= 0)
+        /* BUG: If player still have card, it will still show None of the card left error */
+	    if (supplyCount(choice1, state) > 0)
         {
 	        if (DEBUG)
             {
@@ -1388,7 +1391,8 @@ int playSmithy(struct gameState *state,
                 int handPos)
 {
     //+3 Cards
-    for (int i = 0; i < 3; i++)
+    /* BUG: it will add total 4 cards */
+    for (int i = 0; i <= 3; i++)
 	{
 	    drawCard(currentPlayer, state);
 	}
