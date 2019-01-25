@@ -787,15 +787,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3,
       smithyAction(currentPlayer, state, handPos);
 
     case village:
-      //+1 Card
-      drawCard(currentPlayer, state);
-
-      //+2 Actions
-      state->numActions = state->numActions + 2;
-
-      // discard played card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
+      villageAction(currentPlayer, state, handPos);
 
     case baron:
       state->numBuys++;   // Increase buys by 1!
@@ -904,22 +896,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3,
       return 0;
 
     case steward:
-      if (choice1 == 1) {
-        //+2 cards
-        drawCard(currentPlayer, state);
-        drawCard(currentPlayer, state);
-      } else if (choice1 == 2) {
-        //+2 coins
-        state->coins = state->coins + 2;
-      } else {
-        // trash 2 cards in hand
-        discardCard(choice2, currentPlayer, state, 1);
-        discardCard(choice3, currentPlayer, state, 1);
-      }
-
-      // discard card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
+      stewardAction(currentPlayer, state, handPos, choice1, choice2, choice3);
 
     case tribute:
       if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <=
@@ -1285,6 +1262,41 @@ int adventurerAction(int currentPlayer, struct gameState *state) {
         temphand[z - 1];
     z = z - 1;
   }
+  return 0;
+}
+
+/* Village */
+int villageAction(int currentPlayer, struct gameState *state, int handPos) {
+  //+1 Card
+  drawCard(currentPlayer, state);
+
+  //+2 Actions
+  /*state->numActions = state->numActions + 2;*/
+  // Bug introduced, instead of add two actions, number of actions is set to 2
+  state->numActions = 2;
+
+  // discard played card from hand
+  discardCard(handPos, currentPlayer, state, 0);
+  return 0;
+}
+
+/* Steward */
+int stewardAction(int currentPlayer, struct gameState *state, int handPos,
+                  int choice1, int choice2, int choice3) {
+  if (choice1 == 1) {
+    //+2 cards
+    drawCard(currentPlayer, state);
+    drawCard(currentPlayer, state);
+  } else if (choice1 == 2) {
+    //+2 coins
+    state->coins = state->coins + 2;
+  }
+  // Introduce a bug here, instead of choosing to trash 2 cards
+  // always trash 2 cards when the card is played
+  discardCard(choice2, currentPlayer, state, 1);
+  discardCard(choice3, currentPlayer, state, 1);
+  // discard card from hand
+  discardCard(handPos, currentPlayer, state, 0);
   return 0;
 }
 
