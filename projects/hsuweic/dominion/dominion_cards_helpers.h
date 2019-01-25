@@ -5,5 +5,7 @@
 
 void playAdventurer(struct gameState*, int*, int,  int, int);
 void playCouncilRoom(struct gameState*, int, int);
+void playFeast(struct gameState*, int*, int, int);
+
 
 #endif
