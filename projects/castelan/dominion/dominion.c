@@ -1346,7 +1346,7 @@ j = state->hand[currentPlayer][choice1];  //store card we will trash
 	  return -1;
 	}
 
-  if ( (getCost(state->hand[currentPlayer][choice1]) + 3) > getCost(choice2) )
+  if ( (getCost(state->hand[currentPlayer][choice1])) > getCost(choice2) )
 	{
 	  return -1;
 	}
