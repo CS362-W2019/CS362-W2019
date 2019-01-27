@@ -1,4 +1,2 @@
-
-Sam Beckett   Becketsa
-
-This is my adssignment-1 submission!
+This is my assignment-2 submission!
+-branched for assignment 2
