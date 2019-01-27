@@ -1232,38 +1232,38 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
          return 0;
       // end case sea_hag
 
-    case treasure_map:
-      //search hand for another treasure_map
-      index = -1;
-      for (i = 0; i < state->handCount[currentPlayer]; i++)
-	{
-	  if (state->hand[currentPlayer][i] == treasure_map && i != handPos)
-	    {
-	      index = i;
-	      break;
-	    }
-	}
-      if (index > -1)
-	{
-	  //trash both treasure cards
-	  discardCard(handPos, currentPlayer, state, 1);
-	  discardCard(index, currentPlayer, state, 1);
+      case treasure_map:
+            //search hand for another treasure_map
+         index = -1;
 
-	  //gain 4 Gold cards
-	  for (i = 0; i < 4; i++)
-	    {
-	      gainCard(gold, state, 1, currentPlayer);
-	    }
-				
-	  //return success
-	  return 1;
-	}
-			
-      //no second treasure_map found in hand
+         for (i = 0; i < state->handCount[currentPlayer]; i++)
+         {
+            if (state->hand[currentPlayer][i] == treasure_map && i != handPos)
+            {
+               index = i;
+               break;
+            }
+         }
+
+         if (index > -1)
+         {
+               //trash both treasure cards
+            discardCard(handPos, currentPlayer, state, 1);
+            discardCard(index, currentPlayer, state, 1);
+
+               //gain 4 Gold cards
+            for (i = 0; i < 4; i++)
+               gainCard(gold, state, 1, currentPlayer);
+
+               //return success
+            return 1;
+         }
+
+         //no second treasure_map found in hand (wilsond3: THIS SEEMS TO BE A PROBLEM)
       return -1;
     }
-	
-  return -1;
+
+   return -1; // (wilsond3: THIS SEEMS TO BE A PROBLEM)
 }
 
 int discardCard(int handPos, int currentPlayer, struct gameState *state, int trashFlag)
