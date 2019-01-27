@@ -6,11 +6,11 @@
 #include <stdlib.h>
 
    // Functions for cards (alpha-order)
-int _adventurer(struct gameState* state, int currentPlayer);
-int _council_room(struct gameState* state, int currentPlayer, int handPos);
-int _cutpurse(struct gameState* state, int currentPlayer, int handPos);
+int _adventurer(struct gameState* state, int currentPlayer);                  // BUG INTRODUCED
+int _council_room(struct gameState* state, int currentPlayer, int handPos);   // BUG INTRODUCED
+int _cutpurse(struct gameState* state, int currentPlayer, int handPos);       // BUG INTRODUCED
 int _feast(struct gameState* state, int currentPlayer, int choice1);
-int _smithy(struct gameState* state, int currentPlayer, int handPos);
+int _smithy(struct gameState* state, int currentPlayer, int handPos);         // BUG INTRODUCED
 
 int compare(const void* a, const void* b) {
   if (*(int*)a > *(int*)b)
@@ -1257,10 +1257,13 @@ int _adventurer(struct gameState* state, int currentPlayer)
          drawntreasure++;
       else
       {
-         temphand[z] = cardDrawn;
+         //temphand[z] = cardDrawn; (ORIGINAL)
+         temphand[++z] = cardDrawn; // BUG INTRODUCED (could cause an out of bounds error if user draws beyond max hand size) and
+                                    // this function isn't following the rules of the game anyway, which state that you may only
+                                    // reshuffle your discard pile at most once.
             // This should just remove the top card (the most recently drawn one).
          state->handCount[currentPlayer]--; 
-         z++;
+         //z++; (ORIGINAL)
       }
    }
 
@@ -1284,7 +1287,9 @@ int _council_room(struct gameState* state, int currentPlayer, int handPos)
       drawCard(currentPlayer, state);
 
       // +1 Buy
-   state->numBuys++;
+   //state->numBuys++; // ORIGINAL
+   ++state->numBuys; // (BUG INTRODUCED). This moves the pointer looking at state to sizeof state bytes beyond the state's address
+                     // instead of incrementing the number of buys
 
       // Each other player draws a card
    for (int i = 0; i < state->numPlayers; i++)
@@ -1305,7 +1310,10 @@ int _cutpurse(struct gameState* state, int currentPlayer, int handPos)
       {
          for (int j = 0; j < state->handCount[i]; j++)
          {
-            if (state->hand[i][j] == copper)
+            //if (state->hand[i][j] == copper) // (ORIGINAL)
+            if (state->hand[i][j] == silver) // BUG INTRODUCED. This card should force opponents to discard a copper if they have it, this would cause the card
+                                             // to still only discard one card maximum, which might be something a test checks for, but it's a card that shouldn't
+                                             // be discarded.
             {
                discardCard(j, i, state, 0);
                break;
@@ -1397,7 +1405,10 @@ int _smithy(struct gameState* state, int currentPlayer, int handPos)
       drawCard(currentPlayer, state);
 
       // Discard card from hand
-   discardCard(handPos, currentPlayer, state, 0);
+   //discardCard(handPos, currentPlayer, state, 0); // (ORIGINAL)
+   discardCard(currentPlayer, handPos, state, 0); // (BUG INTRODUCED). Instead of discard handPos card from current player, it will discard
+                                                  // card number currentPlayer from player number handPos. If the handPos is ≤ number of players
+                                                  // this seems like it could easily escape detection.
 
    return 0;
 }
