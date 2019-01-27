@@ -670,36 +670,6 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
    {
       case adventurer:
          return _adventurer(state, currentPlayer);
-         /*while(drawntreasure < 2)
-         {
-               // if empty deck, shuffle discard pile and add to deck
-            if (state->deckCount[currentPlayer] < 1)
-               shuffle(currentPlayer, state);
-
-            drawCard(currentPlayer, state);
-               //top card of hand is most recently drawn card.
-            cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];
-
-            if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
-               drawntreasure++;
-            else
-            {
-               temphand[z] = cardDrawn;
-                  //this should just remove the top card (the most recently drawn one).
-               state->handCount[currentPlayer]--; 
-               z++;
-            }
-         }
-
-         while(z - 1 >= 0)
-         {
-               // discard all cards in play that have been drawn
-            state->discard[currentPlayer][state->discardCount[currentPlayer]++] = temphand[z - 1]; 
-            --z;
-         }
-
-         return 0;*/
-      // end case adventurer
 
          case council_room:
                // +4 Cards
