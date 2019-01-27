@@ -5,6 +5,12 @@
 #include <math.h>
 #include <stdlib.h>
 
+   // Functions for cards (alpha-order)
+int _adventurer(struct gameState* state, int currentPlayer);
+int _smithy(struct gameState* state, int currentPlayer, int handPos);
+
+
+
 int compare(const void* a, const void* b) {
   if (*(int*)a > *(int*)b)
     return 1;
@@ -663,7 +669,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
    switch (card)
    {
       case adventurer:
-         while(drawntreasure < 2)
+         return _adventurer(state, currentPlayer);
+         /*while(drawntreasure < 2)
          {
                // if empty deck, shuffle discard pile and add to deck
             if (state->deckCount[currentPlayer] < 1)
@@ -691,7 +698,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
             --z;
          }
 
-         return 0;
+         return 0;*/
       // end case adventurer
 
          case council_room:
@@ -833,15 +840,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       // end case remodel
 
       case smithy:
-            // +3 Cards
-         for (i = 0; i < 3; i++)
-	         drawCard(currentPlayer, state);
-
-            // discard card from hand
-         discardCard(handPos, currentPlayer, state, 0);
-
-         return 0;
-      // end case smithy
+         return _smithy(state, currentPlayer, handPos);
 
       case village:
             // +1 Card
@@ -1371,6 +1370,63 @@ int updateCoins(int player, struct gameState *state, int bonus)
   return 0;
 }
 
+
+int _adventurer(struct gameState* state, int currentPlayer)
+{
+   int z = 0;
+   int temphand[MAX_HAND];
+   int drawntreasure = 0;
+
+   while(drawntreasure < 2)
+   {
+         // If empty deck, shuffle discard pile and add to deck
+      if (state->deckCount[currentPlayer] < 1)
+         shuffle(currentPlayer, state);
+
+      drawCard(currentPlayer, state);
+
+         // Top card of hand is most recently drawn card.
+      int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];
+
+      if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+         drawntreasure++;
+      else
+      {
+         temphand[z] = cardDrawn;
+            // This should just remove the top card (the most recently drawn one).
+         state->handCount[currentPlayer]--; 
+         z++;
+      }
+   }
+
+   while(z - 1 >= 0)
+   {
+         // discard all cards in play that have been drawn
+      state->discard[currentPlayer][state->discardCount[currentPlayer]++] = temphand[z - 1]; 
+      --z;
+   }
+
+      // Possible will need to include a discard of the current card, would require handPos (I think…)
+   return 0;
+}
+
+
+
+
+
+
+   // Needs currentPlayer, state, handPos (always seems to return 0)
+int _smithy(struct gameState* state, int currentPlayer, int handPos)
+{
+      // +3 Cards
+   for (int i = 0; i < 3; ++i)
+      drawCard(currentPlayer, state);
+
+      // Discard card from hand
+   discardCard(handPos, currentPlayer, state, 0);
+
+   return 0;
+}
 
 //end of dominion.c
 
