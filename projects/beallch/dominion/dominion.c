@@ -643,10 +643,11 @@ int getCost(int cardNumber)
   return -1;
 }
 
-int adventurerFunc(int drawntreasure, int currentPlayer, struct gameState *state, int temphand[], int cardDrawn, int z)
+int adventurerFunc(int drawntreasure, int currentPlayer, struct gameState *state, int temphand[], int z)
 {
 	//bug
 	z += 1;
+	int cardDrawn;
 	while (drawntreasure < 2) {
 		if (state->deckCount[currentPlayer] < 1) {//if the deck is empty we need to shuffle discard and add to deck
 			shuffle(currentPlayer, state);
@@ -841,7 +842,6 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   int i;
   int j;
   int k;
-  int x;
   int index;
   int currentPlayer = whoseTurn(state);
   int nextPlayer = currentPlayer + 1;
@@ -860,7 +860,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
 	case adventurer:
-      return adventurerFunc(drawntreasure, currentPlayer, state, temphand, cardDrawn, z);
+      return adventurerFunc(drawntreasure, currentPlayer, state, temphand, z);
 			
     case council_room:
       //+4 Cards
