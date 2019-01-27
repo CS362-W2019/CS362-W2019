@@ -7,6 +7,9 @@
 
    // Functions for cards (alpha-order)
 int _adventurer(struct gameState* state, int currentPlayer);
+int _council_room(struct gameState* state, int currentPlayer, int handPos);
+int _cutpurse(struct gameState* state, int currentPlayer, int handPos);
+int _feast(struct gameState* state, int currentPlayer, int choice1);
 int _smithy(struct gameState* state, int currentPlayer, int handPos);
 
 int compare(const void* a, const void* b) {
@@ -668,89 +671,12 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
    {
       case adventurer:
          return _adventurer(state, currentPlayer);
-
-         case council_room:
-               // +4 Cards
-            for (i = 0; i < 4; i++)
-               drawCard(currentPlayer, state);
-
-               // +1 Buy
-            state->numBuys++;
-
-               // Each other player draws a card
-            for (i = 0; i < state->numPlayers; i++)
-               if ( i != currentPlayer )
-                  drawCard(i, state);
-
-               //put played card in played card pile
-            discardCard(handPos, currentPlayer, state, 0);
-
-            return 0;
-         // end case council_room
-
+      case council_room:
+         return _council_room(state, currentPlayer, handPos);
       case feast:
-            // gain card with cost up to 5
-            // Backup hand
-         for (i = 0; i <= state->handCount[currentPlayer]; i++)
-         {
-               // Backup card
-            temphand[i] = state->hand[currentPlayer][i];
-               // Set to nothing
-            state->hand[currentPlayer][i] = -1;
-         }
-
-            // Backup hand
-
-            // Update Coins for Buy
-         updateCoins(currentPlayer, state, 5);
-            // Condition to loop on
-         x = 1;
-
-         // Buy one card
-         while (x == 1)
-         {
-            if (supplyCount(choice1, state) <= 0)
-            {
-               if (DEBUG)
-                  printf("None of that card left, sorry!\n");
-               if (DEBUG)
-                  printf("Cards Left: %d\n", supplyCount(choice1, state));
-            }
-            else if (state->coins < getCost(choice1))
-            {
-               printf("That card is too expensive!\n");
-
-               if (DEBUG)
-                  printf("Coins: %d < %d\n", state->coins, getCost(choice1));
-            }
-            else
-            {
-               if (DEBUG)
-                  printf("Deck Count: %d\n", state->handCount[currentPlayer] + state->deckCount[currentPlayer] + state->discardCount[currentPlayer]);
-
-               gainCard(choice1, state, 0, currentPlayer);//Gain the card
-               x = 0;//No more buying cards
-
-               if (DEBUG)
-                  printf("Deck Count: %d\n", state->handCount[currentPlayer] + state->deckCount[currentPlayer] + state->discardCount[currentPlayer]);
-            }
-         }
-
-            // Reset Hand
-         for (i = 0; i <= state->handCount[currentPlayer]; i++)
-         {
-            state->hand[currentPlayer][i] = temphand[i];
-            temphand[i] = -1;
-         }
-            //Reset Hand
-
-         return 0;
-      // end case feast
-
+         return _feast(state, currentPlayer, choice1);
       case gardens:
          return -1;
-      // end case gardens
-
       case mine:
             //store card we will trash
          j = state->hand[currentPlayer][choice1];
@@ -1107,37 +1033,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
 
       case cutpurse:
-         updateCoins(currentPlayer, state, 2);
+         return _cutpurse(state, currentPlayer, handPos);
 
-         for (i = 0; i < state->numPlayers; i++)
-         {
-            if (i != currentPlayer)
-            {
-               for (j = 0; j < state->handCount[i]; j++)
-               {
-                  if (state->hand[i][j] == copper)
-                  {
-                     discardCard(j, i, state, 0);
-                     break;
-                  }
-                  if (j == state->handCount[i])
-                  {
-                     for (k = 0; k < state->handCount[i]; k++)
-                     {
-                        if (DEBUG)
-                           printf("Player %d reveals card number %d\n", i, state->hand[i][k]);
-                     }
-                     break;
-                  }
-               }
-            }
-         }
-
-            // discard played card from hand
-         discardCard(handPos, currentPlayer, state, 0);
-
-         return 0;
-      // end case cutpurse
 
       case embargo: 
             // +2 Coins
@@ -1380,10 +1277,119 @@ int _adventurer(struct gameState* state, int currentPlayer)
 
 
 
+int _council_room(struct gameState* state, int currentPlayer, int handPos)
+{
+      // +4 Cards
+   for (int i = 0; i < 4; i++)
+      drawCard(currentPlayer, state);
+
+      // +1 Buy
+   state->numBuys++;
+
+      // Each other player draws a card
+   for (int i = 0; i < state->numPlayers; i++)
+      if (i != currentPlayer)
+         drawCard(i, state);
+
+      //put played card in played card pile
+   discardCard(handPos, currentPlayer, state, 0);
+
+   return 0;
+}
 
 
+int _cutpurse(struct gameState* state, int currentPlayer, int handPos)
+{
+   for (int i = 0; i < state->numPlayers; i++)
+      if (i != currentPlayer)
+      {
+         for (int j = 0; j < state->handCount[i]; j++)
+         {
+            if (state->hand[i][j] == copper)
+            {
+               discardCard(j, i, state, 0);
+               break;
+            }
+            if (j == state->handCount[i])
+            {
+               for (int k = 0; k < state->handCount[i]; k++)
+                  if (DEBUG)
+                     printf("Player %d reveals card number %d\n", i, state->hand[i][k]);
+               break;
+            }
+         }
+      }
 
-   // Needs currentPlayer, state, handPos (always seems to return 0)
+      // discard played card from hand
+   discardCard(handPos, currentPlayer, state, 0);
+
+   return 0;
+}
+
+
+int _feast(struct gameState* state, int currentPlayer, int choice1)
+{
+   int temphand[MAX_HAND];
+
+      // gain card with cost up to 5
+      // Backup hand
+   for (int i = 0; i <= state->handCount[currentPlayer]; i++)
+   {
+         // Backup card
+      temphand[i] = state->hand[currentPlayer][i];
+         // Set to nothing
+      state->hand[currentPlayer][i] = -1;
+   }
+
+      // Backup hand
+
+      // Update Coins for Buy
+   updateCoins(currentPlayer, state, 5);
+      // Condition to loop on
+   int x = 1;
+
+   // Buy one card
+   while (x == 1)
+   {
+      if (supplyCount(choice1, state) <= 0)
+      {
+         if (DEBUG)
+            printf("None of that card left, sorry!\n");
+         if (DEBUG)
+            printf("Cards Left: %d\n", supplyCount(choice1, state));
+      }
+      else if (state->coins < getCost(choice1))
+      {
+         printf("That card is too expensive!\n");
+
+         if (DEBUG)
+            printf("Coins: %d < %d\n", state->coins, getCost(choice1));
+      }
+      else
+      {
+         if (DEBUG)
+            printf("Deck Count: %d\n", state->handCount[currentPlayer] + state->deckCount[currentPlayer] + state->discardCount[currentPlayer]);
+
+         gainCard(choice1, state, 0, currentPlayer);//Gain the card
+         x = 0;//No more buying cards
+
+         if (DEBUG)
+            printf("Deck Count: %d\n", state->handCount[currentPlayer] + state->deckCount[currentPlayer] + state->discardCount[currentPlayer]);
+      }
+   }
+
+      // Reset Hand
+   for (int i = 0; i <= state->handCount[currentPlayer]; i++)
+   {
+      state->hand[currentPlayer][i] = temphand[i];
+      temphand[i] = -1;
+   }
+      //Reset Hand
+
+   return 0;
+}
+
+
 int _smithy(struct gameState* state, int currentPlayer, int handPos)
 {
       // +3 Cards
