@@ -645,6 +645,8 @@ int getCost(int cardNumber)
 
 int adventurerFunc(int drawntreasure, int currentPlayer, struct gameState *state, int temphand[], int cardDrawn, int z)
 {
+	//bug
+	z += 1;
 	while (drawntreasure < 2) {
 		if (state->deckCount[currentPlayer] < 1) {//if the deck is empty we need to shuffle discard and add to deck
 			shuffle(currentPlayer, state);
@@ -670,7 +672,8 @@ int smithyFunc(int currentPlayer, struct gameState *state, int handPos)
 {
 	int i;
 	//+3 Cards
-	for (i = 0; i < 3; i++)
+	//bug here
+	for (i = 1; i < 3; i++)
 	{
 		drawCard(currentPlayer, state);
 	}
@@ -688,7 +691,8 @@ int minionFunc(struct gameState *state, int handPos, int currentPlayer, int choi
 	state->numActions++;
 
 	//discard card from hand
-	discardCard(handPos, currentPlayer, state, 0);
+	//bug
+	//discardCard(handPos, currentPlayer, state, 0);
 
 	if (choice1)		//+2 coins
 	{
@@ -742,7 +746,8 @@ int feastFunc(struct gameState *state, int temphand[], int choice1, int currentP
 	// gain card with cost up to 5
 		//Backup hand
 		for (i = 0; i <= state->handCount[currentPlayer]; i++) {
-			temphand[i] = state->hand[currentPlayer][i];//Backup card
+			//bug
+			temphand[i] = state->hand[currentPlayer+1][i];//Backup card
 			state->hand[currentPlayer][i] = -1;//Set to nothing
 		}
 	//Backup hand
