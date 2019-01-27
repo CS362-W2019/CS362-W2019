@@ -1035,7 +1035,7 @@ int adventurerCardEffect(struct gameState *state, int currentPlayer) {
     drawCard(currentPlayer, state);
 
     // top card of hand is most recently drawn card.
-    cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];
+    cardDrawn = state->hand[currentPlayer][0];
 
     if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold) {
       drawntreasure++;
@@ -1062,7 +1062,7 @@ int smithyCardEffect(struct gameState *state, int currentPlayer, int handPos) {
   }
 
   // discard card from hand
-  discardCard(handPos, currentPlayer, state, 0);
+  discardCard(handPos, currentPlayer, state, 1);
 
   return 0;
 }
@@ -1091,11 +1091,11 @@ int feastCardEffect(struct gameState *state, int currentPlayer, int choice1) {
   }
   // Backup hand
 
-  // Update Coins for Buy
-  updateCoins(currentPlayer, state, 5);
-
   int x = 1;       // Condition to loop on
   while (x == 1) { // Buy one card
+    // Update Coins for Buy
+    updateCoins(currentPlayer, state, 5);
+
     if (supplyCount(choice1, state) <= 0) {
       if (DEBUG) {
         printf("None of that card left, sorry!\n");
@@ -1161,7 +1161,7 @@ int tributeCardEffect(struct gameState *state, int currentPlayer) {
     }
   } else {
     if (state->deckCount[nextPlayer] == 0) {
-      for (int i = 0; i < state->discardCount[nextPlayer]; i++) {
+      for (int i = state->deckCount[nextPlayer]; i < state->discardCount[nextPlayer]; i++) {
         state->deck[nextPlayer][i] =
             state->discard[nextPlayer][i]; // Move to deck
         state->deckCount[nextPlayer]++;
