@@ -677,7 +677,7 @@ int smithyCard(struct gameState *state, int currentPlayer, int handPos){
       }
 
 int mineCard(struct gameState *state, int currentPlayer,int choice1, int choice2, int handPos){
-      int j = state->hand[currentPlayer][choice1];  //store card we will trash
+      int j = state->hand[currentPlayer][choice2];  //store card we will trash
 
       if (state->hand[currentPlayer][choice1] < copper || state->hand[currentPlayer][choice1] > gold)
 	{
@@ -720,7 +720,6 @@ int stewardCard(int choice1, int choice2, int choice3, int currentPlayer, struct
 	{
 	  //+2 cards
 	  drawCard(currentPlayer, state);
-	  drawCard(currentPlayer, state);
 	}
       else if (choice1 == 2)
 	{
@@ -753,6 +752,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   int tributeRevealedCards[2] = {-1, -1};
   int temphand[MAX_HAND];// moved above the if statement
   int drawntreasure=0;
+
   int z = 0;// this is the counter for the temp hand
   if (nextPlayer > (state->numPlayers - 1)){
     nextPlayer = 0;
@@ -761,7 +761,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card )
     {
     case adventurer:
-        adventurerCard(drawntreasure, state, currentPlayer, temphand, z);
+        return adventurerCard(drawntreasure, state, currentPlayer, temphand, z);
 
     case council_room:
       //+4 Cards
@@ -841,10 +841,10 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 
     case gardens:
-      gardensCard();
+      return gardensCard();
 
     case mine:
-      mineCard(state, currentPlayer, choice1, choice2, handPos);
+      return mineCard(state, currentPlayer, choice1, choice2, handPos);
 
     case remodel:
       j = state->hand[currentPlayer][choice1];  //store card we will trash
@@ -873,7 +873,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 
     case smithy:
-        smithyCard(state, currentPlayer, handPos);
+        return smithyCard(state, currentPlayer, handPos);
 
 
 
@@ -1002,7 +1002,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 
     case steward:
-        stewardCard(choice1, choice2, choice3, currentPlayer, state, handPos);
+        return stewardCard(choice1, choice2, choice3, currentPlayer, state, handPos);
 
     case tribute:
       if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1){
