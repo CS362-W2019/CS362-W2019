@@ -1197,6 +1197,11 @@ int updateCoins(int player, struct gameState *state, int bonus)
   return 0;
 }
 
+/*
+* This is the implementation for the adventurer card. This allows the player to reveal cards
+* from the deck until 2 treasure cards are revealed. Then those two treasure cards go into the players
+* hand and the other revealed cards are discarded.
+*/
 int adventurerCard(struct gameState *state, int currentPlayer, int *temphand, int drawntreasure, int z) {
   while(drawntreasure<2){
           if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
@@ -1219,6 +1224,10 @@ int adventurerCard(struct gameState *state, int currentPlayer, int *temphand, in
         return 0;
 }
 
+/*
+* This is the implementation for the council room card which allows the player to gain 4 cards
+* plus an additional buy. Each other player draws a card. 
+*/
 int councilRoomCard(struct gameState *state, int currentPlayer, int handPos) {
     int i;
     //+4 Cards
@@ -1238,6 +1247,11 @@ int councilRoomCard(struct gameState *state, int currentPlayer, int handPos) {
     discardCard(handPos, currentPlayer, state, 0);		
     return 0;
 }
+
+/*
+* This is the implementation for the feast card which allows the player to trash this card
+* and gain a card costing up to 5 gold.
+*/
 int feastCard(struct gameState *state, int currentPlayer, int *temphand, int choice1) {
     int i;
     int x;
@@ -1292,6 +1306,10 @@ int feastCard(struct gameState *state, int currentPlayer, int *temphand, int cho
     return 0;
 }
 
+/*
+* This is the implementation for the mine card which allows the player to trash a treasure card from
+* their hand and gain a treasure costing up to 3 gold more than it.
+*/
 int mineCard(struct gameState *state, int currentPlayer, int choice1, int choice2, int handPos){
     int i;
     int j = state->hand[currentPlayer][choice1];  //store card we will trash
@@ -1321,6 +1339,10 @@ int mineCard(struct gameState *state, int currentPlayer, int choice1, int choice
     return 0;
 
 }
+/*
+* This is the implementation of the smithy card which is an action card that allows
+* the player to draw 3 additional cards.
+*/
 int smithyCard(struct gameState *state, int currentPlayer,int handPos){
     int i;
     //+3 Cards
