@@ -12,5 +12,9 @@ int playSmithy(struct gameState*, int, int);
 int playREMODEL(struct gameState*, int, int, int, int);
 int playVILLAGE(struct gameState*, int, int);
 int playBaron(struct gameState*, int, int);
+int playGreatHall(struct gameState*, int, int);
+int playMinion(struct gameState*, int, int, int, int, int);
+int playSteward(struct gameState*, int, int, int, int, int);
+
 
 #endif
