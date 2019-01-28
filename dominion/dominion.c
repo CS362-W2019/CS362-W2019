@@ -755,7 +755,8 @@ int adventurerCard(int currentPlayer, struct gameState *state, int handPos)
     }
     drawCard(currentPlayer, state);
     cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1]; //top card of hand is most recently drawn card.
-    if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+    /* BUG:: cardDrawn no longer can check if the card is gold. */
+    if (cardDrawn == copper || cardDrawn == silver)
       drawntreasure++;
     else
     {
@@ -806,7 +807,8 @@ int smithyCard(int currentPlayer, struct gameState *state, int handPos)
 {
   //+3 Cards
   int i;
-  for (i = 0; i < 3; i++)
+  /* BUG:: instead 3 cards, 4 cards will be pulled */
+  for (i = 0; i < 4; i++)
   {
     drawCard(currentPlayer, state);
   }
@@ -819,6 +821,8 @@ int smithyCard(int currentPlayer, struct gameState *state, int handPos)
 int villageCard(int currentPlayer, struct gameState *state, int handPos)
 {
   //+1 Card
+  drawCard(currentPlayer, state);
+  /* BUG:: card will be drawn one more time */
   drawCard(currentPlayer, state);
 
   //+2 Actions
@@ -839,8 +843,9 @@ int stewardCard(int currentPlayer, struct gameState *state, int handPos, int cho
   }
   else if (choice1 == 2)
   {
+    /* BUG:: instread of 2 coins, player will gain 4 coins */
     //+2 coins
-    state->coins = state->coins + 2;
+    state->coins = state->coins + 4;
   }
   else
   {
