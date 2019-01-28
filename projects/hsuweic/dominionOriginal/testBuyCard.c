@@ -43,8 +43,8 @@ int main () {
 
   int i, n, r, p, deckCount, discardCount, handCount;
 
-  int k[10] = {adventurer, council_room, feast, gardens, mine,
-	       remodel, smithy, village, baron, great_hall};
+  int k[10] = {ADVENTURER, COUNCIL_ROOM, FEAST, GARDENS, MINE,
+	       REMODEL, SMITHY, VILLAGE, BARON, GREAT_HALL};
 
 
   struct gameState G;

@@ -6,10 +6,11 @@
 int playAdventurer(struct gameState*, int*, int,  int, int);
 int playCouncilRoom(struct gameState*, int, int);
 int playFeast(struct gameState*, int*, int, int);
-int playGardens();
+int playGARDENS();
 int playMine(struct gameState*, int, int, int, int);
 int playSmithy(struct gameState*, int, int);
-int playRemodel(struct gameState*, int, int, int, int);
-int playVillage(struct gameState*, int, int);
+int playREMODEL(struct gameState*, int, int, int, int);
+int playVILLAGE(struct gameState*, int, int);
+int playBaron(struct gameState*, int, int);
 
 #endif
