@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="dominion"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dominion">
+				<Option output="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/dominion" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/."/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 dominion"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dominion/fast">
+				<Option output="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/dominion" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/."/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 dominion/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/badTestDrawCard.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/betterTestDrawCard.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/dominion.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/dominion.h">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/dominion_helpers.h">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/interface.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/interface.h">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/playdom.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/player.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/rngs.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/rngs.h">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/rt.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/supplyTest.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/testBuyCard.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/testDrawCard.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/testInit.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/testShuffle.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
