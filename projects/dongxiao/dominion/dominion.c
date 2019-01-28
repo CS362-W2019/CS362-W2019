@@ -1380,6 +1380,5 @@ int remodelAction(int currentPlayer, struct gameState *state, int choice1, int c
 	return 0;
 }
 
-
 //end of dominion.c
 
