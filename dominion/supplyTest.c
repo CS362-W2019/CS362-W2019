@@ -12,8 +12,8 @@ int main () {
 
   int r;
 
-  int k[10] = {adventurer, council_room, feast, gardens, mine,
-	       remodel, smithy, village, baron, great_hall};
+  int k[10] = {ADVENTURER, COUNCIL_ROOM, FEAST, GARDENS, MINE,
+	       REMODEL, SMITHY, VILLAGE, BARON, GREAT_HALL};
 
   struct gameState G;
   
@@ -22,8 +22,8 @@ int main () {
   printf ("initializeGame(4, k, 1, &G) = %d\n", r);
   assert(r == 0);
 
-  r = supplyCount(adventurer, &G);
-  printf ("supplyCount(adventurer, &G) = %d\n", r);
+  r = supplyCount(ADVENTURER, &G);
+  printf ("supplyCount(ADVENTURER, &G) = %d\n", r);
   assert(r == 10);
   
   return 0;

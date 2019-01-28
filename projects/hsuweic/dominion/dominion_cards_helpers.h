@@ -3,7 +3,7 @@
 
 #include "dominion.h"
 
-int playAdventurer(struct gameState*, int*, int,  int, int);
+int playAdventurer(struct gameState*, int*,  int);
 int playCouncilRoom(struct gameState*, int, int);
 int playFeast(struct gameState*, int*, int, int);
 int playGARDENS();
@@ -17,12 +17,12 @@ int playMinion(struct gameState*, int, int, int, int, int);
 int playSteward(struct gameState*, int, int, int, int, int);
 int playTribute(struct gameState*, int, int, int*);
 int playAmbassador(struct gameState*, int, int, int, int);
-int playCutpurse();
-int playEmbargo();
-int playOutpost();
-int playSalvager();
-int playSeaHag();
-int playTreasureMap();
+int playCutpurse(struct gameState*, int, int);
+int playEmbargo(struct gameState*, int, int, int);
+int playOutpost(struct gameState*, int, int);
+int playSalvager(struct gameState*, int, int, int);
+int playSeaHag(struct gameState*, int);
+int playTreasureMap(struct gameState*, int, int);
 
 
 

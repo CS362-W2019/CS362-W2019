@@ -646,149 +646,77 @@ int getCost(int cardNumber)
 
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
-  int i;
-  int index;
-  int currentPlayer = whoseTurn(state);
-  int nextPlayer = currentPlayer + 1;
-
-  int tributeRevealedCards[2] = {-1, -1};
-  int temphand[MAX_HAND];// moved above the if statement
-  int drawntreasure=0;
-  int z = 0;// this is the counter for the temp hand
-  if (nextPlayer > (state->numPlayers - 1)){
-    nextPlayer = 0;
-  }
+	int currentPlayer = whoseTurn(state);
+	int nextPlayer = currentPlayer + 1;
+	int tributeRevealedCards[2] = {-1, -1};
+	int temphand[MAX_HAND];// moved above the if statement
+	if (nextPlayer > (state->numPlayers - 1)){
+		nextPlayer = 0;
+	}
   
 	
-  //uses switch to select card and perform actions
-  switch( card ) 
+  	//uses switch to select card and perform actions
+  	switch( card ) 
     {
-    case ADVENTURER:
-        return playAdventurer(state, temphand, drawntreasure, currentPlayer, z);
+		case ADVENTURER:
+			return playAdventurer(state, temphand, currentPlayer);
 
-    case COUNCIL_ROOM:
-		return playCouncilRoom(state, currentPlayer, handPos);
-			
-    case FEAST:
-        return playFeast(state, temphand, currentPlayer, choice1);
-			
-    case GARDENS:
-        return playGARDENS(); // TODO
-			
-    case MINE:
-        return playMine(state, choice1, choice2, currentPlayer, handPos);
-			
-    case REMODEL:
-        return playREMODEL(state, currentPlayer, choice1, choice2, handPos);
-		
-    case SMITHY:
-        return playSmithy(state, currentPlayer, handPos);
-		
-    case VILLAGE:
-        return playVILLAGE(state, currentPlayer, handPos);
-		
-    case BARON:
-        return playBaron(state, currentPlayer, choice1);
-		
-    case GREAT_HALL:
-        return playGreatHall(state, currentPlayer, handPos);
-		
-    case MINION:
-		return playMinion(state, currentPlayer, handPos, choice1,choice2, choice3);
-
-    case STEWARD:
-		return playSteward(state, currentPlayer, handPos, choice1, choice2, choice3);
-
-    case TRIBUTE:
-		return playTribute(state, nextPlayer, currentPlayer, tributeRevealedCards);
-		
-    case AMBASSADOR:
-		return playAmbassador(state, choice1, choice2, currentPlayer, handPos);
-		
-    case CUTPURSE:
-		return playCutpurse(state, currentPlayer, handPos);
-
-		
-    case EMBARGO: 
-      //+2 Coins
-      state->coins = state->coins + 2;
-			
-      //see if selected pile is in play
-      if ( state->supplyCount[choice1] == -1 )
-	{
-	  return -1;
-	}
-			
-      //add EMBARGO token to selected supply pile
-      state->EMBARGOTokens[choice1]++;
-			
-      //trash card
-      discardCard(handPos, currentPlayer, state, 1);		
-      return 0;
-		
-    case OUTPOST:
-      //set OUTPOST flag
-      state->outpostPlayed++;
-			
-      //discard card
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
-		
-    case SALVAGER:
-      //+1 buy
-      state->numBuys++;
-			
-      if (choice1)
-	{
-	  //gain coins equal to trashed card
-	  state->coins = state->coins + getCost( handCard(choice1, state) );
-	  //trash card
-	  discardCard(choice1, currentPlayer, state, 1);	
-	}
-			
-      //discard card
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
-		
-    case SEA_HAG:
-      for (i = 0; i < state->numPlayers; i++){
-	if (i != currentPlayer){
-	  state->discard[i][state->discardCount[i]] = state->deck[i][state->deckCount[i]--];			    state->deckCount[i]--;
-	  state->discardCount[i]++;
-	  state->deck[i][state->deckCount[i]--] = CURSE;//Top card now a CURSE
-	}
-      }
-      return 0;
-		
-    case TREASURE_MAP:
-      //search hand for another TREASURE_MAP
-      index = -1;
-      for (i = 0; i < state->handCount[currentPlayer]; i++)
-	{
-	  if (state->hand[currentPlayer][i] == TREASURE_MAP && i != handPos)
-	    {
-	      index = i;
-	      break;
-	    }
-	}
-      if (index > -1)
-	{
-	  //trash both treasure cards
-	  discardCard(handPos, currentPlayer, state, 1);
-	  discardCard(index, currentPlayer, state, 1);
-
-	  //gain 4 GOLD cards
-	  for (i = 0; i < 4; i++)
-	    {
-	      gainCard(GOLD, state, 1, currentPlayer);
-	    }
+		case COUNCIL_ROOM:
+			return playCouncilRoom(state, currentPlayer, handPos);
 				
-	  //return success
-	  return 1;
-	}
+		case FEAST:
+			return playFeast(state, temphand, currentPlayer, choice1);
+				
+		case GARDENS:
+			return playGARDENS(); // TODO
+				
+		case MINE:
+			return playMine(state, choice1, choice2, currentPlayer, handPos);
+				
+		case REMODEL:
+			return playREMODEL(state, currentPlayer, choice1, choice2, handPos);
 			
-      //no second TREASURE_MAP found in hand
-      return -1;
+		case SMITHY:
+			return playSmithy(state, currentPlayer, handPos);
+			
+		case VILLAGE:
+			return playVILLAGE(state, currentPlayer, handPos);
+			
+		case BARON:
+			return playBaron(state, currentPlayer, choice1);
+			
+		case GREAT_HALL:
+			return playGreatHall(state, currentPlayer, handPos);
+			
+		case MINION:
+			return playMinion(state, currentPlayer, handPos, choice1,choice2, choice3);
+
+		case STEWARD:
+			return playSteward(state, currentPlayer, handPos, choice1, choice2, choice3);
+
+		case TRIBUTE:
+			return playTribute(state, nextPlayer, currentPlayer, tributeRevealedCards);
+			
+		case AMBASSADOR:
+			return playAmbassador(state, choice1, choice2, currentPlayer, handPos);
+			
+		case CUTPURSE:
+			return playCutpurse(state, currentPlayer, handPos);
+			
+		case EMBARGO: 
+			return playEmbargo(state, currentPlayer, choice1, handPos);
+			
+		case OUTPOST:
+			return playOutpost(state, currentPlayer, handPos);
+			
+		case SALVAGER:
+			return playSalvager(state, currentPlayer, handPos, choice1);
+			
+		case SEA_HAG:
+			return playSeaHag(state, currentPlayer);
+			
+		case TREASURE_MAP:
+			return playTreasureMap(state, currentPlayer, handPos);
     }
 	
   return -1;
@@ -904,10 +832,10 @@ int updateCoins(int player, struct gameState *state, int bonus)
  ***************************/
 int playAdventurer(struct gameState *state, 
                     int *temphand, 
-                    int drawntreasure, 
-                    int currentPlayer, 
-                    int tempCounter)
+                    int currentPlayer)
 {
+	int tempCounter = 0;
+	int drawntreasure = 0;
     while(drawntreasure < 2)
     {
 	    if(state->deckCount[currentPlayer] <1)
@@ -1493,32 +1421,110 @@ int playCutpurse(struct gameState* state,
 	return 0;
 }
 
-int playEmbargo()
+int playEmbargo(struct gameState* state,
+				int currentPlayer,
+				int choice1, 
+				int handPos)
 {
-	return 0;
+	//+2 Coins
+    state->coins = state->coins + 2;
+			
+    //see if selected pile is in play
+    if ( state->supplyCount[choice1] == -1 )
+	{
+		return -1;
+	}
+			
+    //add EMBARGO token to selected supply pile
+    state->EMBARGOTokens[choice1]++;
+			
+    //trash card
+    discardCard(handPos, currentPlayer, state, 1);		
+    return 0;
 }
 
-int playOutpost()
+int playOutpost(struct gameState* state,
+				int currentPlayer,
+				int handPos)
 {
-	return 0;
+	//set OUTPOST flag
+    state->outpostPlayed++;
+			
+    //discard card
+    discardCard(handPos, currentPlayer, state, 0);
+    return 0;
 }
 
-int playSalvager()
+int playSalvager(struct gameState* state,
+				 int currentPlayer, 
+				 int handPos, 
+				 int choice1)
 {
-	return 0;
+	//+1 buy
+    state->numBuys++;
+			
+    if (choice1)
+	{
+		//gain coins equal to trashed card
+	  	state->coins = state->coins + getCost( handCard(choice1, state) );
+	  	//trash card
+	  	discardCard(choice1, currentPlayer, state, 1);	
+	}
+			
+    //discard card
+    discardCard(handPos, currentPlayer, state, 0);
+    return 0;
 }
 
-int playSeaHag()
+int playSeaHag(struct gameState* state,
+			   int currentPlayer)
 {
-	return 0;
+	for (int i = 0; i < state->numPlayers; i++)
+	{
+		if (i != currentPlayer)
+		{
+	  		state->discard[i][state->discardCount[i]] = state->deck[i][state->deckCount[i]--];			    
+			state->deckCount[i]--;
+	  		state->discardCount[i]++;
+	  		state->deck[i][state->deckCount[i]--] = CURSE;//Top card now a CURSE
+		}
+    }
+    return 0;
 }
 
-int playTreasureMap()
+int playTreasureMap(struct gameState* state,
+					int currentPlayer,
+					int handPos)
 {
-	return 0;
+	//search hand for another TREASURE_MAP
+    int index = -1;
+    for (int i = 0; i < state->handCount[currentPlayer]; i++)
+	{
+		if (state->hand[currentPlayer][i] == TREASURE_MAP && i != handPos)
+	    {
+	    	index = i;
+	      	break;
+	    }
+	}
+    if (index > -1)
+	{
+		//trash both treasure cards
+	  	discardCard(handPos, currentPlayer, state, 1);
+	  	discardCard(index, currentPlayer, state, 1);
+
+		//gain 4 GOLD cards
+	  	for (int i = 0; i < 4; i++)
+	    {
+	    	gainCard(GOLD, state, 1, currentPlayer);
+	    }
+				
+	  //return success
+	  return 1;
+	}
+			
+    //no second TREASURE_MAP found in hand
+    return -1;
 }
-
-
 
 
 //end of dominion.c
