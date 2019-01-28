@@ -1238,7 +1238,9 @@ int adventurerAction(int currentPlayer, struct gameState *state)
 			drawntreasure++;
 		else{
 			temphand[z]=cardDrawn;
-			state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
+			/********************** BUG ***************************************/
+			/* Do not remove the top card. So the player have two copies of cardDrawn */
+			//state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
 			z++;
 		}
       }
@@ -1259,7 +1261,10 @@ int smithyAction(int currentPlayer, struct gameState *state, int handPos)
 	}
 			
 	//discard card from hand
-	discardCard(handPos, currentPlayer, state, 0);
+	/************************** BUG *************************/
+	/* Trash the card instead of put the card in the discard pile */
+	//discardCard(handPos, currentPlayer, state, 0);
+	discardCard(handPos, currentPlayer, state, 1);
 	return 0;
 }     
 
@@ -1279,10 +1284,12 @@ int council_roomAction(int currentPlayer, struct gameState *state, int handPos)
 	//Each other player draws a card
 	for (i = 0; i < state->numPlayers; i++)
 	{
-	  if ( i != currentPlayer )
-	    {
+	  /*************************** BUG *****************************/
+	  /* every player draws a card */
+	 // if ( i != currentPlayer )
+	   // {
 	    	drawCard(i, state);
-	    }
+	   // }
 	}
 			
 	//put played card in played card pile
@@ -1295,7 +1302,7 @@ int feastAction(int currentPlayer, struct gameState *state, int choice1)
 	int i;
 	int temphand[MAX_HAND];
 	//gain card with cost up to 5
-	//Backup hand
+	//Backup hand  OFF-By-ONE??????????????
 	for (i = 0; i <= state->handCount[currentPlayer]; i++){
 		temphand[i] = state->hand[currentPlayer][i];//Backup card
 		state->hand[currentPlayer][i] = -1;//Set to nothing
@@ -1327,7 +1334,9 @@ int feastAction(int currentPlayer, struct gameState *state, int choice1)
 		  	}
 
 		  	gainCard(choice1, state, 0, currentPlayer);//Gain the card
-		  	x = 0;//No more buying cards
+			/************************* BUG *************************************/
+			/* infinite loop */
+		  	//x = 0;//No more buying cards
 
 		  	if (DEBUG){
 		    		printf("Deck Count: %d\n", state->handCount[currentPlayer] + state->deckCount[currentPlayer] + state->discardCount[currentPlayer]);
@@ -1349,7 +1358,7 @@ int remodelAction(int currentPlayer, struct gameState *state, int choice1, int c
 	int i;
 	int j = state->hand[currentPlayer][choice1];  //store card we will trash
 
-	if ( (getCost(state->hand[currentPlayer][choice1]) + 2) < getCost(choice2) )
+	if ( (getCost(state->hand[currentPlayer][choice1]) + 2) > getCost(choice2) )
 	{
 	  return -1;
 	}
