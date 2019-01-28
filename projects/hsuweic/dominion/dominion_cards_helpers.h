@@ -15,6 +15,15 @@ int playBaron(struct gameState*, int, int);
 int playGreatHall(struct gameState*, int, int);
 int playMinion(struct gameState*, int, int, int, int, int);
 int playSteward(struct gameState*, int, int, int, int, int);
+int playTribute(struct gameState*, int, int, int*);
+int playAmbassador(struct gameState*, int, int, int, int);
+int playCutpurse();
+int playEmbargo();
+int playOutpost();
+int playSalvager();
+int playSeaHag();
+int playTreasureMap();
+
 
 
 #endif
