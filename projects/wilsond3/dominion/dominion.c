@@ -6,11 +6,11 @@
 #include <stdlib.h>
 
    // Functions for cards (alpha-order)
-int _adventurer(struct gameState* state, int currentPlayer);                  // BUG INTRODUCED
-int _council_room(struct gameState* state, int currentPlayer, int handPos);   // BUG INTRODUCED
-int _cutpurse(struct gameState* state, int currentPlayer, int handPos);       // BUG INTRODUCED
-int _feast(struct gameState* state, int currentPlayer, int choice1);
-int _smithy(struct gameState* state, int currentPlayer, int handPos);         // BUG INTRODUCED
+static int _adventurer(struct gameState* state, int currentPlayer);                  // BUG INTRODUCED
+static int _council_room(struct gameState* state, int currentPlayer, int handPos);   // BUG INTRODUCED
+static int _cutpurse(struct gameState* state, int currentPlayer, int handPos);       // BUG INTRODUCED
+static int _feast(struct gameState* state, int currentPlayer, int choice1);
+static int _smithy(struct gameState* state, int currentPlayer, int handPos);         // BUG INTRODUCED
 
 int compare(const void* a, const void* b) {
   if (*(int*)a > *(int*)b)
@@ -1236,7 +1236,7 @@ int updateCoins(int player, struct gameState *state, int bonus)
 }
 
 
-int _adventurer(struct gameState* state, int currentPlayer)
+static int _adventurer(struct gameState* state, int currentPlayer)
 {
    int z = 0;
    int temphand[MAX_HAND];
@@ -1280,7 +1280,7 @@ int _adventurer(struct gameState* state, int currentPlayer)
 
 
 
-int _council_room(struct gameState* state, int currentPlayer, int handPos)
+static int _council_room(struct gameState* state, int currentPlayer, int handPos)
 {
       // +4 Cards
    for (int i = 0; i < 4; i++)
@@ -1303,7 +1303,7 @@ int _council_room(struct gameState* state, int currentPlayer, int handPos)
 }
 
 
-int _cutpurse(struct gameState* state, int currentPlayer, int handPos)
+static int _cutpurse(struct gameState* state, int currentPlayer, int handPos)
 {
    for (int i = 0; i < state->numPlayers; i++)
       if (i != currentPlayer)
@@ -1335,7 +1335,7 @@ int _cutpurse(struct gameState* state, int currentPlayer, int handPos)
 }
 
 
-int _feast(struct gameState* state, int currentPlayer, int choice1)
+static int _feast(struct gameState* state, int currentPlayer, int choice1)
 {
    int temphand[MAX_HAND];
 
@@ -1398,7 +1398,7 @@ int _feast(struct gameState* state, int currentPlayer, int choice1)
 }
 
 
-int _smithy(struct gameState* state, int currentPlayer, int handPos)
+static int _smithy(struct gameState* state, int currentPlayer, int handPos)
 {
       // +3 Cards
    for (int i = 0; i < 3; ++i)
