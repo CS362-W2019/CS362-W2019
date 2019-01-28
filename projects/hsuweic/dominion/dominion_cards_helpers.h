@@ -9,5 +9,6 @@ int playFeast(struct gameState*, int*, int, int);
 int playGardens();
 int playMine(struct gameState*, int, int, int, int);
 int playSmithy(struct gameState*, int, int);
+int playRemodel(struct, int, int, int, int);
 
 #endif
