@@ -681,21 +681,13 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
         return playMine(state, choice1, choice2, currentPlayer, handPos);
 			
     case remodel:
-        return playRemodel(state)
+        return playRemodel(state, currentPlayer, choice1, choice2, handPos);
 		
     case smithy:
         return playSmithy(state, currentPlayer, handPos);
 		
     case village:
-      //+1 Card
-      drawCard(currentPlayer, state);
-			
-      //+2 Actions
-      state->numActions = state->numActions + 2;
-			
-      //discard played card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
+        return playVillage(state, currentPlayer, handPos);
 		
     case baron:
       state->numBuys++;//Increase buys by 1!
@@ -1386,7 +1378,7 @@ int playRemodel(struct gameState *state,
                 int choice2, 
                 int handPos)
 {
-    trashedCard = state->hand[currentPlayer][choice1];  //store card we will trash
+    int trashedCard = state->hand[currentPlayer][choice1];  //store card we will trash
 
     if ((getCost(state->hand[currentPlayer][choice1]) + 2) > getCost(choice2))
 	{
@@ -1409,6 +1401,23 @@ int playRemodel(struct gameState *state,
 	}
     return 0;
 }
+
+int playVillage(struct gameState *state,
+                int currentPlayer, 
+                int handPos)
+{
+    //+1 Card
+    drawCard(currentPlayer, state);
+			
+    //+2 Actions
+    state->numActions = state->numActions + 2;
+			
+    //discard played card from hand
+    discardCard(handPos, currentPlayer, state, 0);
+    return 0;
+}
+
+
 
 
 //end of dominion.c
