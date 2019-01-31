@@ -14,7 +14,7 @@
 #include "dominion.h"
 
 //Last card enum (Treasure map) card number plus one for the 0th card.
-#define NUM_TOTAL_K_CARDS (treasure_map + 1)
+#define NUM_TOTAL_K_CARDS (TREASURE_MAP + 1)
 #define NUM_K_CARDS 10
 #define NUM_V_CARDS_2 8
 #define NUM_V_CARDS_3or4 12

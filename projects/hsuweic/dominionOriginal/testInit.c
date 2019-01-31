@@ -11,8 +11,8 @@ int main (int argc, char** argv) {
 
   int start = -1;
 
-  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, 
-	       sea_hag, tribute, smithy};
+  int k[10] = {ADVENTURER, GARDENS, EMBARGO, VILLAGE, MINION, MINE, CUTPURSE, 
+	       SEA_HAG, TRIBUTE, SMITHY};
   
   memset(&G, 'z', sizeof(struct gameState));
   
@@ -21,7 +21,7 @@ int main (int argc, char** argv) {
   printf ("Rough guide to locations in structure:\n");
   printf ("0: numPlayers\n");
   printf ("%ld: supplyCount[0]\n", ((long)&(G.supplyCount[0]))-((long)&G));
-  printf ("%ld: embargoTokens[0]\n", ((long)&(G.embargoTokens[0]))-((long)&G));
+  printf ("%ld: EMBARGOTokens[0]\n", ((long)&(G.EMBARGOTokens[0]))-((long)&G));
   printf ("%ld: hand[0][0]\n", ((long)&(G.hand[0][0]))-(long)(&G));
   printf ("%ld: deck[0][0]\n", ((long)&(G.deck[0][0]))-(long)(&G));
   printf ("%ld: discard[0][0]\n", ((long)&(G.discard[0][0]))-(long)(&G));

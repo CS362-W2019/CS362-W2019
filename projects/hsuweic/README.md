@@ -37,41 +37,41 @@ It **imports** the dominion.h header file and contains the following function pr
 It contains most of the function prototypes exceptfor those in dominion_helper.h.
 
 #### CARD enum:
-- curse = 0,
-- estate = 1
-- duchy = 2
-- province = 3
-- copper = 4
-- silver = 5
-- gold = 6
-- adventurer = 7 `If no/only 1 treasure found, stop when full deck seen`
-- council_room = 8
-- feast = 9 `choice1 is supply # of card gained`
-- gardens = 10
-- mine = 11 `choice1 is hand# of money to trash, choice2 is supply# of money to put in hand`
-- remodel = 12 `choice1 is hand# of card to remodel, choice2 is supply#`
-- smithy = 13
-- village = 14
-- baron = 15`choice1: boolean for discard of estate`
-   `Discard is always of first (lowest index) estate`
-- great_hall = 16
-- minion = 17 `choice1:  1 = +2 coin, 2 = redraw`
-- steward = 18 `choice1: 1 = +2 card, 2 = +2 coin, 3 = trash 2 (choice2,3)`
-- tribute = 19
+- CURSE = 0,
+- ESTATE = 1
+- DUCHY = 2
+- PROVINCE = 3
+- COPPER = 4
+- SILVER = 5
+- GOLD = 6
+- ADVENTURER = 7 `If no/only 1 treasure found, stop when full deck seen`
+- COUNCIL_ROOM = 8
+- FEAST = 9 `choice1 is supply # of card gained`
+- GARDENS = 10
+- MINE = 11 `choice1 is hand# of money to trash, choice2 is supply# of money to put in hand`
+- REMODEL = 12 `choice1 is hand# of card to REMODEL, choice2 is supply#`
+- SMITHY = 13
+- VILLAGE = 14
+- BARON = 15`choice1: boolean for discard of ESTATE`
+   `Discard is always of first (lowest index) ESTATE`
+- GREAT_HALL = 16
+- MINION = 17 `choice1:  1 = +2 coin, 2 = redraw`
+- STEWARD = 18 `choice1: 1 = +2 card, 2 = +2 coin, 3 = trash 2 (choice2,3)`
+- TRIBUTE = 19
 
-- ambassador = 20 `choice1 = hand#, choice2 = number to return to supply`
-- cutpurse = 21
-- embargo = 22 `choice1 = supply#`
-- outpost = 23
-- salvager = 24 `choice1 = hand# to trash`
-- sea_hag = 25
-- treasure_map = 26
+- AMBASSADOR = 20 `choice1 = hand#, choice2 = number to return to supply`
+- CUTPURSE = 21
+- EMBARGO = 22 `choice1 = supply#`
+- OUTPOST = 23
+- SALVAGER = 24 `choice1 = hand# to trash`
+- SEA_HAG = 25
+- TREASURE_MAP = 26
 
 #### gameState struct
 
 - int numPlayers; //number of players
-- int supplyCount[treasure_map+1];  //this is the amount of a specific type of card given a specific number.
-- int embargoTokens[treasure_map+1];
+- int supplyCount[TREASURE_MAP+1];  //this is the amount of a specific type of card given a specific number.
+- int EMBARGOTokens[TREASURE_MAP+1];
 - int outpostPlayed;
 - int outpostTurn;
 - int whoseTurn;
@@ -199,5 +199,4 @@ It defines a checkDrawCard function.  It performs random tests on the drawCard f
 ### testInit.c­ 
 It has a main() function.  It tests the initializeGame function
 
-### testShuffle.c­ 
-It has a main() function.  It tests the shuffle() function.
+### testShuffle.c­ It has a main() function.  It tests the shuffle() function.
