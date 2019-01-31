@@ -1,8 +1,41 @@
 # Wei-Chien Hsu hsuweic
 
-This is my assignment-1 submission!
+This is my assignemnt-3 submission!
 
-:tada:
+
+### Wrute 4 unit tests for 4 different functions
+
+- Write unit tests for `four functions` (not card implementations, and not cardEffect) in dominion.c. 
+- Check these tests in as `unittest1.c,unittest2.c, unittest3.c, and unittest4.c.` 
+- At least two of these functions should be more than 5 lines of code. 
+
+### Write 4 unit tests for card implementation function
+- Write unit tests for four Dominion cards implemented in dominion.c.
+- Write these tests so that they work whether a card is implemented inside cardEffect or in its own function. 
+- These tests should be checked in as `cardtest1.c, cardtest2.c, cardtest3.c, and cardtest4.c. `
+- It is mandatory to test **smithy** and **adventurer** card.
+
+### Write down the results
+
+- Execute your unit tests and describe any bugs you find in a section named `Bugs`. (10 points)
+- Use gcov to measure code coverage for all of these tests. 
+- Report your findings by discussing your tests' coverages (statement, branch, boundary, etc.),
+- Describe their implications for the tests in a section called `Unit Testing`. 
+
+**I want you to look at the dominion code coverage and find out what parts of your code are not covered so that in future you can improve your test suite. (30 points).**
+
+- Discuss your unit testing efforts in a section called `Unit Testing Efforts`. (10 points)
+- Add a rule in `Makefile` (named unittestresults) that will generate and execute all of these tests.
+- Append complete `testing results (including % coverage)` into a file called `unittestresults.out`.
+
+- The rule should be named `unittestresults` and should depend on `all your test code` as well as `the dominion code`. 
+- The .out files contain the output of your running tests and coverage information.
+- Basically .out file should act as a proof that your tests run correctly and you collected coverage information correctly. (10 points) 
+
+
+In these and other tests, I find it helpful to make all tests print “TEST SUCCESSFULLY COMPLETED” or some other message if and only if the entire test passes, and usually (this isn’t always possible for crashing bugs) print “TEST FAILED” for a failure. This makes it easy to process failing and passing tests. 
+
+***
 
 This is my assignment-2 submission!
 
@@ -200,3 +233,9 @@ It defines a checkDrawCard function.  It performs random tests on the drawCard f
 It has a main() function.  It tests the initializeGame function
 
 ### testShuffle.c­ It has a main() function.  It tests the shuffle() function.
+
+***
+
+This is my assignment-1 submission!
+
+:tada:
