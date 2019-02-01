@@ -1,4 +1,4 @@
-/* Testing 
+/* Testing Shuffle
  * 1. 
  * 2. 
  * 3. 
@@ -9,9 +9,15 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include "test_helper.h"
 #include "rngs.h"
 
-int main()
+void testShuffle()
 {
 
+}
+
+int main() {
+  testShuffle();
+  return 0;
 }

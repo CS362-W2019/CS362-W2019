@@ -1,5 +1,5 @@
-/* Testing 
- * 1. 
+/* Testing Smithy
+ * 1.  
  * 2. 
  * 3. 
  * 4. 
@@ -11,13 +11,14 @@
 #include <stdbool.h>
 #include "test_helper.h"
 #include "rngs.h"
+#include "dominion_cards_helpers.h"
 
-void testNewGame()
+void testCardSmithy()
 {
 
 }
 
 int main() {
-  testNewGame();
+  testCardSmithy();
   return 0;
 }

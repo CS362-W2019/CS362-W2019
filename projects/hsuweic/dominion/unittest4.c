@@ -9,9 +9,15 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include "test_helper.h"
 #include "rngs.h"
 
-int main()
+void testFullDeckCount()
 {
 
+}
+
+int main() {
+  testFullDeckCount();
+  return 0;
 }
