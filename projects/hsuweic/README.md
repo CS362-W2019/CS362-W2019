@@ -21,16 +21,65 @@ This is my assignemnt-3 submission!
 - Use gcov to measure code coverage for all of these tests. 
 - Report your findings by discussing your tests' coverages (statement, branch, boundary, etc.),
 - Describe their implications for the tests in a section called `Unit Testing`. 
+- Discuss your unit testing efforts in a section called `Unit Testing Efforts`. (10 points)
 
 **I want you to look at the dominion code coverage and find out what parts of your code are not covered so that in future you can improve your test suite. (30 points).**
 
-- Discuss your unit testing efforts in a section called `Unit Testing Efforts`. (10 points)
+### Update the Makefile
+
 - Add a rule in `Makefile` (named unittestresults) that will generate and execute all of these tests.
 - Append complete `testing results (including % coverage)` into a file called `unittestresults.out`.
-
 - The rule should be named `unittestresults` and should depend on `all your test code` as well as `the dominion code`. 
 - The .out files contain the output of your running tests and coverage information.
 - Basically .out file should act as a proof that your tests run correctly and you collected coverage information correctly. (10 points) 
+
+```makefile
+CFLAGS = -Wall -fpic -coverage -lm -std=c99
+
+default: tests.out
+
+tests.out: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c bst.c compare.c
+	
+	echo "Result for running BST tests:" > tests.out
+	echo "unittest1.c:" >> tests.out
+	gcc -o unittest1 compare.c bst.c unittest1.c $(CFLAGS)
+	./unittest1 >> tests.out
+	gcov bst.c >> tests.out
+
+   echo "unittest2.c:" >> tests.out
+	gcc -o unittest2 compare.c bst.c unittest2.c $(CFLAGS)
+	./unittest2 >> tests.out
+	gcov bst.c >> tests.out
+	
+   clean:
+	rm tests.out
+
+   cleanall: 
+	rm tests.out unittest1 unittest2 unittest3 unittest4 unittest5 *.gcda *.gcno *.gcov
+
+```
+
+```txt
+Result for running BST tests:
+unittest1.c:
+containsBSTree(): PASS when test containing 50 as root
+containsBSTree(): PASS when test containing 13 as left of root
+containsBSTree(): PASS when test containing 110 as right of root
+containsBSTree(): PASS when test containing 10 as left of left of root
+containsBSTree(): PASS when test containing 111, which is not in the tree
+File 'bst.c'
+Lines executed:38.37% of 86
+bst.c:creating 'bst.c.gcov'
+
+unittest2.c:
+_leftMost(): PASS left most of root
+_leftMost(): PASS left most of left of root
+_leftMost(): PASS left most of left of left of root
+_leftMost(): PASS left most of right of root
+File 'bst.c'
+Lines executed:41.86% of 86
+bst.c:creating 'bst.c.gcov'
+```
 
 
 In these and other tests, I find it helpful to make all tests print “TEST SUCCESSFULLY COMPLETED” or some other message if and only if the entire test passes, and usually (this isn’t always possible for crashing bugs) print “TEST FAILED” for a failure. This makes it easy to process failing and passing tests. 
