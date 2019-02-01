@@ -9,25 +9,21 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include "test_helper.h"
 #include "rngs.h"
 
-int main() {
+void testUpdateCoins()
+{
   int seed = 1000;
   int numPlayer = 2;
   int maxBonus = 10;
   int maxHandCount = 5;
   int k[10] = {ADVENTURER, GARDENS, EMBARGO, VILLAGE, MINION, MINE, CUTPURSE, SEA_HAG, TRIBUTE, SMITHY};
-  
   struct gameState G;
-
-  
   int coppers[MAX_HAND];
   int silvers[MAX_HAND];
   int golds[MAX_HAND];
-
-  bool passedTest1 = true;
-  bool passedTest2 = true;
-  bool passedTest3 = true;
+  bool test_result = true;
 
   /* Assign coins into the array */
   for (int i = 0; i < MAX_HAND; i++)
@@ -38,9 +34,6 @@ int main() {
   }
 
   printf ("TESTING updateCoins():\n");
-  printf("TEST1: Number of coins after setting all the cards to COPPER\n");
-  printf("TEST2: Number of coins after setting all the cards to SILVER\n");
-  printf("TEST3: Number of coins after setting all the cards to GOLD\n");
 
   for (int p = 0; p < numPlayer; p++)
   {
@@ -48,7 +41,6 @@ int main() {
       {
         for (int bonus = 0; bonus <= maxBonus; bonus++)
         {
-          printf("Purpose: Test player %d with %d treasure card(s) and %d bonus.\n", p, handCount, bonus);
           memset(&G, 23, sizeof(struct gameState));   // clear the game state
           initializeGame(numPlayer, k, seed, &G);     // initialize a new game
           G.handCount[p] = handCount;                 // set the number of cards on hand
@@ -56,51 +48,34 @@ int main() {
           /* Test1: Set all the cards to copper */
           memcpy(G.hand[p], coppers, sizeof(int) * handCount); 
           updateCoins(p, &G, bonus);
-
           /* check if the number of coins is correct */
-          if(G.coins == handCount * 1 + bonus) 
+          if(!testEqual("Number of coins after setting all the cards to COPPER.", G.coins, handCount * 1 + bonus))
           {
-            printf("TEST1 PASSED: G.coins = %d, expected = %d\n", G.coins, handCount * 1 + bonus);
-          }
-          else 
-          {
-            passedTest1 = false;
-            printf("TEST1 FALID: G.coins = %d, expected = %d\n", G.coins, handCount * 1 + bonus);
+            test_result = false;
           }
 
           /* Test2: Set all the cards to silver */
           memcpy(G.hand[p], silvers, sizeof(int) * handCount); 
           updateCoins(p, &G, bonus);
-          
           /* check if the number of coins is correct */
-          if(G.coins == handCount * 2 + bonus) 
+          if(!testEqual("Number of coins after setting all the cards to SILVER.", G.coins, handCount * 2 + bonus))
           {
-            printf("TEST2 PASSED: G.coins = %d, expected = %d\n", G.coins, handCount * 2 + bonus);
-          }
-          else 
-          {
-            passedTest2 = false;
-            printf("TEST2 FALID: G.coins = %d, expected = %d\n", G.coins, handCount * 2 + bonus);
-          }
-
+            test_result = false;  
+          }       
+          
           /* Test3: Set all the cards to gold */
           memcpy(G.hand[p], golds, sizeof(int) * handCount); 
           updateCoins(p, &G, bonus);
-
-          if(G.coins == handCount * 3 + bonus) 
+          /* check if the number of coins is correct */
+          if(!testEqual("Number of coins after setting all the cards to GOLD.", G.coins, handCount * 3 + bonus))
           {
-            printf("TEST3 PASSED: G.coins = %d, expected = %d\n", G.coins, handCount * 3 + bonus);
-          }
-          else 
-          {
-            passedTest3 = false;
-            printf("TEST3 FALID: G.coins = %d, expected = %d\n", G.coins, handCount * 3 + bonus);
+            test_result = false;  
           }
           printf("\n");
       }
     }
   }
-  if(passedTest1 && passedTest2 && passedTest2)
+  if(test_result)
   {
     printf("All tests passed!\n");
   }
@@ -108,5 +83,9 @@ int main() {
   {
     printf("You got some bugs, please read the error message.\n");
   }
+}
+
+int main() {
+  testUpdateCoins();
   return 0;
 }
