@@ -48,41 +48,22 @@ void testUpdateCoins()
           /* Test1: Set all the cards to copper */
           memcpy(G.hand[p], coppers, sizeof(int) * handCount); 
           updateCoins(p, &G, bonus);
-          /* check if the number of coins is correct */
-          if(!testEqual("Number of coins after setting all the cards to COPPER.", G.coins, handCount * 1 + bonus))
-          {
-            test_result = false;
-          }
+          testEqual("Number of coins after setting all the cards to COPPER.", G.coins, handCount * 1 + bonus, &test_result);
 
           /* Test2: Set all the cards to silver */
           memcpy(G.hand[p], silvers, sizeof(int) * handCount); 
           updateCoins(p, &G, bonus);
-          /* check if the number of coins is correct */
-          if(!testEqual("Number of coins after setting all the cards to SILVER.", G.coins, handCount * 2 + bonus))
-          {
-            test_result = false;  
-          }       
+          testEqual("Number of coins after setting all the cards to SILVER.", G.coins, handCount * 2 + bonus, &test_result);  
           
           /* Test3: Set all the cards to gold */
           memcpy(G.hand[p], golds, sizeof(int) * handCount); 
           updateCoins(p, &G, bonus);
-          /* check if the number of coins is correct */
-          if(!testEqual("Number of coins after setting all the cards to GOLD.", G.coins, handCount * 3 + bonus))
-          {
-            test_result = false;  
-          }
+          testEqual("Number of coins after setting all the cards to GOLD.", G.coins, handCount * 3 + bonus, &test_result);
           printf("\n");
       }
     }
   }
-  if(test_result)
-  {
-    printf("All tests passed!\n");
-  }
-  else
-  {
-    printf("You got some bugs, please read the error message.\n");
-  }
+  testResult(test_result);
 }
 
 int main() {
