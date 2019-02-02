@@ -1,6 +1,7 @@
 #ifndef TEST_HELPER_H
 #define TEST_HELPER_H
 
-bool testEqual(char *, int , int);
+void testEqual(char *, int , int , bool *);
+void testResult(bool);
 
 #endif
