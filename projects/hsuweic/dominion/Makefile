@@ -50,6 +50,11 @@ cardtest1: cardtest1.c dominion.o test_helper.o rngs.o
 cardtest2: cardtest2.c dominion.o test_helper.o rngs.o
 	gcc -o cardtest2 cardtest2.c -g dominion.o test_helper.o rngs.o $(CFLAGS)
 	
+cardtest3: cardtest3.c dominion.o test_helper.o rngs.o
+	gcc -o cardtest3 cardtest3.c -g dominion.o test_helper.o rngs.o $(CFLAGS)
+	
+cardtest4: cardtest4.c dominion.o test_helper.o rngs.o
+	gcc -o cardtest4 cardtest4.c -g dominion.o test_helper.o rngs.o $(CFLAGS)
 	
 unittestresults: unittest1 unittest2 unittest3 unittest4
 	@chmod +x unittest_result_generator
