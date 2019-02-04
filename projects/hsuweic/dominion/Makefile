@@ -56,9 +56,12 @@ cardtest3: cardtest3.c dominion.o test_helper.o rngs.o
 cardtest4: cardtest4.c dominion.o test_helper.o rngs.o
 	gcc -o cardtest4 cardtest4.c -g dominion.o test_helper.o rngs.o $(CFLAGS)
 	
-unittestresults: unittest1 unittest2 unittest3 unittest4
+unittestresults: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
 	@chmod +x unittest_result_generator
 	@./unittest_result_generator
+	@chmod +x cardtest_result_generator
+	@./cardtest_result_generator
+
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)

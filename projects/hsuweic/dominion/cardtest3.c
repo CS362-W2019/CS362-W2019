@@ -1,8 +1,7 @@
-/* Testing Feast
- * 1.  
- * 2. 
- * 3. 
- * 4. 
+/* Testing Village
+ * +1 card, +2 Action
+ * 1. After playing Village, player should get 1 more card ///bug
+ * 2. After playing Village, player should get 2 more Actions
  */
 #include "dominion.h"
 #include "dominion_helpers.h"
@@ -12,41 +11,42 @@
 #include "test_helper.h"
 #include "rngs.h"
 #include "dominion_cards_helpers.h"
-#define TESTCARD "ADVENTURER"
 #define SEED 1000
 
 void testCardFeast()
 {
+  int currentPlayer, villagePosition = 0, currentHandCount, currentAction;
   int numPlayers = 2;
-  int thisPlayer = 0;
-  struct gameState *G = newGame()
-  int k[10] = {ADVENTURER, GARDENS, EMBARGO, VILLAGE, MINION, MINE, CUTPURSE, SEA_HAG, TRIBUTE, SMITHY};
+  int k[10] = {ADVENTURER, GARDENS, COUNCIL_ROOM, VILLAGE, MINION, MINE, CUTPURSE, SEA_HAG, TRIBUTE, SMITHY};
+  struct gameState* G = newGame();
   bool test_result = true;
 
+
 	/* initialize a game state and player cards */
-	initializeGame(numPlayers, k, SEED, &G);
+	initializeGame(numPlayers, k, SEED, G);
+  currentPlayer = whoseTurn(G);
 
-	printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
+  gainCard(VILLAGE, G, 2, currentPlayer);
+  currentAction = G->numActions;
+  currentHandCount = G->handCount[currentPlayer];
 
-	/* ----------- TEST 1:  ------------- */
-	printf("TEST 1: \n");
+  /* get Village position */
+  for(int i = 0; i < G->handCount[currentPlayer]; i++) 
+  {
+    if(G->hand[currentPlayer][i] == VILLAGE)
+    {
+      villagePosition = i;
+      break;
+    }
+  }
 
-	// copy the game state to a test case
-	memcpy(&testG, &G, sizeof(struct gameState));
-	cardEffect(ADVENTURER, choice1, choice2, choice3, &testG, handpos, &bonus);
+  playVILLAGE(G, currentPlayer, villagePosition);
 
-
-  testEqual("Test Hand Count", , test_result);
-
-  /* ----------- TEST 2:  ------------- */
-	printf("TEST 2: \n");
-
-	// copy the game state to a test case
-	memcpy(&testG, &G, sizeof(struct gameState));
-	cardEffect(ADVENTURER, choice1, choice2, choice3, &testG, handpos, &bonus);
-
-
-  testEqual("Test Hand Count", , test_result);
+  testEqual("Check VILLAGE has been played.", VILLAGE, G->playedCards[0], &test_result);
+  testEqual("Current player should get 1 more cards", 1, G->handCount[currentPlayer] - currentHandCount, &test_result);
+  testEqual("There should have 2 more actions", 2, G->numActions - currentAction, &test_result);
+  
+  testResult(test_result);
 }
 
 int main() {

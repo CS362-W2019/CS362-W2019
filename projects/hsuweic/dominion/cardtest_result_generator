@@ -1,0 +1,33 @@
+#!/bin/bash
+
+echo "============ ADVENTURER TEST  ============" >> unittestresults.out
+./cardtest1 >> unittestresults.out
+var=$(gcov dominion.c --function-summaries | grep -n playAdventurer | cut -f1 -d:)
+((var++))
+gcov dominion.c --function-summaries | head -n$(echo $var) | tail -n2 >> unittestresults.out
+gcov dominion.c >> unittestresults.out
+echo -e "\n\n" >> unittestresults.out
+
+echo "============ SMITHY TEST ============" >> unittestresults.out
+./cardtest2 >> unittestresults.out
+var=$(gcov dominion.c --function-summaries | grep -n playSmithy | cut -f1 -d:)
+((var++))
+gcov dominion.c --function-summaries | head -n$(echo $var) | tail -n2 >> unittestresults.out
+gcov dominion.c >> unittestresults.out
+echo -e "\n\n" >> unittestresults.out
+
+echo "============ VILLAGE TEST ============" >> unittestresults.out
+./cardtest3 >> unittestresults.out
+var=$(gcov dominion.c --function-summaries | grep -n playVILLAGE | cut -f1 -d:)
+((var++))
+gcov dominion.c --function-summaries | head -n$(echo $var) | tail -n2 >> unittestresults.out
+gcov dominion.c >> unittestresults.out
+echo -e "\n\n" >> unittestresults.out
+
+echo "============ COUNCIL ROOM TEST 4 ============" >> unittestresults.out
+./cardtest4 >> unittestresults.out
+var=$(gcov dominion.c --function-summaries | grep -n playCouncilRoom | cut -f1 -d:)
+((var++))
+gcov dominion.c --function-summaries | head -n$(echo $var) | tail -n2 >> unittestresults.out
+gcov dominion.c >> unittestresults.out
+echo -e "\n\n" >> unittestresults.out
