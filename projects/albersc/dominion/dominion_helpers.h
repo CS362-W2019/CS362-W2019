@@ -14,7 +14,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3,
 
 // New function prototypes for assignment 2
 int playSmithy(int currentPlayer, struct gameState *state, int handPos);
-int playAdventurer(int drawntreasure, struct gameState *state, int currentPlayer, int temphand[], int z);
+int playAdventurer(struct gameState *state, int currentPlayer, int temphand[], int z, int handPos);
 int playRemodel(int j, struct gameState *state, int currentPlayer, int choice1, int choice2, int handPos, int i);
 int playVillage(int currentPlayer, struct gameState *state, int handPos);
 int playMine(int j, struct gameState *state, int currentPlayer, int choice1, int choice2, int handPos, int i);
