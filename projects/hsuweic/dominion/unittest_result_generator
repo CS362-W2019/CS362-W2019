@@ -1,0 +1,33 @@
+#!/bin/bash
+
+echo "============ UNIT TEST 1 ============" >> unittestresults.out
+./unittest1 >> unittestresults.out
+var=$(gcov dominion.c --function-summaries | grep -n updateCoins | cut -f1 -d:)
+((var++))
+gcov dominion.c --function-summaries | head -n$(echo $var) | tail -n2 >> unittestresults.out
+gcov dominion.c >> unittestresults.out
+echo -e "\n\n" >> unittestresults.out
+
+echo "============ UNIT TEST 2 ============" >> unittestresults.out
+./unittest2 >> unittestresults.out
+var=$(gcov dominion.c --function-summaries | grep -n shuffle | cut -f1 -d:)
+((var++))
+gcov dominion.c --function-summaries | head -n$(echo $var) | tail -n2 >> unittestresults.out
+gcov dominion.c >> unittestresults.out
+echo -e "\n\n" >> unittestresults.out
+
+echo "============ UNIT TEST 3 ============" >> unittestresults.out
+./unittest3 >> unittestresults.out
+var=$(gcov dominion.c --function-summaries | grep -n newGame | cut -f1 -d:)
+((var++))
+gcov dominion.c --function-summaries | head -n$(echo $var) | tail -n2 >> unittestresults.out
+gcov dominion.c >> unittestresults.out
+echo -e "\n\n" >> unittestresults.out
+
+echo "============ UNIT TEST 4 ============" >> unittestresults.out
+./unittest4 >> unittestresults.out
+var=$(gcov dominion.c --function-summaries | grep -n fullDeckCount | cut -f1 -d:)
+((var++))
+gcov dominion.c --function-summaries | head -n$(echo $var) | tail -n2 >> unittestresults.out
+gcov dominion.c >> unittestresults.out
+echo -e "\n\n" >> unittestresults.out
