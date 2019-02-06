@@ -1,0 +1,1056 @@
+        -:    0:Source:c:/mingw/include/stdio.h
+        -:    0:Graph:player.gcno
+        -:    0:Data:-
+        -:    0:Runs:0
+        -:    0:Programs:0
+        -:    1:/*
+        -:    2: * stdio.h
+        -:    3: *
+        -:    4: * Definitions of types and prototypes of functions for operations on
+        -:    5: * standard input and standard output streams.
+        -:    6: *
+        -:    7: * $Id: stdio.h,v cfaff99b541a 2017/05/24 22:11:33 keithmarshall $
+        -:    8: *
+        -:    9: * Written by Colin Peters <colin@bird.fu.is.saga-u.ac.jp>
+        -:   10: * Copyright (C) 1997-2005, 2007-2010, 2014-2017, MinGW.org Project.
+        -:   11: *
+        -:   12: *
+        -:   13: * Permission is hereby granted, free of charge, to any person obtaining a
+        -:   14: * copy of this software and associated documentation files (the "Software"),
+        -:   15: * to deal in the Software without restriction, including without limitation
+        -:   16: * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+        -:   17: * and/or sell copies of the Software, and to permit persons to whom the
+        -:   18: * Software is furnished to do so, subject to the following conditions:
+        -:   19: *
+        -:   20: * The above copyright notice, this permission notice, and the following
+        -:   21: * disclaimer shall be included in all copies or substantial portions of
+        -:   22: * the Software.
+        -:   23: *
+        -:   24: * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+        -:   25: * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        -:   26: * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+        -:   27: * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        -:   28: * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+        -:   29: * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OF OR OTHER
+        -:   30: * DEALINGS IN THE SOFTWARE.
+        -:   31: *
+        -:   32: * NOTE: The file manipulation functions provided by Microsoft seem to
+        -:   33: * work with either slash (/) or backslash (\) as the directory separator;
+        -:   34: * (this is consistent with Microsoft's own documentation, on MSDN).
+        -:   35: *
+        -:   36: */
+        -:   37:#ifndef _STDIO_H
+        -:   38:#pragma GCC system_header
+        -:   39:
+        -:   40:/* When including <wchar.h>, some of the definitions and declarations
+        -:   41: * which are nominally provided in <stdio.h> must be duplicated.  Rather
+        -:   42: * than require duplicated maintenance effort, we provide for partial
+        -:   43: * inclusion of <stdio.h> by <wchar.h>; only when not included in
+        -:   44: * this partial fashion...
+        -:   45: */
+        -:   46:#ifndef __WCHAR_H_SOURCED__
+        -:   47: /*
+        -:   48:  * ...which is exclusive to <wchar.h>, do we assert the multiple
+        -:   49:  * inclusion guard for <stdio.h> itself.
+        -:   50:  */
+        -:   51:#define _STDIO_H
+        -:   52:#endif
+        -:   53:
+        -:   54:/* All the headers include this file.
+        -:   55: */
+        -:   56:#include <_mingw.h>
+        -:   57:
+        -:   58:#ifndef RC_INVOKED
+        -:   59:/* POSIX stipulates that the following set of types, (as identified by
+        -:   60: * __need_TYPENAME macros), shall be defined consistently with <stddef.h>;
+        -:   61: * by defining the appropriate __need_TYPENAME macros, we may selectively
+        -:   62: * obtain the required definitions by inclusion of <stddef.h>, WITHOUT
+        -:   63: * automatic exposure of any of its additional content.
+        -:   64: */
+        -:   65:#define __need_NULL
+        -:   66:#define __need_size_t
+        -:   67:#define __need_wchar_t
+        -:   68:#define __need_wint_t
+        -:   69:#include <stddef.h>
+        -:   70:
+        -:   71:#if _POSIX_C_SOURCE >= 200809L
+        -:   72: /* Similarly, for types defined in <sys/types.h>, (which are explicitly
+        -:   73:  * dependent on the POSIX.1-2008 feature test)...
+        -:   74:  */
+        -:   75:# define __need_off_t
+        -:   76:# define __need_ssize_t
+        -:   77:#endif
+        -:   78:#if !(defined __STRICT_ANSI__ || defined (__NO_MINGW_LFS)) \
+        -:   79: && defined (__MSVCRT__)
+        -:   80: /* ...while this is required to support our fseeko64() and ftello64()
+        -:   81:  * implementations, (neither of which is in any way standardized)...
+        -:   82:  */
+        -:   83:# define __need___off64_t
+        -:   84:#endif
+        -:   85:/* It is sufficient to test for just one define from each of the two
+        -:   86: * preceding groups...
+        -:   87: */
+        -:   88:#if defined __need_off_t || defined __need___off64_t
+        -:   89: /* ...to identify a requirement for selective inclusion of one or more
+        -:   90:  * of these type definitions from "sys/types.h"; (note that we use the
+        -:   91:  * #include "..." form here, to ensure that we get the correct header
+        -:   92:  * file, relative to the location of this <stdio.h>).
+        -:   93:  */
+        -:   94:# include "sys/types.h"
+        -:   95:#endif
+        -:   96:
+        -:   97:#ifndef __VALIST
+        -:   98: /* Also similarly, for the va_list type, defined in "stdarg.h"
+        -:   99:  */
+        -:  100:# if defined __GNUC__ && __GNUC__ >= 3
+        -:  101:#  define __need___va_list
+        -:  102:#  include "stdarg.h"
+        -:  103:#  define __VALIST __builtin_va_list
+        -:  104:# else
+        -:  105:#  define __VALIST char *
+        -:  106:# endif
+        -:  107:#endif
+        -:  108:#endif	/* ! RC_INVOKED */
+        -:  109:
+        -:  110:#ifdef _STDIO_H
+        -:  111:/* Flags for the iobuf structure
+        -:  112: */
+        -:  113:#define _IOREAD 	1	/* currently reading */
+        -:  114:#define _IOWRT		2	/* currently writing */
+        -:  115:#define _IORW	   0x0080	/* opened as "r+w" */
+        -:  116:
+        -:  117:/* The three standard file pointers provided by the run time library.
+        -:  118: * NOTE: These will go to the bit-bucket silently in GUI applications!
+        -:  119: */
+        -:  120:#define STDIN_FILENO	0
+        -:  121:#define STDOUT_FILENO	1
+        -:  122:#define STDERR_FILENO	2
+        -:  123:
+        -:  124:/* Returned by various functions on end of file condition or error.
+        -:  125: */
+        -:  126:#define EOF	      (-1)
+        -:  127:
+        -:  128:#endif	/* _STDIO_H */
+        -:  129:
+        -:  130:/* The maximum length of a file name.  It may be better to use the Windows'
+        -:  131: * GetVolumeInformation() function in preference to this constant, but hey,
+        -:  132: * this works!  Note that <io.h> also defines it, but we don't guard it, so
+        -:  133: * that the compiler has a chance to catch inconsistencies.
+        -:  134: *
+        -:  135: * FIXME: Right now, we define this unconditionally for both full <stdio.h>
+        -:  136: * inclusion, and for partial inclusion on behalf of <wchar.h>, (which needs
+        -:  137: * it for some non-ANSI structure declarations).  The conditions under which
+        -:  138: * <wchar.h> needs this require review, because defining it as a consequence
+        -:  139: * of including <wchar.h> alone may violate strict ANSI conformity.
+        -:  140: */
+        -:  141:#define FILENAME_MAX  (260)
+        -:  142:
+        -:  143:#ifdef _STDIO_H
+        -:  144:/* The maximum number of files that may be open at once. I have set this to
+        -:  145: * a conservative number. The actual value may be higher.
+        -:  146: */
+        -:  147:#define FOPEN_MAX      (20)
+        -:  148:
+        -:  149:/* After creating this many names, tmpnam and tmpfile return NULL
+        -:  150: */
+        -:  151:#define TMP_MAX      32767
+        -:  152:
+        -:  153:/* Tmpnam, tmpfile and, sometimes, _tempnam try to create
+        -:  154: * temp files in the root directory of the current drive
+        -:  155: * (not in pwd, as suggested by some older MS doc's).
+        -:  156: * Redefining these macros does not effect the CRT functions.
+        -:  157: */
+        -:  158:#define _P_tmpdir   "\\"
+        -:  159:#ifndef __STRICT_ANSI__
+        -:  160:#define P_tmpdir _P_tmpdir
+        -:  161:#endif
+        -:  162:#define _wP_tmpdir  L"\\"
+        -:  163:
+        -:  164:/* The maximum size of name (including NUL) that will be put in the user
+        -:  165: * supplied buffer caName for tmpnam.
+        -:  166: * Inferred from the size of the static buffer returned by tmpnam
+        -:  167: * when passed a NULL argument. May actually be smaller.
+        -:  168: */
+        -:  169:#define L_tmpnam (16)
+        -:  170:
+        -:  171:#define _IOFBF		0x0000	/* full buffered */
+        -:  172:#define _IOLBF		0x0040	/* line buffered */
+        -:  173:#define _IONBF		0x0004	/* not buffered */
+        -:  174:
+        -:  175:#define _IOMYBUF	0x0008	/* stdio malloc()'d buffer */
+        -:  176:#define _IOEOF		0x0010	/* EOF reached on read */
+        -:  177:#define _IOERR		0x0020	/* I/O error from system */
+        -:  178:#define _IOSTRG 	0x0040	/* Strange or no file descriptor */
+        -:  179:#ifdef _POSIX_SOURCE
+        -:  180:# define _IOAPPEND	0x0200
+        -:  181:#endif
+        -:  182:
+        -:  183:/* The buffer size as used by setbuf such that it is equivalent to
+        -:  184: * (void) setvbuf(fileSetBuffer, caBuffer, _IOFBF, BUFSIZ).
+        -:  185: */
+        -:  186:#define BUFSIZ		   512
+        -:  187:
+        -:  188:/* Constants for nOrigin indicating the position relative to which fseek
+        -:  189: * sets the file position.  Defined unconditionally since ISO and POSIX
+        -:  190: * say they are defined here.
+        -:  191: */
+        -:  192:#define SEEK_SET	     0
+        -:  193:#define SEEK_CUR	     1
+        -:  194:#define SEEK_END	     2
+        -:  195:
+        -:  196:#endif	/* _STDIO_H */
+        -:  197:
+        -:  198:#ifndef RC_INVOKED
+        -:  199:#if ! (defined _STDIO_H && defined _WCHAR_H)
+        -:  200:/* The structure underlying the FILE type; this should be defined when
+        -:  201: * including either <stdio.h> or <wchar.h>.  If both header include guards
+        -:  202: * are now in place, then we must currently be including <stdio.h> in its
+        -:  203: * own right, having already processed this block during a prior partial
+        -:  204: * inclusion by <wchar.h>; there is no need to process it a second time.
+        -:  205: *
+        -:  206: * Some believe that nobody in their right mind should make use of the
+        -:  207: * internals of this structure. Provided by Pedro A. Aranda Gutiirrez
+        -:  208: * <paag@tid.es>.
+        -:  209: */
+        -:  210:typedef struct _iobuf
+        -:  211:{
+        -:  212:  char	*_ptr;
+        -:  213:  int	 _cnt;
+        -:  214:  char	*_base;
+        -:  215:  int	 _flag;
+        -:  216:  int	 _file;
+        -:  217:  int	 _charbuf;
+        -:  218:  int	 _bufsiz;
+        -:  219:  char	*_tmpfname;
+        -:  220:} FILE;
+        -:  221:
+        -:  222:#endif  /* ! (_STDIO_H && _WCHAR_H) */
+        -:  223:#ifdef _STDIO_H
+        -:  224:/* Content to be exposed only when including <stdio.h> in its own right;
+        -:  225: * these will not be exposed when __WCHAR_H_SOURCE__ is defined, as will
+        -:  226: * be the case when <stdio.h> is included indirectly, by <wchar.h>
+        -:  227: *
+        -:  228: *
+        -:  229: * The standard file handles
+        -:  230: */
+        -:  231:#ifndef __DECLSPEC_SUPPORTED
+        -:  232:
+        -:  233:extern FILE (*_imp___iob)[];	/* A pointer to an array of FILE */
+        -:  234:
+        -:  235:#define _iob (*_imp___iob)	/* An array of FILE */
+        -:  236:
+        -:  237:#else /* __DECLSPEC_SUPPORTED */
+        -:  238:
+        -:  239:__MINGW_IMPORT FILE _iob[];	/* An array of FILE imported from DLL. */
+        -:  240:
+        -:  241:#endif /* __DECLSPEC_SUPPORTED */
+        -:  242:
+        -:  243:#define stdin	(&_iob[STDIN_FILENO])
+        -:  244:#define stdout	(&_iob[STDOUT_FILENO])
+        -:  245:#define stderr	(&_iob[STDERR_FILENO])
+        -:  246:
+        -:  247:/* Need to close the current _STDIO_H specific block here...
+        -:  248: */
+        -:  249:#endif
+        -:  250:/* ...because, we need this regardless of the inclusion mode...
+        -:  251: */
+        -:  252:_BEGIN_C_DECLS
+        -:  253:
+        -:  254:#ifdef _STDIO_H
+        -:  255:/* ...then revert to _STDIO_H specific mode, to declare...
+        -:  256: *
+        -:  257: *
+        -:  258: * File Operations
+        -:  259: */
+        -:  260:_CRTIMP __cdecl __MINGW_NOTHROW  FILE * fopen (const char *, const char *);
+        -:  261:_CRTIMP __cdecl __MINGW_NOTHROW  FILE * freopen (const char *, const char *, FILE *);
+        -:  262:_CRTIMP __cdecl __MINGW_NOTHROW  int    fflush (FILE *);
+        -:  263:_CRTIMP __cdecl __MINGW_NOTHROW  int    fclose (FILE *);
+        -:  264:
+        -:  265:/* Note: Microsoft also declares remove & rename (but not their wide char
+        -:  266: * variants) in <io.h>; since duplicate prototypes are acceptable, provided
+        -:  267: * they are consistent, we simply declare them here anyway, while allowing
+        -:  268: * the compiler to check consistency as appropriate.
+        -:  269: */
+        -:  270:_CRTIMP __cdecl __MINGW_NOTHROW  int    remove (const char *);
+        -:  271:_CRTIMP __cdecl __MINGW_NOTHROW  int    rename (const char *, const char *);
+        -:  272:_CRTIMP __cdecl __MINGW_NOTHROW  FILE * tmpfile (void);
+        -:  273:_CRTIMP __cdecl __MINGW_NOTHROW  char * tmpnam (char *);
+        -:  274:
+        -:  275:#ifndef __STRICT_ANSI__
+        -:  276:_CRTIMP __cdecl __MINGW_NOTHROW  char *_tempnam (const char *, const char *);
+        -:  277:_CRTIMP __cdecl __MINGW_NOTHROW  int   _rmtmp (void);
+        -:  278:_CRTIMP __cdecl __MINGW_NOTHROW  int   _unlink (const char *);
+        -:  279:
+        -:  280:#if __MSVCRT_VERSION__>=__MSVCR80_DLL
+        -:  281:/* The following pair of non-ANSI functions require a non-free version of
+        -:  282: * the Microsoft runtime; neither is provided by any MSVCRT.DLL variant.
+        -:  283: */
+        -:  284:_CRTIMP __cdecl __MINGW_NOTHROW  void  _lock_file(FILE *);
+        -:  285:_CRTIMP __cdecl __MINGW_NOTHROW  void  _unlock_file(FILE *);
+        -:  286:#endif
+        -:  287:
+        -:  288:#ifndef NO_OLDNAMES
+        -:  289:_CRTIMP __cdecl __MINGW_NOTHROW  char * tempnam (const char *, const char *);
+        -:  290:_CRTIMP __cdecl __MINGW_NOTHROW  int    rmtmp (void);
+        -:  291:_CRTIMP __cdecl __MINGW_NOTHROW  int    unlink (const char *);
+        -:  292:#endif
+        -:  293:#endif /* __STRICT_ANSI__ */
+        -:  294:
+        -:  295:_CRTIMP __cdecl __MINGW_NOTHROW  int    setvbuf (FILE *, char *, int, size_t);
+        -:  296:_CRTIMP __cdecl __MINGW_NOTHROW  void   setbuf (FILE *, char *);
+        -:  297:
+        -:  298:/* Formatted Output
+        -:  299: *
+        -:  300: * MSVCRT implementations are not ANSI C99 conformant...
+        -:  301: * we offer conforming alternatives from libmingwex.a
+        -:  302: */
+        -:  303:#undef  __mingw_stdio_redirect__
+        -:  304:#define __mingw_stdio_redirect__(F) __cdecl __MINGW_NOTHROW __Wformat(F)
+        -:  305:#define __Wformat_mingw_printf(F,A) __attribute__((__format__(__mingw_printf__,F,A)))
+        -:  306:
+        -:  307:#if __GNUC__ >= 6
+        -:  308:/* From GCC-6 onwards, we will provide customized -Wformat
+        -:  309: * handling, via our own mingw_printf format category...
+        -:  310: */
+        -:  311:#define __Wformat(F)		__Wformat_##F __mingw_##F
+        -:  312:
+        -:  313:#else	/* __GNUC__ < 6 */
+        -:  314:/* ...whereas, for earlier GCC, we preserve the status quo,
+        -:  315: * offering no -Wformat checking for those functions which
+        -:  316: * replace the MSVCRT.DLL versions...
+        -:  317: */
+        -:  318:#define __Wformat(F)		__mingw_##F
+        -:  319:/*
+        -:  320: * ...while degrading to gnu_printf checking for snprintf()
+        -:  321: * and vsnprintf(), (which are ALWAYS MinGW.org variants).
+        -:  322: */
+        -:  323:#define __mingw_printf__	__gnu_printf__
+        -:  324:#endif
+        -:  325:
+        -:  326:/* The following convenience macros specify the appropriate
+        -:  327: * -Wformat checking for MSVCRT.DLL replacement functions...
+        -:  328: */
+        -:  329:#define __Wformat_printf	__Wformat_mingw_printf(1,2)
+        -:  330:#define __Wformat_fprintf	__Wformat_mingw_printf(2,3)
+        -:  331:#define __Wformat_sprintf	__Wformat_mingw_printf(2,3)
+        -:  332:#define __Wformat_vprintf	__Wformat_mingw_printf(1,0)
+        -:  333:#define __Wformat_vfprintf	__Wformat_mingw_printf(2,0)
+        -:  334:#define __Wformat_vsprintf	__Wformat_mingw_printf(2,0)
+        -:  335:/*
+        -:  336: * ...while this pair are specific to the two MinGW.org
+        -:  337: * only functions.
+        -:  338: */
+        -:  339:#define __Wformat_snprintf	__Wformat_mingw_printf(3,4)
+        -:  340:#define __Wformat_vsnprintf	__Wformat_mingw_printf(3,0)
+        -:  341:
+        -:  342:extern int __mingw_stdio_redirect__(fprintf)(FILE*, const char*, ...);
+        -:  343:extern int __mingw_stdio_redirect__(printf)(const char*, ...);
+        -:  344:extern int __mingw_stdio_redirect__(sprintf)(char*, const char*, ...);
+        -:  345:extern int __mingw_stdio_redirect__(snprintf)(char*, size_t, const char*, ...);
+        -:  346:extern int __mingw_stdio_redirect__(vfprintf)(FILE*, const char*, __VALIST);
+        -:  347:extern int __mingw_stdio_redirect__(vprintf)(const char*, __VALIST);
+        -:  348:extern int __mingw_stdio_redirect__(vsprintf)(char*, const char*, __VALIST);
+        -:  349:extern int __mingw_stdio_redirect__(vsnprintf)(char*, size_t, const char*, __VALIST);
+        -:  350:
+        -:  351:/* When using these C99 conforming alternatives, we may wish to support
+        -:  352: * some of Microsoft's quirky formatting options, even when they violate
+        -:  353: * strict C99 conformance.
+        -:  354: */
+        -:  355:#define _MSVC_PRINTF_QUIRKS		0x0100U
+        -:  356:#define _QUERY_MSVC_PRINTF_QUIRKS	~0U, 0U
+        -:  357:#define _DISABLE_MSVC_PRINTF_QUIRKS	~_MSVC_PRINTF_QUIRKS, 0U
+        -:  358:#define _ENABLE_MSVC_PRINTF_QUIRKS	~0U, _MSVC_PRINTF_QUIRKS
+        -:  359:
+        -:  360:/* Those quirks which conflict with ANSI C99 specified behaviour are
+        -:  361: * disabled by default; use the following function, like this:
+        -:  362: *
+        -:  363: *   _mingw_output_format_control( _ENABLE_MSVC_PRINTF_QUIRKS );
+        -:  364: *
+        -:  365: * to enable them, like this:
+        -:  366: *
+        -:  367: *   state = _mingw_output_format_control( _QUERY_MSVC_PRINTF_QUIRKS )
+        -:  368: *		& _MSVC_PRINTF_QUIRKS;
+        -:  369: *
+        -:  370: * to ascertain the currently active enabled state, or like this:
+        -:  371: *
+        -:  372: *   _mingw_output_format_control( _DISABLE_MSVC_PRINTF_QUIRKS );
+        -:  373: *
+        -:  374: * to disable them again.
+        -:  375: */
+        -:  376:extern unsigned int _mingw_output_format_control( unsigned int, unsigned int );
+        -:  377:
+        -:  378:#if __USE_MINGW_ANSI_STDIO
+        -:  379:/* User has expressed a preference for C99 conformance...
+        -:  380: */
+        -:  381:# undef __mingw_stdio_redirect__
+        -:  382:# ifdef __cplusplus
+        -:  383:/* For C++ we use inline implementations, to avoid interference
+        -:  384: * with namespace qualification, which may result from using #defines.
+        -:  385: */
+        -:  386:#  define __mingw_stdio_redirect__  inline __cdecl __MINGW_NOTHROW
+        -:  387:
+        -:  388:# elif defined __GNUC__
+        -:  389:/* FIXME: Is there any GCC version prerequisite here?
+        -:  390: *
+        -:  391: * We also prefer inline implementations for C, when we can be confident
+        -:  392: * that the GNU specific __inline__ mechanism is supported.
+        -:  393: */
+        -:  394:#  define __mingw_stdio_redirect__  static __inline__ __cdecl __MINGW_NOTHROW
+        -:  395:
+        -:  396:# else
+        -:  397:/* Can't use inlines; fall back on module local static stubs.
+        -:  398: */
+        -:  399:#  define __mingw_stdio_redirect__  static __cdecl __MINGW_NOTHROW
+        -:  400:# endif
+        -:  401:
+        -:  402:__mingw_stdio_redirect__
+        -:  403:int fprintf (FILE *__stream, const char *__format, ...)
+        -:  404:{
+        -:  405:  register int __retval;
+        -:  406:  __builtin_va_list __local_argv; __builtin_va_start( __local_argv, __format );
+        -:  407:  __retval = __mingw_vfprintf( __stream, __format, __local_argv );
+        -:  408:  __builtin_va_end( __local_argv );
+        -:  409:  return __retval;
+        -:  410:}
+        -:  411:
+        -:  412:__mingw_stdio_redirect__
+    #####:  413:int printf (const char *__format, ...)
+        -:  414:{
+        -:  415:  register int __retval;
+    #####:  416:  __builtin_va_list __local_argv; __builtin_va_start( __local_argv, __format );
+    #####:  417:  __retval = __mingw_vprintf( __format, __local_argv );
+    #####:  418:  __builtin_va_end( __local_argv );
+    #####:  419:  return __retval;
+        -:  420:}
+        -:  421:
+        -:  422:__mingw_stdio_redirect__
+        -:  423:int sprintf (char *__stream, const char *__format, ...)
+        -:  424:{
+        -:  425:  register int __retval;
+        -:  426:  __builtin_va_list __local_argv; __builtin_va_start( __local_argv, __format );
+        -:  427:  __retval = __mingw_vsprintf( __stream, __format, __local_argv );
+        -:  428:  __builtin_va_end( __local_argv );
+        -:  429:  return __retval;
+        -:  430:}
+        -:  431:
+        -:  432:__mingw_stdio_redirect__
+        -:  433:int vfprintf (FILE *__stream, const char *__format, __VALIST __local_argv)
+        -:  434:{
+        -:  435:  return __mingw_vfprintf( __stream, __format, __local_argv );
+        -:  436:}
+        -:  437:
+        -:  438:__mingw_stdio_redirect__
+        -:  439:int vprintf (const char *__format, __VALIST __local_argv)
+        -:  440:{
+        -:  441:  return __mingw_vprintf( __format, __local_argv );
+        -:  442:}
+        -:  443:
+        -:  444:__mingw_stdio_redirect__
+        -:  445:int vsprintf (char *__stream, const char *__format, __VALIST __local_argv)
+        -:  446:{
+        -:  447:  return __mingw_vsprintf( __stream, __format, __local_argv );
+        -:  448:}
+        -:  449:
+        -:  450:#else	/* !__USE_MINGW_ANSI_STDIO */
+        -:  451:/* Default configuration: simply direct all calls to MSVCRT...
+        -:  452: */
+        -:  453:_CRTIMP __cdecl __MINGW_NOTHROW  int fprintf (FILE *, const char *, ...);
+        -:  454:_CRTIMP __cdecl __MINGW_NOTHROW  int printf (const char *, ...);
+        -:  455:_CRTIMP __cdecl __MINGW_NOTHROW  int sprintf (char *, const char *, ...);
+        -:  456:_CRTIMP __cdecl __MINGW_NOTHROW  int vfprintf (FILE *, const char *, __VALIST);
+        -:  457:_CRTIMP __cdecl __MINGW_NOTHROW  int vprintf (const char *, __VALIST);
+        -:  458:_CRTIMP __cdecl __MINGW_NOTHROW  int vsprintf (char *, const char *, __VALIST);
+        -:  459:
+        -:  460:#endif
+        -:  461:/* Regardless of user preference, always offer these alternative
+        -:  462: * entry points, for direct access to the MSVCRT implementations,
+        -:  463: * with ms_printf -Wformat checking in each case.
+        -:  464: */
+        -:  465:#undef  __Wformat
+        -:  466:#undef  __mingw_stdio_redirect__
+        -:  467:#define __mingw_stdio_redirect__(F) __cdecl __MINGW_NOTHROW __Wformat(F)
+        -:  468:#define __Wformat_msvcrt_printf(F,A) __attribute__((__format__(__ms_printf__,F,A)))
+        -:  469:#define __Wformat(F) __Wformat_ms_##F __msvcrt_##F
+        -:  470:
+        -:  471:#define __Wformat_ms_printf	__Wformat_msvcrt_printf(1,2)
+        -:  472:#define __Wformat_ms_fprintf	__Wformat_msvcrt_printf(2,3)
+        -:  473:#define __Wformat_ms_sprintf	__Wformat_msvcrt_printf(2,3)
+        -:  474:#define __Wformat_ms_vprintf	__Wformat_msvcrt_printf(1,0)
+        -:  475:#define __Wformat_ms_vfprintf	__Wformat_msvcrt_printf(2,0)
+        -:  476:#define __Wformat_ms_vsprintf	__Wformat_msvcrt_printf(2,0)
+        -:  477:
+        -:  478:_CRTIMP int __mingw_stdio_redirect__(fprintf)(FILE *, const char *, ...);
+        -:  479:_CRTIMP int __mingw_stdio_redirect__(printf)(const char *, ...);
+        -:  480:_CRTIMP int __mingw_stdio_redirect__(sprintf)(char *, const char *, ...);
+        -:  481:_CRTIMP int __mingw_stdio_redirect__(vfprintf)(FILE *, const char *, __VALIST);
+        -:  482:_CRTIMP int __mingw_stdio_redirect__(vprintf)(const char *, __VALIST);
+        -:  483:_CRTIMP int __mingw_stdio_redirect__(vsprintf)(char *, const char *, __VALIST);
+        -:  484:
+        -:  485:#undef  __mingw_stdio_redirect__
+        -:  486:#undef  __Wformat
+        -:  487:
+        -:  488:/* The following three ALWAYS refer to the MSVCRT implementations...
+        -:  489: */
+        -:  490:_CRTIMP __cdecl __MINGW_NOTHROW  int _snprintf (char *, size_t, const char *, ...);
+        -:  491:_CRTIMP __cdecl __MINGW_NOTHROW  int _vsnprintf (char *, size_t, const char *, __VALIST);
+        -:  492:_CRTIMP __cdecl __MINGW_NOTHROW  int _vscprintf (const char *, __VALIST);
+        -:  493:
+        -:  494:#ifdef _ISOC99_SOURCE
+        -:  495:/* Microsoft does not provide implementations for the following,
+        -:  496: * which are required by C99.  Note in particular that Microsoft's
+        -:  497: * corresponding implementations of _snprintf() and _vsnprintf() are
+        -:  498: * NOT compatible with C99, but the following are; if you want the
+        -:  499: * MSVCRT behaviour, you MUST use the Microsoft "uglified" names.
+        -:  500: */
+        -:  501:__cdecl __MINGW_NOTHROW __Wformat_snprintf
+        -:  502:int snprintf (char *, size_t, const char *, ...);
+        -:  503:
+        -:  504:__cdecl __MINGW_NOTHROW __Wformat_vsnprintf
+        -:  505:int vsnprintf (char *, size_t, const char *, __VALIST);
+        -:  506:
+        -:  507:__cdecl __MINGW_NOTHROW
+        -:  508:int vscanf (const char * __restrict__, __VALIST);
+        -:  509:
+        -:  510:__cdecl __MINGW_NOTHROW
+        -:  511:int vfscanf (FILE * __restrict__, const char * __restrict__, __VALIST);
+        -:  512:
+        -:  513:__cdecl __MINGW_NOTHROW
+        -:  514:int vsscanf (const char * __restrict__, const char * __restrict__, __VALIST);
+        -:  515:
+        -:  516:#endif  /* _ISOC99_SOURCE */
+        -:  517:#endif	/* <stdio.h> included in its own right */
+        -:  518:
+        -:  519:#if __MSVCRT_VERSION__ >= __MSVCR80_DLL || _WIN32_WINNT >= _WIN32_WINNT_VISTA
+        -:  520:/*
+        -:  521: * In MSVCR80.DLL, (and its descendants), Microsoft introduced variants
+        -:  522: * of the printf() functions, with names qualified by an underscore prefix
+        -:  523: * and "_p" or "_p_l" suffixes; implemented in Microsoft's typically crass,
+        -:  524: * non-standard, and non-portable fashion, these provide support for access
+        -:  525: * to printf() arguments in random order, as was standardised by POSIX as a
+        -:  526: * feature of the optional Extended Systems Interface (XSI) specification,
+        -:  527: * and is now required for conformity with the POSIX.1-2008 base standard.
+        -:  528: * Although these additional Microsoft functions were subsequently added
+        -:  529: * to MSVCRT.DLL, from Windows-Vista onward, and they are prototyped here,
+        -:  530: * MinGW applications are strenuously encouraged to avoid using them; a
+        -:  531: * much better alternative is to "#define _XOPEN_SOURCE 700" before any
+        -:  532: * system header is included, then use POSIX standard printf() functions
+        -:  533: * instead; this is both portable to many non-Windows platforms, and it
+        -:  534: * offers better compatibility with earlier Windows versions.
+        -:  535: */
+        -:  536:#ifndef __have_typedef_locale_t
+        -:  537:/* Note that some of the following require the opaque locale_t data type,
+        -:  538: * which we may obtain, by selective inclusion, from <locale.h>
+        -:  539: */
+        -:  540:#define __need_locale_t
+        -:  541:#include <locale.h>
+        -:  542:#endif
+        -:  543:
+        -:  544:#ifdef _STDIO_H
+        -:  545:/* The following are to be declared only when <stdio.h> is explicitly
+        -:  546: * included; the first six are NOT dependent on locale_t...
+        -:  547: */
+        -:  548:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  549:int _printf_p (const char *, ...);
+        -:  550:
+        -:  551:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  552:int _fprintf_p (FILE *, const char *, ...);
+        -:  553:
+        -:  554:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  555:int _sprintf_p (char *, size_t, const char *, ...);
+        -:  556:
+        -:  557:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  558:int _vprintf_p (const char *, __VALIST);
+        -:  559:
+        -:  560:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  561:int _vfprintf_p (FILE *, const char *, __VALIST);
+        -:  562:
+        -:  563:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  564:int _vsprintf_p (char *, size_t, const char *, __VALIST);
+        -:  565:
+        -:  566:/* ...whereas the following six DO depend on locale_t.
+        -:  567: *
+        -:  568: * CAVEAT: unless you are linking with non-free MSVCR80.DLL, or one
+        -:  569: * of its later derivatives, good luck trying to use these; see the
+        -:  570: * explanation in <locale.t>, as to why you may be unable to create,
+        -:  571: * or otherwise acquire a reference to, a locale_t object.
+        -:  572: */
+        -:  573:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  574:int _printf_p_l (const char *, locale_t, ...);
+        -:  575:
+        -:  576:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  577:int _fprintf_p_l (FILE *, const char *, locale_t, ...);
+        -:  578:
+        -:  579:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  580:int _sprintf_p_l (char *, size_t, const char *, locale_t, ...);
+        -:  581:
+        -:  582:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  583:int _vprintf_p_l (const char *, locale_t, __VALIST);
+        -:  584:
+        -:  585:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  586:int _vfprintf_p_l (FILE *, const char *, locale_t, __VALIST);
+        -:  587:
+        -:  588:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  589:int _vsprintf_p_l (char *, size_t, const char *, locale_t, __VALIST);
+        -:  590:
+        -:  591:#endif	/* <stdio.h> included in its own right */
+        -:  592:#endif	/* MSVCR80.DLL and descendants, or MSVCRT.DLL since Vista */
+        -:  593:
+        -:  594:#if ! (defined _STDIO_H && defined _WCHAR_H)
+        -:  595:#if __MSVCRT_VERSION__ >= __MSVCR80_DLL || _WIN32_WINNT >= _WIN32_WINNT_VISTA
+        -:  596:/*
+        -:  597: * Wide character variants of the foregoing "positional parameter" printf()
+        -:  598: * functions; MSDN says that these should be declared when either <stdio.h>, or
+        -:  599: * <wchar.h> is included, so we make them selectively available to <wchar.h>,
+        -:  600: * but, just as in the foregoing, we advise against their use.
+        -:  601: */
+        -:  602:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  603:int _wprintf_p (const wchar_t *, ...);
+        -:  604:
+        -:  605:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  606:int _fwprintf_p (FILE *, const wchar_t *, ...);
+        -:  607:
+        -:  608:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  609:int _swprintf_p (wchar_t *, size_t, const wchar_t *, ...);
+        -:  610:
+        -:  611:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  612:int _vwprintf_p (const wchar_t *, __VALIST);
+        -:  613:
+        -:  614:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  615:int _vfwprintf_p (FILE *, const wchar_t *, __VALIST);
+        -:  616:
+        -:  617:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  618:int _vswprintf_p (wchar_t *, size_t, const wchar_t *, __VALIST);
+        -:  619:
+        -:  620:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  621:int _wprintf_p_l (const wchar_t *, locale_t, ...);
+        -:  622:
+        -:  623:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  624:int _fwprintf_p_l (FILE *, const wchar_t *, locale_t, ...);
+        -:  625:
+        -:  626:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  627:int _swprintf_p_l (wchar_t *, size_t, const wchar_t *, locale_t, ...);
+        -:  628:
+        -:  629:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  630:int _vwprintf_p_l (const wchar_t *, locale_t, __VALIST);
+        -:  631:
+        -:  632:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  633:int _vfwprintf_p_l (FILE *, const wchar_t *, locale_t, __VALIST);
+        -:  634:
+        -:  635:_CRTIMP __cdecl __MINGW_NOTHROW
+        -:  636:int _vswprintf_p_l (wchar_t *, size_t, const wchar_t *, locale_t, __VALIST);
+        -:  637:
+        -:  638:#endif	/* MSVCR80.DLL and descendants, or MSVCRT.DLL since Vista */
+        -:  639:#endif	/* ! (defined _STDIO_H && defined _WCHAR_H) */
+        -:  640:#ifdef _STDIO_H
+        -:  641:/* Once again, back to <stdio.h> specific declarations.
+        -:  642: */
+        -:  643:#if _POSIX_C_SOURCE >= 200809L
+        -:  644:/* POSIX standard IEEE 1003.1-2008 added getdelim() and getline()
+        -:  645: */
+        -:  646:__cdecl __MINGW_NOTHROW ssize_t
+        -:  647:getdelim (char ** __restrict__, size_t * __restrict__, int, FILE * __restrict__);
+        -:  648:
+        -:  649:__cdecl __MINGW_NOTHROW ssize_t
+        -:  650:getline (char ** __restrict__, size_t * __restrict__, FILE * __restrict__);
+        -:  651:
+        -:  652:#ifndef __NO_INLINE__
+        -:  653:/* getline() is a trivial specialization of getdelim(), which may
+        -:  654: * be readily expressed by inline expansion.
+        -:  655: */
+        -:  656:__CRT_ALIAS __LIBIMPL__(( FUNCTION = getline ))
+        -:  657:__cdecl __MINGW_NOTHROW ssize_t getline
+        -:  658:( char **__restrict__ __l, size_t *__restrict__ __n, FILE *__restrict__ __s )
+        -:  659:{ return getdelim( __l, __n, '\n', __s ); }
+        -:  660:
+        -:  661:#endif  /* !__NO_INLINE__ */
+        -:  662:#endif  /* POSIX.1-2008 */
+        -:  663:
+        -:  664:/* Formatted Input
+        -:  665: */
+        -:  666:_CRTIMP __cdecl __MINGW_NOTHROW  int    fscanf (FILE *, const char *, ...);
+        -:  667:_CRTIMP __cdecl __MINGW_NOTHROW  int    scanf (const char *, ...);
+        -:  668:_CRTIMP __cdecl __MINGW_NOTHROW  int    sscanf (const char *, const char *, ...);
+        -:  669:
+        -:  670:/* Character Input and Output Functions
+        -:  671: */
+        -:  672:_CRTIMP __cdecl __MINGW_NOTHROW  int    fgetc (FILE *);
+        -:  673:_CRTIMP __cdecl __MINGW_NOTHROW  char * fgets (char *, int, FILE *);
+        -:  674:_CRTIMP __cdecl __MINGW_NOTHROW  int    fputc (int, FILE *);
+        -:  675:_CRTIMP __cdecl __MINGW_NOTHROW  int    fputs (const char *, FILE *);
+        -:  676:_CRTIMP __cdecl __MINGW_NOTHROW  char * gets (char *);
+        -:  677:_CRTIMP __cdecl __MINGW_NOTHROW  int    puts (const char *);
+        -:  678:_CRTIMP __cdecl __MINGW_NOTHROW  int    ungetc (int, FILE *);
+        -:  679:
+        -:  680:/* Traditionally, getc and putc are defined as macros. but the
+        -:  681: * standard doesn't say that they must be macros.  We use inline
+        -:  682: * functions here to allow the fast versions to be used in C++
+        -:  683: * with namespace qualification, eg., ::getc.
+        -:  684: *
+        -:  685: * NOTE: _filbuf and _flsbuf  are not thread-safe.
+        -:  686: */
+        -:  687:_CRTIMP __cdecl __MINGW_NOTHROW  int   _filbuf (FILE *);
+        -:  688:_CRTIMP __cdecl __MINGW_NOTHROW  int   _flsbuf (int, FILE *);
+        -:  689:
+        -:  690:#if !defined _MT
+        -:  691:
+        -:  692:__CRT_INLINE __cdecl __MINGW_NOTHROW  int getc (FILE *);
+        -:  693:__CRT_INLINE __cdecl __MINGW_NOTHROW  int getc (FILE * __F)
+        -:  694:{
+        -:  695:  return (--__F->_cnt >= 0)
+        -:  696:    ?  (int) (unsigned char) *__F->_ptr++
+        -:  697:    : _filbuf (__F);
+        -:  698:}
+        -:  699:
+        -:  700:__CRT_INLINE __cdecl __MINGW_NOTHROW  int putc (int, FILE *);
+        -:  701:__CRT_INLINE __cdecl __MINGW_NOTHROW  int putc (int __c, FILE * __F)
+        -:  702:{
+        -:  703:  return (--__F->_cnt >= 0)
+        -:  704:    ?  (int) (unsigned char) (*__F->_ptr++ = (char)__c)
+        -:  705:    :  _flsbuf (__c, __F);
+        -:  706:}
+        -:  707:
+        -:  708:__CRT_INLINE __cdecl __MINGW_NOTHROW  int getchar (void);
+        -:  709:__CRT_INLINE __cdecl __MINGW_NOTHROW  int getchar (void)
+        -:  710:{
+        -:  711:  return (--stdin->_cnt >= 0)
+        -:  712:    ?  (int) (unsigned char) *stdin->_ptr++
+        -:  713:    : _filbuf (stdin);
+        -:  714:}
+        -:  715:
+        -:  716:__CRT_INLINE __cdecl __MINGW_NOTHROW  int putchar(int);
+        -:  717:__CRT_INLINE __cdecl __MINGW_NOTHROW  int putchar(int __c)
+        -:  718:{
+        -:  719:  return (--stdout->_cnt >= 0)
+        -:  720:    ?  (int) (unsigned char) (*stdout->_ptr++ = (char)__c)
+        -:  721:    :  _flsbuf (__c, stdout);}
+        -:  722:
+        -:  723:#else  /* Use library functions.  */
+        -:  724:
+        -:  725:_CRTIMP __cdecl __MINGW_NOTHROW  int    getc (FILE *);
+        -:  726:_CRTIMP __cdecl __MINGW_NOTHROW  int    putc (int, FILE *);
+        -:  727:_CRTIMP __cdecl __MINGW_NOTHROW  int    getchar (void);
+        -:  728:_CRTIMP __cdecl __MINGW_NOTHROW  int    putchar (int);
+        -:  729:
+        -:  730:#endif
+        -:  731:
+        -:  732:/* Direct Input and Output Functions
+        -:  733: */
+        -:  734:_CRTIMP __cdecl __MINGW_NOTHROW  size_t fread (void *, size_t, size_t, FILE *);
+        -:  735:_CRTIMP __cdecl __MINGW_NOTHROW  size_t fwrite (const void *, size_t, size_t, FILE *);
+        -:  736:
+        -:  737:/* File Positioning Functions
+        -:  738: */
+        -:  739:_CRTIMP __cdecl __MINGW_NOTHROW  int    fseek (FILE *, long, int);
+        -:  740:_CRTIMP __cdecl __MINGW_NOTHROW  long   ftell (FILE *);
+        -:  741:_CRTIMP __cdecl __MINGW_NOTHROW  void   rewind (FILE *);
+        -:  742:
+        -:  743:#if _WIN32_WINNT >= _WIN32_WINNT_VISTA || __MSVCRT_VERSION__ >= __MSVCR80_DLL
+        -:  744: /*
+        -:  745:  * Microsoft introduced a number of variations on fseek() and ftell(),
+        -:  746:  * beginning with MSVCR80.DLL; the bare _fseeki64() and _ftelli64() were
+        -:  747:  * subsequently integrated into MSVCRT.DLL, from Vista onward...
+        -:  748:  */
+        -:  749:_CRTIMP __cdecl __MINGW_NOTHROW  int    _fseeki64 (FILE *, __int64, int);
+        -:  750:_CRTIMP __cdecl __MINGW_NOTHROW __int64 _ftelli64 (FILE *);
+        -:  751:
+        -:  752:#if __MSVCRT_VERSION__ >= __MSVCR80_DLL
+        -:  753: /*
+        -:  754:  * ...while the "nolock" variants remain exclusive to MSVCR80.DLL, and
+        -:  755:  * its later MSVC specific derivatives.
+        -:  756:  */
+        -:  757:_CRTIMP __cdecl __MINGW_NOTHROW  int    _fseek_nolock (FILE *, long, int);
+        -:  758:_CRTIMP __cdecl __MINGW_NOTHROW  long   _ftell_nolock (FILE *);
+        -:  759:
+        -:  760:_CRTIMP __cdecl __MINGW_NOTHROW  int    _fseeki64_nolock (FILE *, __int64, int);
+        -:  761:_CRTIMP __cdecl __MINGW_NOTHROW __int64 _ftelli64_nolock (FILE *);
+        -:  762:
+        -:  763:#endif  /* MSVCR80.DLL and later derivatives ONLY */
+        -:  764:#endif  /* MSVCR80.DLL and descendants, or MSVCRT.DLL since Vista */
+        -:  765:
+        -:  766:#ifdef __USE_MINGW_FSEEK
+        -:  767:/* Workaround for a limitation on Win9x where a file is not zero padded
+        -:  768: * on write, following a seek beyond the original end of file; these are
+        -:  769: * implemented in libmingwex.a
+        -:  770: */
+        -:  771:__cdecl __MINGW_NOTHROW  int    __mingw_fseek (FILE *, long, int);
+        -:  772:__cdecl __MINGW_NOTHROW  size_t __mingw_fwrite (const void *, size_t, size_t, FILE *);
+        -:  773:
+        -:  774:#define fwrite(buffer, size, count, fp)  __mingw_fwrite(buffer, size, count, fp)
+        -:  775:#define fseek(fp, offset, whence)        __mingw_fseek(fp, offset, whence)
+        -:  776:#endif /* __USE_MINGW_FSEEK */
+        -:  777:
+        -:  778:/* An opaque data type used for storing file positions... The contents of
+        -:  779: * this type are unknown, but we (the compiler) need to know the size
+        -:  780: * because the programmer using fgetpos and fsetpos will be setting aside
+        -:  781: * storage for fpos_t structres. Actually I tested using a byte array and
+        -:  782: * it is fairly evident that the fpos_t type is a long (in CRTDLL.DLL).
+        -:  783: * Perhaps an unsigned long? TODO? It's definitely a 64-bit number in
+        -:  784: * MSVCRT however, and for now `long long' will do.
+        -:  785: */
+        -:  786:#ifdef __MSVCRT__
+        -:  787:typedef long long  fpos_t;
+        -:  788:#else
+        -:  789:typedef long       fpos_t;
+        -:  790:#endif
+        -:  791:
+        -:  792:_CRTIMP __cdecl __MINGW_NOTHROW  int fgetpos (FILE *, fpos_t *);
+        -:  793:_CRTIMP __cdecl __MINGW_NOTHROW  int fsetpos (FILE *, const fpos_t *);
+        -:  794:
+        -:  795:/* Error Functions
+        -:  796: */
+        -:  797:_CRTIMP __cdecl __MINGW_NOTHROW  int feof (FILE *);
+        -:  798:_CRTIMP __cdecl __MINGW_NOTHROW  int ferror (FILE *);
+        -:  799:
+        -:  800:#ifdef __cplusplus
+        -:  801:inline __cdecl __MINGW_NOTHROW  int feof (FILE * __F){ return __F->_flag & _IOEOF; }
+        -:  802:inline __cdecl __MINGW_NOTHROW  int ferror (FILE * __F){ return __F->_flag & _IOERR; }
+        -:  803:#else
+        -:  804:#define feof(__F)     ((__F)->_flag & _IOEOF)
+        -:  805:#define ferror(__F)   ((__F)->_flag & _IOERR)
+        -:  806:#endif
+        -:  807:
+        -:  808:_CRTIMP __cdecl __MINGW_NOTHROW  void clearerr (FILE *);
+        -:  809:_CRTIMP __cdecl __MINGW_NOTHROW  void perror (const char *);
+        -:  810:
+        -:  811:
+        -:  812:#ifndef __STRICT_ANSI__
+        -:  813:/*
+        -:  814: * Pipes
+        -:  815: */
+        -:  816:_CRTIMP __cdecl __MINGW_NOTHROW  FILE * _popen (const char *, const char *);
+        -:  817:_CRTIMP __cdecl __MINGW_NOTHROW  int    _pclose (FILE *);
+        -:  818:
+        -:  819:#ifndef NO_OLDNAMES
+        -:  820:_CRTIMP __cdecl __MINGW_NOTHROW  FILE *  popen (const char *, const char *);
+        -:  821:_CRTIMP __cdecl __MINGW_NOTHROW  int     pclose (FILE *);
+        -:  822:#endif
+        -:  823:
+        -:  824:/* Other Non ANSI functions
+        -:  825: */
+        -:  826:_CRTIMP __cdecl __MINGW_NOTHROW  int    _flushall (void);
+        -:  827:_CRTIMP __cdecl __MINGW_NOTHROW  int    _fgetchar (void);
+        -:  828:_CRTIMP __cdecl __MINGW_NOTHROW  int    _fputchar (int);
+        -:  829:_CRTIMP __cdecl __MINGW_NOTHROW  FILE * _fdopen (int, const char *);
+        -:  830:_CRTIMP __cdecl __MINGW_NOTHROW  int    _fileno (FILE *);
+        -:  831:_CRTIMP __cdecl __MINGW_NOTHROW  int    _fcloseall (void);
+        -:  832:_CRTIMP __cdecl __MINGW_NOTHROW  FILE * _fsopen (const char *, const char *, int);
+        -:  833:#ifdef __MSVCRT__
+        -:  834:_CRTIMP __cdecl __MINGW_NOTHROW  int    _getmaxstdio (void);
+        -:  835:_CRTIMP __cdecl __MINGW_NOTHROW  int    _setmaxstdio (int);
+        -:  836:#endif
+        -:  837:
+        -:  838:/* Microsoft introduced a capability in MSVCR80.DLL and later, to
+        -:  839: * set the minimum number of digits to be displayed in a printf()
+        -:  840: * floating point exponent; they retro-fitted this in MSVCRT.DLL,
+        -:  841: * from Windows-Vista onwards, but we provide our own wrappers in
+        -:  842: * libmingwex.a, which make it possible for us to emulate the API
+        -:  843: * for any version of MSVCRT.DLL (including WinXP and earlier).
+        -:  844: */
+        -:  845:#define _TWO_DIGIT_EXPONENT    1
+        -:  846:
+        -:  847:/* While Microsoft define the preceding manifest constant, they
+        -:  848: * appear to neglect to define its complement, (for restoration
+        -:  849: * of their default exponent display format); for orthogonality,
+        -:  850: * we will provide this regardless of Microsoft's negligence.
+        -:  851: */
+        -:  852:#define _THREE_DIGIT_EXPONENT  0
+        -:  853:
+        -:  854:/* Once again, unspecified by Microsoft, (and mostly redundant),
+        -:  855: * it is convenient to specify a combining mask for these.
+        -:  856: */
+        -:  857:#define _EXPONENT_DIGIT_MASK  (_TWO_DIGIT_EXPONENT | _THREE_DIGIT_EXPONENT)
+        -:  858:
+        -:  859:unsigned int __cdecl __mingw_get_output_format (void);
+        -:  860:unsigned int __cdecl __mingw_set_output_format (unsigned int);
+        -:  861:
+        -:  862:/* Also appearing for the first time in MSVCR80.DLL, and then also
+        -:  863: * retro-fitted to MSVCRT.DLL from Windows-Vista onwards, was this
+        -:  864: * pair of functions to control availability of "%n" formatting in
+        -:  865: * the MSVCRT.DLL printf() family of functions, for which we also
+        -:  866: * provide our own DLL version agnostic wrappers:
+        -:  867: */
+        -:  868:int __cdecl __mingw_get_printf_count_output (void);
+        -:  869:int __cdecl __mingw_set_printf_count_output (int);
+        -:  870:
+        -:  871:#if __MSVCRT_VERSION__ >= __MSVCR80_DLL
+        -:  872:/* When the user declares that MSVCR80.DLL features are supported,
+        -:  873: * we simply expose the corresponding APIs...
+        -:  874: */
+        -:  875:_CRTIMP unsigned int __cdecl __MINGW_NOTHROW _get_output_format (void);
+        -:  876:_CRTIMP unsigned int __cdecl __MINGW_NOTHROW _set_output_format (unsigned int);
+        -:  877:
+        -:  878:_CRTIMP __cdecl __MINGW_NOTHROW  int _get_printf_count_output (void);
+        -:  879:_CRTIMP __cdecl __MINGW_NOTHROW  int _set_printf_count_output (int);
+        -:  880:
+        -:  881:#else
+        -:  882:/* ...otherwise, we emulate the APIs, in a DLL version agnostic
+        -:  883: * manner, using our own implementation wrappers.
+        -:  884: */
+        -:  885:__CRT_ALIAS unsigned int __cdecl _get_output_format (void)
+        -:  886:{ return __mingw_get_output_format (); }
+        -:  887:
+        -:  888:__CRT_ALIAS unsigned int __cdecl _set_output_format (unsigned int __style)
+        -:  889:{ return __mingw_set_output_format (__style); }
+        -:  890:
+        -:  891:/* When using our own printf() implementation, "%n" format is ALWAYS
+        -:  892: * supported, so we make this API a no-op, reporting it to be so; for
+        -:  893: * the alternative case, when using MSVCRT.DLL's printf(), we delegate
+        -:  894: * to our wrapper API implementation, which will invoke the API function
+        -:  895: * calls within the DLL, if they are available, or persistently report
+        -:  896: * the state of "%n" formatting as DISABLED if they are not.
+        -:  897: */
+        -:  898:#if __USE_MINGW_ANSI_STDIO
+        -:  899:/* Note that __USE_MINGW_ANSI_STDIO is not guaranteed to resolve to any
+        -:  900: * symbol which will represent a compilable logic state; map it to this
+        -:  901: * alternative which will, for the true state...
+        -:  902: */
+        -:  903:# define __USE_MINGW_PRINTF  1
+        -:  904:#else
+        -:  905:/* ...and for the false.
+        -:  906: */
+        -:  907:# define __USE_MINGW_PRINTF  0
+        -:  908:#endif
+        -:  909:
+        -:  910:__CRT_ALIAS int __cdecl _get_printf_count_output (void)
+        -:  911:{ return __USE_MINGW_PRINTF ? 1 : __mingw_get_printf_count_output (); }
+        -:  912:
+        -:  913:__CRT_ALIAS int __cdecl _set_printf_count_output (int __mode)
+        -:  914:{ return __USE_MINGW_PRINTF ? 1 : __mingw_set_printf_count_output (__mode); }
+        -:  915:#endif
+        -:  916:
+        -:  917:#ifndef _NO_OLDNAMES
+        -:  918:_CRTIMP __cdecl __MINGW_NOTHROW  int    fgetchar (void);
+        -:  919:_CRTIMP __cdecl __MINGW_NOTHROW  int    fputchar (int);
+        -:  920:_CRTIMP __cdecl __MINGW_NOTHROW  FILE * fdopen (int, const char *);
+        -:  921:_CRTIMP __cdecl __MINGW_NOTHROW  int    fileno (FILE *);
+        -:  922:#endif	/* !_NO_OLDNAMES */
+        -:  923:
+        -:  924:#define _fileno(__F) ((__F)->_file)
+        -:  925:#ifndef _NO_OLDNAMES
+        -:  926:#define fileno(__F) ((__F)->_file)
+        -:  927:#endif
+        -:  928:
+        -:  929:#if defined (__MSVCRT__) && ! defined (__NO_MINGW_LFS)
+        -:  930:__CRT_ALIAS FILE * __cdecl __MINGW_NOTHROW  fopen64 (const char *, const char *);
+        -:  931:__CRT_ALIAS __JMPSTUB__(( FUNCTION = fopen64, REMAPPED = fopen ))
+        -:  932:FILE * __cdecl __MINGW_NOTHROW  fopen64 (const char * filename, const char * mode)
+        -:  933:{ return fopen (filename, mode); }
+        -:  934:
+        -:  935:int __cdecl __MINGW_NOTHROW  fseeko64 (FILE *, __off64_t, int);
+        -:  936:
+        -:  937:#ifdef __USE_MINGW_FSEEK
+        -:  938:int __cdecl __MINGW_NOTHROW __mingw_fseeko64 (FILE *, __off64_t, int);
+        -:  939:#define fseeko64(fp, offset, whence)  __mingw_fseeko64(fp, offset, whence)
+        -:  940:#endif
+        -:  941:
+        -:  942:__CRT_ALIAS __off64_t __cdecl __MINGW_NOTHROW ftello64 (FILE *);
+        -:  943:__CRT_ALIAS __LIBIMPL__(( FUNCTION = ftello64 ))
+        -:  944:__off64_t __cdecl __MINGW_NOTHROW ftello64 (FILE * stream)
+        -:  945:{ fpos_t __pos; return (fgetpos(stream, &__pos)) ? -1LL : (__off64_t)(__pos); }
+        -:  946:
+        -:  947:#endif	/* __MSVCRT__ && !__NO_MINGW_LFS */
+        -:  948:#endif	/* !__STRICT_ANSI__ */
+        -:  949:#endif	/* _STDIO_H */
+        -:  950:
+        -:  951:#if ! (defined _STDIO_H && defined _WCHAR_H)
+        -:  952:/* The following are declared when including either <stdio.h> or <wchar.h>.
+        -:  953: * If both header include guards are now in place, then we must currently be
+        -:  954: * including <stdio.h> in its own right, having already processed this block
+        -:  955: * during prior partial inclusion by <wchar.h>; there is no need to process
+        -:  956: * it a second time.
+        -:  957: */
+        -:  958:_CRTIMP __cdecl __MINGW_NOTHROW  int     fwprintf (FILE *, const wchar_t *, ...);
+        -:  959:_CRTIMP __cdecl __MINGW_NOTHROW  int     wprintf (const wchar_t *, ...);
+        -:  960:_CRTIMP __cdecl __MINGW_NOTHROW  int     vfwprintf (FILE *, const wchar_t *, __VALIST);
+        -:  961:_CRTIMP __cdecl __MINGW_NOTHROW  int     vwprintf (const wchar_t *, __VALIST);
+        -:  962:_CRTIMP __cdecl __MINGW_NOTHROW  int    _snwprintf (wchar_t *, size_t, const wchar_t *, ...);
+        -:  963:_CRTIMP __cdecl __MINGW_NOTHROW  int    _vscwprintf (const wchar_t *, __VALIST);
+        -:  964:_CRTIMP __cdecl __MINGW_NOTHROW  int    _vsnwprintf (wchar_t *, size_t, const wchar_t *, __VALIST);
+        -:  965:_CRTIMP __cdecl __MINGW_NOTHROW  int     fwscanf (FILE *, const wchar_t *, ...);
+        -:  966:_CRTIMP __cdecl __MINGW_NOTHROW  int     wscanf (const wchar_t *, ...);
+        -:  967:_CRTIMP __cdecl __MINGW_NOTHROW  int     swscanf (const wchar_t *, const wchar_t *, ...);
+        -:  968:_CRTIMP __cdecl __MINGW_NOTHROW  wint_t  fgetwc (FILE *);
+        -:  969:_CRTIMP __cdecl __MINGW_NOTHROW  wint_t  fputwc (wchar_t, FILE *);
+        -:  970:_CRTIMP __cdecl __MINGW_NOTHROW  wint_t  ungetwc (wchar_t, FILE *);
+        -:  971:
+        -:  972:#ifndef __STRICT_ANSI__
+        -:  973:/* These differ from the ISO C prototypes, which have a maxlen parameter (like snprintf).
+        -:  974: */
+        -:  975:_CRTIMP __cdecl __MINGW_NOTHROW  int  swprintf (wchar_t *, const wchar_t *, ...);
+        -:  976:_CRTIMP __cdecl __MINGW_NOTHROW  int  vswprintf (wchar_t *, const wchar_t *, __VALIST);
+        -:  977:#endif
+        -:  978:
+        -:  979:#ifdef __MSVCRT__
+        -:  980:_CRTIMP __cdecl __MINGW_NOTHROW  wchar_t * fgetws (wchar_t *, int, FILE *);
+        -:  981:_CRTIMP __cdecl __MINGW_NOTHROW  int       fputws (const wchar_t *, FILE *);
+        -:  982:_CRTIMP __cdecl __MINGW_NOTHROW  wint_t    getwc (FILE *);
+        -:  983:_CRTIMP __cdecl __MINGW_NOTHROW  wint_t    getwchar (void);
+        -:  984:_CRTIMP __cdecl __MINGW_NOTHROW  wint_t    putwc (wint_t, FILE *);
+        -:  985:_CRTIMP __cdecl __MINGW_NOTHROW  wint_t    putwchar (wint_t);
+        -:  986:
+        -:  987:#ifndef __STRICT_ANSI__
+        -:  988:_CRTIMP __cdecl __MINGW_NOTHROW  wchar_t * _getws (wchar_t *);
+        -:  989:_CRTIMP __cdecl __MINGW_NOTHROW  int       _putws (const wchar_t *);
+        -:  990:_CRTIMP __cdecl __MINGW_NOTHROW  FILE    * _wfdopen(int, const wchar_t *);
+        -:  991:_CRTIMP __cdecl __MINGW_NOTHROW  FILE    * _wfopen (const wchar_t *, const wchar_t *);
+        -:  992:_CRTIMP __cdecl __MINGW_NOTHROW  FILE    * _wfreopen (const wchar_t *, const wchar_t *, FILE *);
+        -:  993:_CRTIMP __cdecl __MINGW_NOTHROW  FILE    * _wfsopen (const wchar_t *, const wchar_t *, int);
+        -:  994:_CRTIMP __cdecl __MINGW_NOTHROW  wchar_t * _wtmpnam (wchar_t *);
+        -:  995:_CRTIMP __cdecl __MINGW_NOTHROW  wchar_t * _wtempnam (const wchar_t *, const wchar_t *);
+        -:  996:_CRTIMP __cdecl __MINGW_NOTHROW  int       _wrename (const wchar_t *, const wchar_t *);
+        -:  997:_CRTIMP __cdecl __MINGW_NOTHROW  int       _wremove (const wchar_t *);
+        -:  998:_CRTIMP __cdecl __MINGW_NOTHROW  void      _wperror (const wchar_t *);
+        -:  999:_CRTIMP __cdecl __MINGW_NOTHROW  FILE    * _wpopen (const wchar_t *, const wchar_t *);
+        -: 1000:
+        -: 1001:#endif  /* !__STRICT_ANSI__ */
+        -: 1002:#endif	/* __MSVCRT__ */
+        -: 1003:
+        -: 1004:#ifdef _ISOC99_SOURCE
+        -: 1005:__JMPSTUB__(( FUNCTION = snwprintf, DLLENTRY = _snwprintf ))
+        -: 1006:__cdecl __MINGW_NOTHROW  int snwprintf (wchar_t *, size_t, const wchar_t *, ...);
+        -: 1007:__cdecl __MINGW_NOTHROW  int vsnwprintf (wchar_t *, size_t, const wchar_t *, __VALIST);
+        -: 1008:
+        -: 1009:#ifndef __NO_INLINE__
+        -: 1010:__CRT_INLINE __cdecl __MINGW_NOTHROW
+        -: 1011:__JMPSTUB__(( FUNCTION = vsnwprintf, DLLENTRY = _vsnwprintf ))
+        -: 1012:int vsnwprintf (wchar_t *__s, size_t __n, const wchar_t *__fmt, __VALIST __arg)
+        -: 1013:{ return _vsnwprintf ( __s, __n, __fmt, __arg); }
+        -: 1014:#endif
+        -: 1015:
+        -: 1016:__cdecl __MINGW_NOTHROW  int  vwscanf (const wchar_t *__restrict__, __VALIST);
+        -: 1017:__cdecl __MINGW_NOTHROW
+        -: 1018:int  vfwscanf (FILE *__restrict__, const wchar_t *__restrict__, __VALIST);
+        -: 1019:__cdecl __MINGW_NOTHROW
+        -: 1020:int  vswscanf (const wchar_t *__restrict__, const wchar_t * __restrict__, __VALIST);
+        -: 1021:
+        -: 1022:#endif  /* _ISOC99_SOURCE */
+        -: 1023:#endif  /* ! (_STDIO_H && _WCHAR_H) */
+        -: 1024:
+        -: 1025:#if defined _STDIO_H && ! defined __STRICT_ANSI__
+        -: 1026:#if defined __MSVCRT__ && ! defined _NO_OLDNAMES
+        -: 1027:_CRTIMP __cdecl __MINGW_NOTHROW  FILE * wpopen (const wchar_t *, const wchar_t *);
+        -: 1028:#endif
+        -: 1029:
+        -: 1030:/* Other non-ANSI wide character functions...
+        -: 1031: */
+        -: 1032:_CRTIMP __cdecl __MINGW_NOTHROW  wint_t _fgetwchar (void);
+        -: 1033:_CRTIMP __cdecl __MINGW_NOTHROW  wint_t _fputwchar (wint_t);
+        -: 1034:_CRTIMP __cdecl __MINGW_NOTHROW  int    _getw (FILE *);
+        -: 1035:_CRTIMP __cdecl __MINGW_NOTHROW  int    _putw (int, FILE *);
+        -: 1036:
+        -: 1037:#ifndef _NO_OLDNAMES
+        -: 1038:/* ...and their original names, before Microsoft uglification...
+        -: 1039: */
+        -: 1040:_CRTIMP __cdecl __MINGW_NOTHROW  wint_t  fgetwchar (void);
+        -: 1041:_CRTIMP __cdecl __MINGW_NOTHROW  wint_t  fputwchar (wint_t);
+        -: 1042:_CRTIMP __cdecl __MINGW_NOTHROW  int     getw (FILE *);
+        -: 1043:_CRTIMP __cdecl __MINGW_NOTHROW  int     putw (int, FILE *);
+        -: 1044:
+        -: 1045:#endif  /* !_NO_OLDNAMES */
+        -: 1046:#endif  /* !__STRICT_ANSI__ */
+        -: 1047:
+        -: 1048:_END_C_DECLS
+        -: 1049:
+        -: 1050:#endif	/* ! RC_INVOKED */
+        -: 1051:#endif  /* !_STDIO_H: $RCSfile: stdio.h,v $: end of file */
