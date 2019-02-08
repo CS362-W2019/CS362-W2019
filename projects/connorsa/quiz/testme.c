@@ -21,6 +21,7 @@ char inputChar()
 
 char *inputString()
 {
+  int i;
   int len = strlen("reset"); // improve likelihood of target string
   int idx;
 
@@ -30,7 +31,7 @@ char *inputString()
 
   testString = malloc(sizeof(char) * (len+1));
 
-  for (int i = 0; i < len; i++) {
+  for (i = 0; i < len; i++) {
     idx = rand() % strlen(heavyAlpha);
     testString[i] = heavyAlpha[idx];
   }
