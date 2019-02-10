@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "invoke make ut4",
+            "label": "invoke make ct1",
             "type": "shell",
-            "command": "make ut4",
+            "command": "make ct1",
             "group": {
                 "kind": "build",
                 "isDefault": true

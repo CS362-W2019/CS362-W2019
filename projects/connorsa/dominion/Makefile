@@ -40,6 +40,12 @@ clean:
 	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe ut1
 	rm -rf badTestDrawCard.dSYM playdom.dSYM player.dSYM testDrawCard.dSYM ut1.dSYM ut2.dSYM
 
+ct1: clean cardtest1.c dominion.o rngs.o
+	gcc  -o ct1 -g cardtest1.c dominion.o rngs.o $(CFLAGS)
+
+ct2: clean cardtest2.c dominion.o rngs.o
+	gcc  -o ct2 -g cardtest2.c dominion.o rngs.o $(CFLAGS)
+
 ut1: clean unittest1.c dominion.o rngs.o
 	gcc  -o ut1 -g unittest1.c dominion.o rngs.o $(CFLAGS)
 
@@ -69,5 +75,10 @@ cov3: ut3
 
 cov4: ut4 
 	./ut4
+	lcov --capture --directory . --output-file coverage.info
+	genhtml coverage.info --output covhtml
+
+covc1: ct1
+	./ct1
 	lcov --capture --directory . --output-file coverage.info
 	genhtml coverage.info --output covhtml

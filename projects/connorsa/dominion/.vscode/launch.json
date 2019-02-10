@@ -5,17 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(lldb) Launch ut4",
+            "name": "(lldb) Launch ct1",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/ut4",
+            "program": "${workspaceFolder}/ct1",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",
-            "preLaunchTask": "invoke make ut4"
+            "preLaunchTask": "invoke make ct1"
         }
     ]
 }

@@ -764,7 +764,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   {
   case adventurer:
 
-    return adventurerCard(card, choice1, choice2, choice3, state, handPos, bonus);
+    return adventurerCard(state);
 
   case feast:
     //gain card with cost up to 5
@@ -829,10 +829,10 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     return 0;
 
   case gardens:
-    return gardensCard(card, choice1, choice2, choice3, state, handPos, bonus);
+    return gardensCard(state);
 
   case mine:
-    return minesCard(card, choice1, choice2, choice3, state, handPos, bonus);
+    return minesCard(choice1, choice2, state, handPos);
 
   case remodel:
     j = state->hand[currentPlayer][choice1]; //store card we will trash
@@ -860,10 +860,10 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     return 0;
 
   case smithy:
-    return smithyCard(card, choice1, choice2, choice3, state, handPos, bonus);
+    return smithyCard(state, handPos);
 
   case village:
-    return villageCard(card, choice1, choice2, choice3, state, handPos, bonus);
+    return villageCard(state, handPos);
 
   case baron:
     state->numBuys++; //Increase buys by 1!
@@ -1370,7 +1370,7 @@ int updateCoins(int player, struct gameState *state, int bonus)
  * * REFACTOR 5 CHOICE CARDS INTO OWN FUNCTIONS
 ******************************************************************************/
 
-int adventurerCard(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
+int adventurerCard(struct gameState *state)
 {
   int currentPlayer = whoseTurn(state);
   int nextPlayer = currentPlayer + 1;
@@ -1408,7 +1408,7 @@ int adventurerCard(int card, int choice1, int choice2, int choice3, struct gameS
   return 0;
 }
 
-int smithyCard(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
+int smithyCard(struct gameState *state, int handPos)
 {
   int i;
   int currentPlayer = whoseTurn(state);
@@ -1419,18 +1419,21 @@ int smithyCard(int card, int choice1, int choice2, int choice3, struct gameState
     nextPlayer = 0;
   }
   //+3 Cards
-  //for (i = 0; i < 3; i++) //UNBUGGED HERE
-  for (i = 0; i <= 3; i++) //INTRODUCED BUG HERE
+  for (i = 0; i < 3; i++) //UNBUGGED HERE
   {
     drawCard(currentPlayer, state);
   }
+  //for (i = 0; i <= 3; i++) //INTRODUCED BUG HERE
+  //{
+  //  drawCard(currentPlayer, state);
+  //}
 
   //discard card from hand
   discardCard(handPos, currentPlayer, state, 0);
   return 0;
 }
 
-int villageCard(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
+int villageCard(struct gameState *state, int handPos)
 {
   int currentPlayer = whoseTurn(state);
   int nextPlayer = currentPlayer + 1;
@@ -1451,7 +1454,7 @@ int villageCard(int card, int choice1, int choice2, int choice3, struct gameStat
   return 0;
 }
 
-int gardensCard(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
+int gardensCard(struct gameState *state)
 {
   int currentPlayer = whoseTurn(state);
   //int nextPlayer = currentPlayer + 1; //UNBUGGED HERE
@@ -1464,7 +1467,7 @@ int gardensCard(int card, int choice1, int choice2, int choice3, struct gameStat
   return -1;
 }
 
-int minesCard(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
+int minesCard(int choice1, int choice2, struct gameState *state, int handPos)
 {
   int i;
   int j;
