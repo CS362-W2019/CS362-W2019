@@ -35,5 +35,39 @@ player: player.c interface.o
 
 all: playdom player 
 
+## Added a cleanup for dSYM folder files
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe ut1
+	rm -rf badTestDrawCard.dSYM playdom.dSYM player.dSYM testDrawCard.dSYM ut1.dSYM ut2.dSYM
+
+ut1: clean unittest1.c dominion.o rngs.o
+	gcc  -o ut1 -g unittest1.c dominion.o rngs.o $(CFLAGS)
+
+ut2: clean unittest2.c dominion.o rngs.o
+	gcc  -o ut2 -g unittest2.c dominion.o rngs.o $(CFLAGS)
+
+ut3: clean unittest3.c dominion.o rngs.o
+	gcc  -o ut3 -g unittest3.c dominion.o rngs.o $(CFLAGS)
+
+ut4: clean unittest4.c dominion.o rngs.o
+	gcc  -o ut4 -g unittest4.c dominion.o rngs.o $(CFLAGS)
+
+cov1: ut1
+	./ut1
+	lcov --capture --directory . --output-file coverage.info
+	genhtml coverage.info --output covhtml
+
+cov2: ut2 
+	./ut2
+	lcov --capture --directory . --output-file coverage.info
+	genhtml coverage.info --output covhtml
+
+cov3: ut3 
+	./ut3
+	lcov --capture --directory . --output-file coverage.info
+	genhtml coverage.info --output covhtml
+
+cov4: ut4 
+	./ut4
+	lcov --capture --directory . --output-file coverage.info
+	genhtml coverage.info --output covhtml
