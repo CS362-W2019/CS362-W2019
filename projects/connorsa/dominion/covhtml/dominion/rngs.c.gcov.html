@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-02-09 16:02:33</td>
+            <td class="headerValue">2019-02-10 13:50:42</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -117,16 +117,16 @@
 <span class="lineNum">      55 </span>            :  * ----------------------------------------------------------------
 <span class="lineNum">      56 </span>            :  */
 <span class="lineNum">      57 </span>            : {
-<span class="lineNum">      58 </span><span class="lineCov">         40 :   const long Q = MODULUS / MULTIPLIER;</span>
-<span class="lineNum">      59 </span><span class="lineCov">         20 :   const long R = MODULUS % MULTIPLIER;</span>
+<span class="lineNum">      58 </span><span class="lineCov">         60 :   const long Q = MODULUS / MULTIPLIER;</span>
+<span class="lineNum">      59 </span><span class="lineCov">         30 :   const long R = MODULUS % MULTIPLIER;</span>
 <span class="lineNum">      60 </span>            :         long t;
 <span class="lineNum">      61 </span>            : 
-<span class="lineNum">      62 </span><span class="lineCov">         20 :   t = MULTIPLIER * (seed[stream] % Q) - R * (seed[stream] / Q);</span>
-<span class="lineNum">      63 </span><span class="lineCov">         20 :   if (t &gt; 0) </span>
-<span class="lineNum">      64 </span><span class="lineCov">         19 :     seed[stream] = t;</span>
+<span class="lineNum">      62 </span><span class="lineCov">         30 :   t = MULTIPLIER * (seed[stream] % Q) - R * (seed[stream] / Q);</span>
+<span class="lineNum">      63 </span><span class="lineCov">         30 :   if (t &gt; 0) </span>
+<span class="lineNum">      64 </span><span class="lineCov">         27 :     seed[stream] = t;</span>
 <span class="lineNum">      65 </span>            :   else 
-<span class="lineNum">      66 </span><span class="lineCov">          1 :     seed[stream] = t + MODULUS;</span>
-<span class="lineNum">      67 </span><span class="lineCov">         20 :   return ((double) seed[stream] / MODULUS);</span>
+<span class="lineNum">      66 </span><span class="lineCov">          3 :     seed[stream] = t + MODULUS;</span>
+<span class="lineNum">      67 </span><span class="lineCov">         30 :   return ((double) seed[stream] / MODULUS);</span>
 <span class="lineNum">      68 </span>            : }
 <a name="69"><span class="lineNum">      69 </span>            : </a>
 <span class="lineNum">      70 </span>            : 

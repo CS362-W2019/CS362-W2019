@@ -82,3 +82,8 @@ covc1: ct1
 	./ct1
 	lcov --capture --directory . --output-file coverage.info
 	genhtml coverage.info --output covhtml
+
+covc2: ct2
+	./ct2
+	lcov --capture --directory . --output-file coverage.info
+	genhtml coverage.info --output covhtml

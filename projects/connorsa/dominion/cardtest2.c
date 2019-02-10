@@ -13,12 +13,10 @@ extern int updateCoins(int player, struct gameState *state, int bonus);
 
 void testAdventurer()
 {
-    int i, x, coin, preCoins, postCoins, advPos, preDeck, postDeck;
-    int coinsFound = 2; // set this to total coin value Adventurer is expected to add to hand
-    int badDiscard = -13; // for checking discard deck for bad contents
+    int i, preCoins, postCoins, advPos, postDeck, preHand, preDeck, preDisc, cardsFound, badVal;
 
     // create 2 identical game states to test if updateCoins() modifies other things
-    // copy G into original after preparing for test
+    // copy G into original AFTER preparing for test
     struct gameState G;
     // initialize with all cards available
     int k[20] = {adventurer, council_room, feast, gardens, mine, remodel, smithy,
@@ -30,7 +28,7 @@ void testAdventurer()
     // manually set a hand for P0
     G.handCount[0] = 5;
     G.whoseTurn = 0;
-    coin = 4;
+    
 
     // put the adventurer in first card spot, fill the rest with curses
     advPos = 0;
@@ -41,13 +39,15 @@ void testAdventurer()
         {
             G.hand[0][i] = curse; // curse cards
         }
+         //printf("%d  ", G.hand[0][i]);
     }
-
+    //printf("hand \n");
     // fill deck with estates and copper
-    G.deckCount[0] = 10;
+    // only 5 to force reshuffle to get to extra copper in discard
+    G.deckCount[0] = 5;
     for (i = 0; i < G.deckCount[0]; i++)
     {
-        if (i > G.deckCount[0] / 3 && i < G.deckCount[0] - 2) // overwrite with some copper
+        if (i == 3) // put one copper in the deck
         {
             G.deck[0][i] = copper;
         }
@@ -55,47 +55,69 @@ void testAdventurer()
         {
              G.deck[0][i] = estate;
         }
+        //printf("%d  ", G.deck[0][i]);
     }
-
-    // poison discard for later checking
+    //printf("deck \n");
+    // load discard to ensure shuffle must occur 
     G.discardCount[0] = 5;
     for (i = 0; i < G.discardCount[0]; i++)
     {
-        G.discard[0][i] = badDiscard;
+        if (i == 2 || i == 4)
+        {
+            G.discard[0][i] = copper;
+        }
+        else
+        {
+            G.discard[0][i] = estate;
+        }
+        //printf("%d  ", G.discard[0][i]);
     }
-
-    x = G.discard[0][i-1];
+    //printf("discard \n");
 
     // save off variables for comparison
     updateCoins(0, &G, 0);
     preCoins = G.coins; // treasure the player has in hand before using Adventurer
     preDeck = G.deckCount[0]; // size of deck before playing card
+    preDisc = G.discardCount[0]; //size of discard deck before playing card
+    preHand = G.handCount[0]; //size of hand before playing card
 
     // copy the struct here so that modifications are included
     memcpy(&original, &G, sizeof(G)); // use memcpy so that memory padding copies too
     //adventurerCard(&G);
     cardEffect(adventurer, 30, 30, 30, &G, advPos, 0);
 
-    // TEST DISCARD PILE
+    // TEST DISCARD PILE - should be estates only
+    cardsFound = 0;
+    badVal = 0;
     for (i = 0; i < G.discardCount[0]; i++)
     {
-        // only 2 cards should have been discarded, both estates
-        if (i > 4 && (G.discard[0][i] != estate)) // last two spots should be estates
+        if (G.discard[0][i] == estate)
         {
-            printf("FAIL --- didn't see expected discarded cards\n");
+            cardsFound++;
         }
-        else if (i <= 4 && (G.discard[0][i] != badDiscard)) // else check they are badDiscard
+        else //only estates because 2 copper in hand, 1 copper reshuffled into deck
         {
-            printf("FAIL --- unexpected contents found in discard pile %d\n", i);
+            badVal = -1; // indicate unexpected contents
         }
+        //printf("%d  ", G.discard[0][i]);
         
     }
+    //printf("disc\n");
+    if (cardsFound < 1 || cardsFound > 7 || badVal == -1)
+    {
+        printf("FAIL --- unexpected discard pile contents\n");
+    }
+
     // TEST HAND value for added treasure
     updateCoins(0, &G, 0);
     postCoins = G.coins;
-    if (postCoins != preCoins + coinsFound)
+    if (postCoins != 2) // should have exactly 2 copper in hand
     {
         printf("FAIL --- expected %d coins in hand from Adventurer, but have %d\n", preCoins + 2, postCoins);
+    }
+    if (G.handCount[0] - preHand > 2)
+    {
+        printf("FAIL --- too many cards in hand after Adventurer\n");
     }
     // TEST PLAYED to see if adventurer card was removed from hand and put into played pile
     if (G.playedCards[0] != adventurer || G.hand[0][advPos] == adventurer)
@@ -103,7 +125,7 @@ void testAdventurer()
         printf("FAIL --- Adventurer card not moved from hand to played pile\n");
     }
 
-    // TEST DECK - should be 4 down (discard 2 estates, move 2 treasure to hand)
+    // TEST DECK - should be 
     postDeck = G.deckCount[0];
     if ((preDeck - postDeck) != 4)
     {
