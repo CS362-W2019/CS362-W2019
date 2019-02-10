@@ -1,0 +1,8 @@
+# dominion specific
+playdom
+player
+testDrawCard
+testBuyCard
+badTestDrawCard
+testShuffle
+testInit
