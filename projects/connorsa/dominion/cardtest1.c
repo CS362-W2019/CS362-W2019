@@ -68,50 +68,10 @@ void testSmithy()
     card2 = G.deck[0][smithyPos-2];
     card3 = G.deck[0][smithyPos-3];
     
-    /*
-    printf("P0 & P1 decks = %d, P0 deck = %d, P0 hand = %d, P0 disc = %d\n", allDeckSize, deckSize, handSize, discSize); 
-    printf("\ndeck\n");
-    for (i = 0; i < deckSize; i++)
-    {
-        printf("%d\t", G.deck[0][i]);
-    }
-    printf("\nhand\n");
-    for (i = 0; i < handSize; i++)
-    {
-        printf("%d\t", G.hand[0][i]);
-    }
-    printf("\ndiscard\n");
-    for (i = 0; i < discSize; i++)
-    {
-        printf("%d\t", G.discard[0][i]);
-    }
-    */
     //printf("\n\nPLAYING SMITHY\n\n");
-    smithyCard(&G, smithyPos); // test the function directly
-    //cardEffect(smithy, 30, 30, 30, &G, smithyPos, 0); // test via cardEffect
-    /*
-    printf("\ndeck\n");
-    for (i = 0; i < G.deckCount[P0]; i++)
-    {
-        printf("%d\t", G.deck[P0][i]);
-    }
-    printf("\nhand\n");
-    for (i = 0; i < G.handCount[P0]; i++)
-    {
-        printf("%d\t", G.hand[P0][i]);
-    }
-    printf("\ndiscard\n");
-    for (i = 0; i < G.discardCount[P0]; i++)
-    {
-        printf("%d\t", G.discard[P0][i]);
-    }
-    printf("\nplayed\n");
-    for (i = 0; i < G.playedCardCount; i++)
-    {
-        printf("%d\t", G.playedCards[i]);
-    }
-    printf("\n");
-    */
+    //smithyCard(&G, smithyPos); // test the function directly
+    cardEffect(smithy, 30, 30, 30, &G, smithyPos, 0); // test via cardEffect
+
     // test for what we expect
     // deck should have 3 fewer cards due to drawn cards
     if (G.deckCount[P0] != deckSize - 3)
@@ -137,7 +97,7 @@ void testSmithy()
         printf("FAIL --- Smithy changed total deck size\n");
     }
 
-    //compareStateFull(&G, &original, "");
+    compareStateFull(&G, &original, "");
 }
 
 int main()
