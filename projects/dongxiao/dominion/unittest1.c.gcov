@@ -1,0 +1,57 @@
+        -:    0:Source:unittest1.c
+        -:    0:Graph:unittest1.gcno
+        -:    0:Data:unittest1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* unittest1.c
+        -:    2: * Function tested: int* kingdomCards */
+        -:    3:
+        -:    4:#include "dominion.h"
+        -:    5:#include "dominion_helpers.h"
+        -:    6:#include "rngs.h"
+        -:    7:#include <string.h>
+        -:    8:#include <stdio.h>
+        -:    9:#include <stdlib.h>
+        -:   10:
+        -:   11:/*************************************************************************
+        -:   12: * Function: assertTrue
+        -:   13: * Parameters: testResult: an int; expectedResult: an int; info: a string
+        -:   14: * Description: If testResult is the same as expectedResult, then the "TEST
+        -:   15: * 		SUCCESSFULLY COMPLETED" will be printed to stdout. Otherwise,
+        -:   16: * 		"TEST FAILED" will be printed out. The message is followed
+        -:   17: * 		by the testing conditions stated in info.
+        -:   18: **************************************************************************/
+        -:   19:
+       10:   20:void assertTrue(int testResult, int expectedResult, char* info)
+        -:   21:{
+       10:   22:	if (testResult == expectedResult) 
+        -:   23:	{
+       10:   24:		printf("TEST SUCCESSFULLY COMPLETED: ");
+       10:   25:		fflush(stdout);
+        -:   26:	}
+        -:   27:	else
+        -:   28:	{
+    #####:   29:		printf("TEST FAILED: ");
+    #####:   30:		fflush(stdout);
+        -:   31:	}
+       10:   32:	printf(info);
+       10:   33:}
+        -:   34:
+        -:   35:
+        1:   36:int main()
+        -:   37:{
+        1:   38:	int k[10] = {adventurer, feast, gardens, mine, smithy, village, baron, steward, outpost, treasure_map};
+        1:   39:	int *r = kingdomCards(k[0], k[1], k[2], k[3], k[4], k[5], k[6], k[7], k[8], k[9]);
+        -:   40:
+        -:   41:	char info[20];
+       11:   42:	for (int i=0; i<10; i++)
+        -:   43:	{
+       10:   44:		memset(info, '\0', sizeof(info));
+       10:   45:		sprintf(info, "k[%d]=%d, r[%d]=%d\n", i,k[i],i,r[i]);
+       10:   46:		assertTrue(k[i], r[i],info);
+        -:   47:	}
+        1:   48:	free(r);
+        1:   49:	return 0;
+        -:   50:}
+        -:   51:
+        -:   52:

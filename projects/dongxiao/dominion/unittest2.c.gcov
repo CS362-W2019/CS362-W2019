@@ -1,0 +1,69 @@
+        -:    0:Source:unittest2.c
+        -:    0:Graph:unittest2.gcno
+        -:    0:Data:unittest2.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* unittest1.c
+        -:    2: * Function tested: int getCost */
+        -:    3:
+        -:    4:#include "dominion.h"
+        -:    5:#include "dominion_helpers.h"
+        -:    6:#include "rngs.h"
+        -:    7:#include <string.h>
+        -:    8:#include <stdio.h>
+        -:    9:#include <stdlib.h>
+        -:   10:
+        -:   11:/*************************************************************************
+        -:   12: * Function: assertTrue
+        -:   13: * Parameters: testResult: an int; expectedResult: an int; info: a string
+        -:   14: * Description: If testResult is the same as expectedResult, then the "TEST
+        -:   15: * 		SUCCESSFULLY COMPLETED" will be printed to stdout. Otherwise,
+        -:   16: * 		"TEST FAILED" will be printed out. The message is followed
+        -:   17: * 		by the testing conditions stated in info.
+        -:   18: **************************************************************************/
+        -:   19:
+       29:   20:void assertTrue(int testResult, int expectedResult, char* info)
+        -:   21:{
+       29:   22:	if (testResult == expectedResult) 
+        -:   23:	{
+       29:   24:		printf("TEST SUCCESSFULLY COMPLETED: ");
+       29:   25:		fflush(stdout);
+        -:   26:	}
+        -:   27:	else
+        -:   28:	{
+    #####:   29:		printf("TEST FAILED: ");
+    #####:   30:		fflush(stdout);
+        -:   31:	}
+       29:   32:	printf(info);
+       29:   33:}
+        -:   34:
+        -:   35:
+        1:   36:int main()
+        -:   37:{
+        1:   38:	int c[27] = {0,2,5,8,0,3,6,6,5,4,4,5,4,4,3,4,3,5,3,5,3,4,2,5,4,4,4};
+        -:   39:	char info[100];
+        -:   40:	int r;
+        -:   41:	//test all the card values
+       28:   42:	for (int i=0; i<27; i++)
+        -:   43:	{
+       27:   44:		r = getCost(i);
+       27:   45:		memset(info, '\0', sizeof(info));
+       27:   46:		sprintf(info, "card enum: %d, card value returned: %d, card expected value: %d\n", i,r,c[i]);
+       27:   47:		assertTrue(r, c[i],info);
+        -:   48:	}
+        -:   49:	
+        -:   50:	//test invalid values
+        1:   51:	r = getCost(-1);
+        1:   52:	memset(info, '\0', sizeof(info));
+        1:   53:	sprintf(info, "card enum: -1, card value returned: %d, card expected value: -1\n", r);
+        1:   54:	assertTrue(r, -1,info);
+        -:   55:	
+        1:   56:	r = getCost(28);
+        1:   57:	memset(info, '\0', sizeof(info));
+        1:   58:	sprintf(info, "card enum: 28, card value returned: %d, card expected value: -1\n", r);
+        1:   59:	assertTrue(r, -1,info);
+        -:   60:	
+        1:   61:	return 0;
+        -:   62:}
+        -:   63:
+        -:   64:
