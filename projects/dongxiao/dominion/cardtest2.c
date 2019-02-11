@@ -1,5 +1,5 @@
 /* cardtest1.c
- * Card tested: adventurer */
+ * Card tested: smithy */
 
 #include "dominion.h"
 #include "dominion_helpers.h"
@@ -47,9 +47,8 @@ int main()
 	int bonus = 0;
 	char info[100];
 	memset(info, '\0', sizeof(info));
-	int player = preG.whoseTurn;
 
-	printf("----------------------- Testing Adventurer ----------------------\n");
+	printf("----------------------- Testing Smithy ----------------------\n");
 	fflush(stdout);
 	//test 10 times
 	for (int i=0; i<10; i++)
@@ -57,26 +56,22 @@ int main()
 		//initialize a game state and player cards
 		initializeGame(numPlayers, k, seed, &G);
 		memcpy(&preG,&G, sizeof(struct gameState));
-
-		cardEffect(adventurer, choice1, choice2, choice3, &G, handPos, &bonus);
+		int player = preG.whoseTurn;
+		cardEffect(smithy, choice1, choice2, choice3, &G, handPos, &bonus);
 		
 
 		//check whether two more cards are added to the hand
 		assertTrue(preG.handCount[player]+2, G.handCount[player], "2 cards added to hand\n");
 		
+		//check whether the discard pile has one more card
+		assertTrue(preG.discardCount[player]+1, G.discardCount[player], "1 card added to discard pile\n");
+		printf("Old discardCount: %d; New discardCount: %d\n", preG.discardCount[player], G.discardCount[player]);
+		fflush(stdout);
+
 		//check whether the total number of cards the player has remains unchanged
 		int preTotal = preG.handCount[player] + preG.deckCount[player] + preG.discardCount[player];
 		int postTotal = G.handCount[player] + G.deckCount[player] + G.discardCount[player];
 		assertTrue(preTotal, postTotal, "Player's total card count should remain unchanged\n");
-		printf("Expected total card count: %d; Actual total card count: %d\n", preTotal, postTotal);
-		fflush(stdout);
-
-		//check the two cards added to the hand are treasure cards
-		int count = G.handCount[player];
-		int card1 = G.hand[player][count-2];
-		int card2 = G.hand[player][count-1];
-		assertTrue(card1==copper || card1==silver || card1==gold,1, "first card added is a treasure card\n");
-		assertTrue(card2==copper || card2==silver || card2==gold,1, "second card added is a treasure card\n");
 	}
 	return 0;
 }
