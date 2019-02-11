@@ -36,12 +36,13 @@ runtests: $(TESTS)
 	$(GCOV) dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
-.PHONY=unittests
-unittests: $(UNITTESTS)
-	./unittest1
-	./unittest2
-	./unittest3
-	$(GCOV) dominion.c -b -f > unittests.out
+.PHONY=unittestresults
+unittestresults: $(UNITTESTS) $(OBJS) $(SRCS)
+	rm -f unittestresults.out
+	./unittest1 >> unittestresults.out
+	./unittest2 >> unittestresults.out
+	./unittest3 >> unittestresults.out
+	$(GCOV) dominion.c -b -f >> unittestresults.out
 
 .PHONY=clean
 clean:
