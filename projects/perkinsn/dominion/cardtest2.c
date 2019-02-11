@@ -39,7 +39,7 @@ Put those Treasure cards into your hand and discard the other revealed cards.
     printf("\nTest with shuffle.\n");
 
     int hand1[] = {adventurer, -1};
-    int deck1[] = {village, village, silver, village, village, -1};
+    int deck1[] = {village, village, copper, village, village, -1};
     int discard1[] = {gold, -1};
 
     initGameState(2, &state);
