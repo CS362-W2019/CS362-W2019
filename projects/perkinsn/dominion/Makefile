@@ -7,7 +7,9 @@ CFLAGS=-Wall -fpic -std=c99 -MMD -MP -fprofile-arcs -ftest-coverage
 SRCS=cards.c dominion.c interface.c rngs.c
 OBJS=$(SRCS:.c=.o)
 TESTS=testDrawCard testBuyCard testShuffle testInit
-BINARIES=$(TESTS) playdom player
+UNITTESTS=unittest1 unittest2 unittest3
+CARDTESTS=cardtest1
+BINARIES=$(TESTS) $(UNITTESTS) $(CARDTESTS) playdom player
 
 # default action to build all binaries
 .PHONY=all
@@ -34,8 +36,15 @@ runtests: $(TESTS)
 	$(GCOV) dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
+.PHONY=unittests
+unittests: $(UNITTESTS)
+	./unittest1
+	./unittest2
+	./unittest3
+	$(GCOV) dominion.c -b -f > unittests.out
+
 .PHONY=clean
 clean:
 	rm -f *.o *.exe *.gcov *.gcda *.gcno *.so *.out *.d
 	rm -rf *.dSYM
-	rm -f playdom player testDrawCard badTestDrawCard testBuyCard testInit testShuffle
+	rm -f $(BINARIES)
