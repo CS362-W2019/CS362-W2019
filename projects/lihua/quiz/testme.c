@@ -26,8 +26,8 @@ char inputChar()
 
 char *inputString()
 {
-    int m= rand()%6;
-    char str[8]="reset";
+    int m= 6;
+    char str[8]="resetas";
     for(int i = 0; i < m; i++){
        int n = rand() % 5;
        str[i] = str[n];
