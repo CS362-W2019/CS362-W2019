@@ -1,4 +1,4 @@
-/* unittest1.c
+/* unittest4.c
  * Function tested: int supplyCount */
 
 #include "dominion.h"

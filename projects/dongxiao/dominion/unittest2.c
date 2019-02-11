@@ -1,4 +1,4 @@
-/* unittest1.c
+/* unittest2.c
  * Function tested: int whoseTurn */
 
 #include "dominion.h"

@@ -1,4 +1,4 @@
-/* unittest1.c
+/* unittest3.c
  * Function tested: int playCard */
 
 #include "dominion.h"
