@@ -31,7 +31,8 @@ playSmithy()
     debugGameState(0, &state);
     asserttrue(state.handCount[0] == 3);
     asserttrue(state.deckCount[0] == 1); 
-    asserttrue(state.discardCount[0] == 1);
+    asserttrue(state.discardCount[0] == 0);
+    asserttrue(state.playedCardCount == 1); 
     asserttrue(state.numActions == 0);
 
     printf("\nsmithy tests done.\n\n");
