@@ -4,7 +4,7 @@ GCOV=gcov
 CFLAGS=-Wall -lm -fpic -std=c99 -MMD -MP -fprofile-arcs -ftest-coverage 
 
 # modify these variables as source/binary files are added or removed
-SRCS=cards.c dominion.c interface.c rngs.c
+SRCS=cards.c dominion.c interface.c rngs.c test_helpers.c
 OBJS=$(SRCS:.c=.o)
 TESTS=testDrawCard testBuyCard testShuffle testInit
 UNITTESTS=unittest1 unittest2 unittest3 unittest4
@@ -17,7 +17,7 @@ all: $(BINARIES)
 
 # compiles all the binaries and generates dependencies
 $(BINARIES): % : %.c $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ 
+	$(CC) $(CFLAGS) $^ -o $@
 
 # build all the generated dependencies
 -include $(wildcard *.d)
@@ -37,12 +37,13 @@ runtests: $(TESTS)
 	cat dominion.c.gcov >> unittestresult.out
 
 .PHONY=unittestresults
-unittestresults: $(UNITTESTS) $(OBJS) $(SRCS)
+unittestresults: $(UNITTESTS) $(CARDTESTS) $(OBJS) $(SRCS)
 	rm -f unittestresults.out
 	./unittest1 >> unittestresults.out
 	./unittest2 >> unittestresults.out
 	./unittest3 >> unittestresults.out
 	./unittest4 >> unittestresults.out
+	./cardtest1 >> unittestresults.out
 	$(GCOV) dominion.c -b -f >> unittestresults.out
 
 .PHONY=clean
