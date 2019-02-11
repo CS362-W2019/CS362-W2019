@@ -12,7 +12,7 @@ CARDTESTS=cardtest1 cardtest2 cardtest3 cardtest4
 BINARIES=$(TESTS) $(UNITTESTS) $(CARDTESTS) playdom player
 
 # default action to build all binaries
-.PHONY=all
+.PHONY: all
 all: $(BINARIES)
 
 # compiles all the binaries and generates dependencies
@@ -22,7 +22,7 @@ $(BINARIES): % : %.c $(OBJS)
 # build all the generated dependencies
 -include $(wildcard *.d)
 
-.PHONY=runtests
+.PHONY: runtests
 runtests: $(TESTS)
 	rm -f unittestresult.out
 	./testBuyCard  >> unittestresult.out
@@ -36,7 +36,7 @@ runtests: $(TESTS)
 	$(GCOV) dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
-.PHONY=unittestresults
+.PHONY: unittestresults
 unittestresults: $(UNITTESTS) $(CARDTESTS) $(OBJS) $(SRCS)
 	rm -f unittestresults.out
 	./unittest1 >> unittestresults.out
@@ -50,7 +50,7 @@ unittestresults: $(UNITTESTS) $(CARDTESTS) $(OBJS) $(SRCS)
 	$(GCOV) dominion.c -bf >> unittestresults.out
 	$(GCOV) cards.c -bf >> unittestresults.out
 
-.PHONY=clean
+.PHONY: clean
 clean:
 	rm -f *.o *.exe *.gcov *.gcda *.gcno *.so *.out *.d
 	rm -rf *.dSYM
