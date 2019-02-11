@@ -44,7 +44,8 @@ unittestresults: $(UNITTESTS) $(CARDTESTS) $(OBJS) $(SRCS)
 	./unittest3 >> unittestresults.out
 	./unittest4 >> unittestresults.out
 	./cardtest1 >> unittestresults.out
-	$(GCOV) dominion.c -b -f >> unittestresults.out
+	$(GCOV) dominion.c -bf >> unittestresults.out
+	$(GCOV) cards.c -bf >> unittestresults.out
 
 .PHONY=clean
 clean:
