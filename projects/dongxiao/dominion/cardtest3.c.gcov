@@ -1,0 +1,103 @@
+        -:    0:Source:cardtest3.c
+        -:    0:Graph:cardtest3.gcno
+        -:    0:Data:cardtest3.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* cardtest1.c
+        -:    2: * Card tested: council_room */
+        -:    3:
+        -:    4:#include "dominion.h"
+        -:    5:#include "dominion_helpers.h"
+        -:    6:#include "rngs.h"
+        -:    7:#include <string.h>
+        -:    8:#include <stdio.h>
+        -:    9:#include <stdlib.h>
+        -:   10:#include <time.h>
+        -:   11:
+        -:   12:/*************************************************************************
+        -:   13: * Function: assertTrue
+        -:   14: * Parameters: testResult: an int; expectedResult: an int; info: a string
+        -:   15: * Description: If testResult is the same as expectedResult, then the "TEST
+        -:   16: * 		SUCCESSFULLY COMPLETED" will be printed to stdout. Otherwise,
+        -:   17: * 		"TEST FAILED" will be printed out. The message is followed
+        -:   18: * 		by the testing conditions stated in info.
+        -:   19: **************************************************************************/
+        -:   20:
+       60:   21:void assertTrue(int testResult, int expectedResult, char* info)
+        -:   22:{
+       60:   23:	if (testResult == expectedResult) 
+        -:   24:	{
+       50:   25:		printf("TEST SUCCESSFULLY COMPLETED: ");
+       50:   26:		fflush(stdout);
+        -:   27:	}
+        -:   28:	else
+        -:   29:	{
+       10:   30:		printf("TEST FAILED: ");
+       10:   31:		fflush(stdout);
+        -:   32:	}
+       60:   33:	printf(info);
+       60:   34:}
+        -:   35:
+        -:   36:
+        1:   37:int main()
+        -:   38:{
+        1:   39:	int numPlayers = 2;
+        1:   40:	int seed = 0;
+        1:   41:	int k[10] = {adventurer, feast, gardens, mine, smithy, village, baron, steward, outpost, treasure_map};
+        -:   42:	struct gameState G,preG;
+        1:   43:	int handPos = 0;
+        1:   44:	int choice1 = 1;
+        1:   45:	int choice2 = 2;
+        1:   46:	int choice3 = 4;
+        1:   47:	int bonus = 0;
+        -:   48:	char info[100];
+        -:   49:
+        1:   50:	printf("----------------------- Testing council_room ----------------------\n");
+        1:   51:	fflush(stdout);
+        -:   52:	//test 10 times
+       11:   53:	for (int i=0; i<10; i++)
+        -:   54:	{
+        -:   55:		//initialize a game state and player cards
+       10:   56:		initializeGame(numPlayers, k, seed, &G);
+       10:   57:		int player = preG.whoseTurn;
+        -:   58://		printf("********************After Initialization: G****************************\n");
+        -:   59://		printf("handcount: %d\tplayedCardCount: %d\tplayedCard:%d\tdeckCount:%d\tdiscardCount%d\n",G.handCount[player], G.playedCardCount, G.playedCards[player], G.deckCount[player], G.discardCount[player]);
+       10:   60:		G.hand[player][0] = council_room;
+       10:   61:		memcpy(&preG,&G, sizeof(struct gameState));
+       10:   62:		cardEffect(council_room, choice1, choice2, choice3, &G, handPos, &bonus);
+        -:   63:		
+        -:   64:
+        -:   65:		//check whether three more cards are added to the hand
+       10:   66:		assertTrue(preG.handCount[player]+3, G.handCount[player], "3 cards added to hand\n");
+       10:   67:		printf("Old handCount: %d; New handCount: %d\n", preG.handCount[player], G.handCount[player]);
+       10:   68:		fflush(stdout);
+        -:   69:		
+        -:   70:		//check whether council_room has been played
+       10:   71:		assertTrue(G.playedCardCount,1, "1 card is played\n");
+        -:   72://		printf("Old playedCardCount: %d; New playedCardCount: %d\n", preG.playedCardCount, G.playedCardCount);
+        -:   73://		fflush(stdout);
+       10:   74:		assertTrue(G.playedCards[0], council_room, "The played card is council_room\n");
+        -:   75:
+        -:   76:		//check whether the total number of cards the player has remains unchanged
+       10:   77:		int preTotal = preG.handCount[player] + preG.deckCount[player] + preG.discardCount[player] + preG.playedCardCount;
+       10:   78:		int postTotal = G.handCount[player] + G.deckCount[player] + G.discardCount[player] + G.playedCardCount;
+       10:   79:		assertTrue(preTotal, postTotal, "Player's total card count should remain unchanged\n");
+        -:   80:
+        -:   81:		//check whether the player get one more buy
+       10:   82:		assertTrue(preG.numBuys + 1, G.numBuys, "The played adds one more buy\n");
+        -:   83:
+        -:   84:		//check whether every other player gets one more card to hand
+       30:   85:		for (int j=0; j<numPlayers; j++)
+        -:   86:		{
+       20:   87:			if (player != j)
+        -:   88:			{
+       10:   89:				memset(info, '\0', sizeof(info));
+       10:   90:				sprintf(info, "Player %d adds one more card to hand\n", j);
+       10:   91:				assertTrue(preG.handCount[j]+1, G.handCount[j], info);
+        -:   92:			}
+        -:   93:		}
+        -:   94:	}
+        1:   95:	return 0;
+        -:   96:}
+        -:   97:
+        -:   98:
