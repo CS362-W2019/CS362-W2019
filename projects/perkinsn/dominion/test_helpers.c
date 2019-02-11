@@ -1,4 +1,6 @@
 #include "test_helpers.h"
+#include "interface.h"
+
 #include <string.h>
 
 void initGameState(int players, struct gameState* state)
@@ -30,31 +32,43 @@ void addCards(int player, int* hand, int* deck, int* discard, struct gameState* 
     }
 }
 
-void printGameState(int player, struct gameState* state)
+void debugGameState(int player, struct gameState* state)
 {
     printf("numPlayers: %d\n", state->numPlayers);
     printf("whoseTurn: %d\n", state->whoseTurn);
+    char phase[20];
+    phaseNumToName(state->phase, phase);
+    printf("phase: %s\n", phase);
+    printf("\n");
     
     if (player > -1) {
         printf("handCount: %d\n", state->handCount[player]);
         printf("Hand: ");
         for (int i = 0; i < state->handCount[player]; ++i) {
-            printf("%d ", state->hand[player][i]);
+            char name[20];
+            cardNumToName(state->hand[player][i], name);
+            printf("%s ", name); 
         }
         printf("\n");
 
         printf("deckCount: %d\n", state->deckCount[player]);
         printf("Deck: ");
         for (int i = 0; i < state->deckCount[player]; ++i) {
-            printf("%d ", state->deck[player][i]);
+            char name[20];
+            cardNumToName(state->deck[player][i], name);
+            printf("%s ", name); 
         }
         printf("\n");
 
         printf("discardCount: %d\n", state->discardCount[player]);
         printf("Discard: ");
         for (int i = 0; i < state->discardCount[player]; ++i) {
-            printf("%d ", state->discard[player][i]);
+            char name[20];
+            cardNumToName(state->deck[player][i], name);
+            printf("%s ", name); 
         }
         printf("\n");
     }
+
+    printf("\n");
 }

@@ -15,6 +15,6 @@
 
 void initGameState(int players, struct gameState* state);
 void addCards(int player, int* hand, int* deck, int* discard, struct gameState* state);
-void printGameState(int player, struct gameState* state);
+void debugGameState(int player, struct gameState* state);
 
 #endif
