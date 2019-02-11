@@ -1,0 +1,13 @@
+ct1
+ct2
+ct3
+ct4
+ut1
+ut2
+ut4
+ut3
+*.gcda
+*.gcno
+*.o
+*.swp
+*.nfs*

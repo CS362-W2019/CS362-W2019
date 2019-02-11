@@ -24,7 +24,7 @@ testAll: dominion.o testSuite.c
 interface.o: interface.h interface.c
 	gcc -c interface.c -g  $(CFLAGS)
 
-runtests: testDrawCard 
+runtests: testDrawCard
 	./testDrawCard &> unittestresult.out
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
@@ -33,7 +33,7 @@ runtests: testDrawCard
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
-all: playdom player 
+all: playdom player
 
 ## Added a cleanup for dSYM folder files
 clean:
@@ -45,6 +45,9 @@ ct1: clean cardtest1.c dominion.o rngs.o
 
 ct2: clean cardtest2.c dominion.o rngs.o
 	gcc  -o ct2 -g cardtest2.c dominion.o rngs.o $(CFLAGS)
+
+ct4: clean cardtest4.c dominion.o rngs.o
+	gcc  -o ct4 -g cardtest4.c dominion.o rngs.o $(CFLAGS)
 
 ut1: clean unittest1.c dominion.o rngs.o
 	gcc  -o ut1 -g unittest1.c dominion.o rngs.o $(CFLAGS)
@@ -63,17 +66,17 @@ cov1: ut1
 	lcov --capture --directory . --output-file coverage.info
 	genhtml coverage.info --output covhtml
 
-cov2: ut2 
+cov2: ut2
 	./ut2
 	lcov --capture --directory . --output-file coverage.info
 	genhtml coverage.info --output covhtml
 
-cov3: ut3 
+cov3: ut3
 	./ut3
 	lcov --capture --directory . --output-file coverage.info
 	genhtml coverage.info --output covhtml
 
-cov4: ut4 
+cov4: ut4
 	./ut4
 	lcov --capture --directory . --output-file coverage.info
 	genhtml coverage.info --output covhtml
