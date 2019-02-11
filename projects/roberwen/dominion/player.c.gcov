@@ -1,0 +1,222 @@
+        -:    0:Source:player.c
+        -:    0:Graph:player.gcno
+        -:    0:Data:-
+        -:    0:Runs:0
+        -:    0:Programs:0
+        -:    1:/* 	Interactive Dominion Interface
+        -:    2:	Version 7
+        -:    3:	
+        -:    4:	Sam Heinith CS362
+        -:    5:	Questions/Comments:
+        -:    6:	heiniths@onid.orst.edu
+        -:    7:	1/26/2010
+        -:    8:*/
+        -:    9:
+        -:   10:
+        -:   11:#include <stdio.h>
+        -:   12:#include <stdlib.h>
+        -:   13:#include <assert.h>
+        -:   14:#include <stdio.h>
+        -:   15:#include <stdlib.h>
+        -:   16:#include <string.h>
+        -:   17:#include <math.h>
+        -:   18:#include "dominion.h"
+        -:   19:#include "interface.h"
+        -:   20:#include "rngs.h"
+        -:   21:
+        -:   22:
+    #####:   23:int main2(int argc, char *argv[]) {
+        -:   24:	//Default cards, as defined in playDom
+    #####:   25:	int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy};
+        -:   26:	struct gameState g;
+    #####:   27:	initializeGame(2,k,1,&g);
+    #####:   28:	printf ("SUCCESSFUL INIT\n");
+    #####:   29:	getchar();
+    #####:   30:	return 0;
+        -:   31:}
+        -:   32:
+    #####:   33:int main(int argc, char* argv[]) {
+    #####:   34:		char *add  = "add";
+    #####:   35:	char *buyC = "buy";
+    #####:   36:	char *endT = "end";
+    #####:   37:	char *exit = "exit";
+    #####:   38:	char *help = "help";
+    #####:   39:	char *init = "init";
+    #####:   40:	char *numH = "num";
+    #####:   41:	char *play = "play";
+    #####:   42:	char *resign  = "resi";
+    #####:   43:	char *show = "show";
+    #####:   44:	char *stat = "stat";
+    #####:   45:	char *supply = "supp";
+    #####:   46:	char *whos = "whos";
+        -:   47:		
+        -:   48:	char command[MAX_STRING_LENGTH];
+        -:   49:	char line[MAX_STRING_LENGTH];
+        -:   50:	char cardName[MAX_STRING_LENGTH];
+        -:   51:
+        -:   52:	//Array to hold bot presence 
+    #####:   53:	int isBot[MAX_PLAYERS] = { 0, 0, 0, 0};
+        -:   54:
+        -:   55:	int players[MAX_PLAYERS];
+        -:   56:	int playerNum;
+        -:   57:	int outcome;
+        -:   58:	int currentPlayer;
+    #####:   59:	int gameOver = FALSE;
+    #####:   60:	int gameStarted = FALSE;
+    #####:   61:	int turnNum = 0;
+        -:   62:
+    #####:   63:	int randomSeed = atoi(argv[1]);
+        -:   64:
+        -:   65:	//Default cards, as defined in playDom
+    #####:   66:	int kCards[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy};
+        -:   67:
+        -:   68:	struct gameState g;
+    #####:   69:	struct gameState * game = &g;
+        -:   70:
+    #####:   71:	memset(game,0,sizeof(struct gameState));
+        -:   72:		
+    #####:   73:	if(argc != 2){
+    #####:   74:		printf("Usage: player [integer random number seed]\n");
+    #####:   75:		return EXIT_SUCCESS;
+        -:   76:	}
+        -:   77:
+    #####:   78:	if(randomSeed <= 0){
+    #####:   79:		printf("Usage: player [integer random number seed]\n");
+    #####:   80:		return EXIT_SUCCESS;
+        -:   81:	}	
+        -:   82:	
+    #####:   83:	initializeGame(2,kCards,randomSeed,game);
+        -:   84:
+    #####:   85:	printf("Please enter a command or \"help\" for commands\n");
+        -:   86:	
+        -:   87:
+    #####:   88:	while(TRUE) {
+    #####:   89:		int arg0 = UNUSED;
+    #####:   90:		int arg1 = UNUSED;
+    #####:   91:		int arg2 = UNUSED;
+    #####:   92:		int arg3 = UNUSED;
+        -:   93:
+    #####:   94:		outcome = FAILURE;
+    #####:   95:		strcpy(line,"");
+    #####:   96:		strcpy(command,"");
+    #####:   97:		strcpy(cardName,"");
+        -:   98:		
+    #####:   99:		currentPlayer = whoseTurn(game);
+        -:  100:		
+        -:  101:		//If you are getting a seg fault comment this if block out
+    #####:  102:		gameOver = isGameOver(game); 		
+    #####:  103:		if(gameStarted == TRUE && gameOver == TRUE){
+    #####:  104:			printScores(game);
+    #####:  105:			getWinners(players, game);
+    #####:  106:			printf("After %d turns, the winner(s) are:\n", turnNum);
+    #####:  107:			for(playerNum = 0; playerNum < game->numPlayers; playerNum++){
+    #####:  108:				if(players[playerNum] == WINNER) printf("Player %d\n", playerNum);
+        -:  109:			}
+    #####:  110:		for(playerNum = 0; playerNum < game->numPlayers; playerNum++){
+    #####:  111:				printHand(playerNum, game);
+    #####:  112:				printPlayed(playerNum, game);
+    #####:  113:				printDiscard(playerNum, game);
+    #####:  114:				printDeck(playerNum, game);
+        -:  115:			}
+        -:  116:			
+    #####:  117:			break; //Exit out of the game/while loop
+        -:  118:		}         
+        -:  119:		
+        -:  120:
+    #####:  121:		if(isBot[currentPlayer] == TRUE) {
+    #####:  122:				executeBotTurn(currentPlayer, &turnNum, game);
+    #####:  123:				continue;
+        -:  124:		}
+        -:  125:		
+    #####:  126:		printf("$ ");
+    #####:  127:		fgets(line, MAX_STRING_LENGTH, stdin);
+    #####:  128:		sscanf(line, "%s %d %d %d %d", command, &arg0, &arg1, &arg2, &arg3);
+        -:  129:
+        -:  130:
+    #####:  131:		if(COMPARE(command, add) == 0) {
+    #####:  132:			outcome = addCardToHand(currentPlayer, arg0, game);
+    #####:  133:			cardNumToName(arg0, cardName);
+    #####:  134:			printf("Player %d adds %s to their hand\n\n", currentPlayer, cardName);
+        -:  135:		} else
+    #####:  136:		if(COMPARE(command, buyC) == 0) {
+    #####:  137:			outcome = buyCard(arg0, game);
+    #####:  138:			cardNumToName(arg0, cardName);
+    #####:  139:			if(outcome == SUCCESS){
+    #####:  140:				printf("Player %d buys card %d, %s\n\n", currentPlayer, arg0, cardName);
+        -:  141:			} else {
+    #####:  142:				printf("Player %d cannot buy card %d, %s\n\n", currentPlayer, arg0, cardName);
+        -:  143:			}
+        -:  144:		} else
+    #####:  145:		if(COMPARE(command, endT) == 0) {
+    #####:  146:			if(gameStarted == TRUE) {
+    #####:  147:				if(currentPlayer == (game->numPlayers -1)) turnNum++;
+    #####:  148:				endTurn(game);
+    #####:  149:				currentPlayer = whoseTurn(game);
+    #####:  150:				printf("Player %d's turn number %d\n\n", currentPlayer, turnNum);
+        -:  151:			}
+        -:  152:
+        -:  153:		} else			
+    #####:  154:		if(COMPARE(command, exit) == 0) {
+    #####:  155:			break;
+        -:  156:		} else
+    #####:  157:		if(COMPARE(command, help) == 0) {
+    #####:  158:			printHelp();
+        -:  159:		} else
+    #####:  160:		if(COMPARE(command, init) == 0) {
+    #####:  161:			int numHuman = arg0 - arg1;
+    #####:  162:			for(playerNum = numHuman; playerNum < arg0; playerNum++) {
+    #####:  163:				isBot[playerNum] = TRUE;
+        -:  164:			}			
+        -:  165:	//		selectKingdomCards(randomSeed, kCards);  //Comment this out to use the default card set defined in playDom.
+    #####:  166:			outcome = initializeGame(arg0, kCards, randomSeed, game);
+    #####:  167:			printf("\n");
+    #####:  168:			if(outcome == SUCCESS){
+    #####:  169:				gameStarted = TRUE;
+    #####:  170:				currentPlayer = whoseTurn(game);
+    #####:  171:				printf("Player %d's turn number %d\n\n", currentPlayer, turnNum);
+        -:  172:			}
+        -:  173:
+        -:  174:		} else
+    #####:  175:		if(COMPARE(command, numH) == 0) {
+    #####:  176:			int numCards = numHandCards(game);
+    #####:  177:			printf("There are %d cards in your hand.\n", numCards);
+        -:  178:		} else
+    #####:  179:		if(COMPARE(command, play) == 0) {
+    #####:  180:			int card = handCard(arg0,game);
+    #####:  181:			outcome = playCard(arg0, arg1, arg2, arg3, game);
+    #####:  182:			cardNumToName(card, cardName);
+    #####:  183:			if(outcome == SUCCESS){
+    #####:  184:				printf("Player %d plays %s\n\n", currentPlayer, cardName);
+        -:  185:			} else {
+    #####:  186:				printf("Player %d cannot play card %d\n\n", currentPlayer, arg0);
+        -:  187:			}
+        -:  188:
+        -:  189:		} else
+    #####:  190:		if(COMPARE(command, resign) == 0) {
+    #####:  191:			endTurn(game);
+    #####:  192:			printScores(game);
+    #####:  193:			break;
+        -:  194:		} else
+    #####:  195:		if(COMPARE(command, show) == 0) {
+    #####:  196:			if(gameStarted == FALSE) continue;
+    #####:  197:			printHand(currentPlayer, game);
+    #####:  198:			printPlayed(currentPlayer, game);
+        -:  199:			//printDiscard(currentPlayer, game);
+        -:  200:			//printDeck(currentPlayer, game);
+        -:  201:		} else
+    #####:  202:		if(COMPARE(command, stat) == 0) {
+    #####:  203:			if(gameStarted == FALSE) continue;
+    #####:  204:			printState(game);
+        -:  205:		} else
+    #####:  206:		if(COMPARE(command, supply) == 0) {
+    #####:  207:			printSupply(game);
+        -:  208:		} else
+    #####:  209:		if(COMPARE(command, whos) == 0) {
+    #####:  210:			int playerNum =	whoseTurn(game);
+    #####:  211:			printf("Player %d's turn\n", playerNum);
+        -:  212:		} 
+        -:  213:    	}
+        -:  214:	
+    #####:  215:    	return EXIT_SUCCESS;
+        -:  216:
+        -:  217:}
