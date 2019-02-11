@@ -4,7 +4,11 @@
 
 int main()
 /*
-playSmithy() 
+test card smithy
+
+http://wiki.dominionstrategy.com/index.php/Smithy
+
+You draw 3 cards.
 
 */
 {
