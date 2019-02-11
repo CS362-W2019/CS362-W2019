@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #include<time.h>
 
-char inputChar()
+/*char inputChar()
 {
     // rewrote this function
     char c = 0;
@@ -12,6 +12,17 @@ char inputChar()
     c = str[i];
     return c;
 }
+*/
+
+char inputChar()
+{
+	// TODO: rewrite this function
+    int n = (rand() % (126 - 32 + 1)) + 32;
+    char c = (char) n;
+    
+    return c;
+}
+
 
 char *inputString()
 {
