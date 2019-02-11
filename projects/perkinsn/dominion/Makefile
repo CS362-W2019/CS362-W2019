@@ -1,7 +1,7 @@
 # modify these variables to point to gcc and gcov
 CC="gcc"
 GCOV="/usr/local/Cellar/gcc/8.2.0/bin/gcov-8"
-CFLAGS=-Wall -fpic -std=c99 -MMD -MP -fprofile-arcs -ftest-coverage 
+CFLAGS=-Wall -lm -fpic -std=c99 -MMD -MP -fprofile-arcs -ftest-coverage 
 
 # modify these variables as source/binary files are added or removed
 SRCS=cards.c dominion.c interface.c rngs.c
