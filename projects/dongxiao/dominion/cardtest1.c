@@ -58,6 +58,9 @@ int main()
 		initializeGame(numPlayers, k, seed, &G);
 		memcpy(&preG,&G, sizeof(struct gameState));
 
+//		printf("********************After Initialization: G****************************\n");
+//		printf("handcount: %d\tplayedCardCount: %d\tplayedCard:%d\tdeckCount:%d\tdiscardCount%d\n",G.handCount[player], G.playedCardCount, G.playedCards[player], G.deckCount[player], G.discardCount[player]);
+	
 		cardEffect(adventurer, choice1, choice2, choice3, &G, handPos, &bonus);
 		
 

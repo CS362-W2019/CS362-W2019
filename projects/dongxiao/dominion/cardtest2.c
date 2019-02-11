@@ -56,6 +56,8 @@ int main()
 		//initialize a game state and player cards
 		initializeGame(numPlayers, k, seed, &G);
 		int player = preG.whoseTurn;
+//		printf("********************After Initialization: G****************************\n");
+//		printf("handcount: %d\tplayedCardCount: %d\tplayedCard:%d\tdeckCount:%d\tdiscardCount%d\n",G.handCount[player], G.playedCardCount, G.playedCards[player], G.deckCount[player], G.discardCount[player]);
 		G.hand[player][0] = smithy;
 		memcpy(&preG,&G, sizeof(struct gameState));
 		cardEffect(smithy, choice1, choice2, choice3, &G, handPos, &bonus);
@@ -68,7 +70,7 @@ int main()
 		assertTrue(G.playedCardCount,1, "1 card is played\n");
 		printf("Old playedCardCount: %d; New playedCardCount: %d\n", preG.playedCardCount, G.playedCardCount);
 		fflush(stdout);
-		assertTrue(G.playedCards[0], smithy, "The played card is smithy");
+		assertTrue(G.playedCards[0], smithy, "The played card is smithy\n");
 
 		//check whether the total number of cards the player has remains unchanged
 		int preTotal = preG.handCount[player] + preG.deckCount[player] + preG.discardCount[player] + preG.playedCardCount;
