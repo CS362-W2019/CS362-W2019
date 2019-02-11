@@ -8,7 +8,6 @@
 #include <limits.h>
 #include "rngs.h"
 
-void compareStateFull(struct gameState *g1, struct gameState *g2, char *ignore);
 extern int updateCoins(int player, struct gameState *state, int bonus);
 
 void testSteward()

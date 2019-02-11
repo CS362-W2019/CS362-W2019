@@ -13,3 +13,5 @@ ut3
 *.nfs*
 covhtml/
 *.dSYM/
+*test*
+!*.c

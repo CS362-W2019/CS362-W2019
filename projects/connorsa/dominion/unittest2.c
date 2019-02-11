@@ -8,8 +8,6 @@
 #include <limits.h>
 #include "rngs.h"
 
-void compareStateFull(struct gameState *g1, struct gameState *g2, char *ignore);
-
 // updateCoins() is not a part of dominion.h so must note it is external
 extern int updateCoins(int player, struct gameState *state, int bonus);
 
@@ -48,7 +46,6 @@ void testUpdateCoins()
         }
     }
     G.handCount[1] = card;               // update hand count for player 0
-    compareStateFull(&G, &original, ""); 
     G.coins = 0;                         // reset
 
     // TEST TWO
@@ -78,11 +75,7 @@ void testUpdateCoins()
         printf("FAIL --- expected %d for all-card hand; received %d\n", x, G.coins);
     }
 
-    compareStateFull(&G, &original, ""); 
-
-    // TEST THREE
     // test bonus values
-
     // check results for player 1, but this time add various bonuses
     for (i = -5; i < 20; i++)
     {
@@ -99,7 +92,6 @@ void testUpdateCoins()
         }
     }
 
-    compareStateFull(&G, &original, "");
     printf("\nUNIT TEST 2 COMPLETE\n");
 
 }

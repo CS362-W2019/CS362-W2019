@@ -1,4 +1,4 @@
-CFLAGS= -Wall -fpic -coverage -lm -std=c99
+CFLAGS=-Wall -fpic --coverage -ftest-coverage -fprofile-arcs -lm -std=c99
 
 rngs.o: rngs.h rngs.c
 	gcc -c rngs.c -g  $(CFLAGS)
@@ -38,67 +38,16 @@ all: playdom player
 clean:
 	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe ut1
 	rm -rf badTestDrawCard.dSYM playdom.dSYM player.dSYM testDrawCard.dSYM ut1.dSYM ut2.dSYM
+	rm -f $(TESTS)
 
-ct1: clean cardtest1.c dominion.o rngs.o
-	gcc  -o ct1 -g cardtest1.c dominion.o rngs.o $(CFLAGS)
+TESTS=$(patsubst %.c,%,$(wildcard unittest*.c) $(wildcard cardtest*.c))
+define TESTRULE
+$(test): $(test).c dominion.o rngs.o
+	gcc -o $$@ -g $$^ $(CFLAGS)
+endef
+$(foreach test,$(TESTS),$(eval $(TESTRULE)))
 
-ct2: clean cardtest2.c dominion.o rngs.o
-	gcc  -o ct2 -g cardtest2.c dominion.o rngs.o $(CFLAGS)
+unittestresults: $(TESTS)
+	rm -f *.gcda *.gcno
+	for t in $(TESTS); do ./$$t; done
 
-ct4: clean cardtest4.c dominion.o rngs.o
-	gcc  -o ct4 -g cardtest4.c dominion.o rngs.o $(CFLAGS)
-	
-ct3: clean cardtest3.c dominion.o rngs.o
-	gcc  -o ct3 -g cardtest3.c dominion.o rngs.o $(CFLAGS)
-
-ut1: clean unittest1.c dominion.o rngs.o
-	gcc  -o ut1 -g unittest1.c dominion.o rngs.o $(CFLAGS)
-
-ut2: clean unittest2.c dominion.o rngs.o
-	gcc  -o ut2 -g unittest2.c dominion.o rngs.o $(CFLAGS)
-
-ut3: clean unittest3.c dominion.o rngs.o
-	gcc  -o ut3 -g unittest3.c dominion.o rngs.o $(CFLAGS)
-
-ut4: clean unittest4.c dominion.o rngs.o
-	gcc  -o ut4 -g unittest4.c dominion.o rngs.o $(CFLAGS)
-
-cov1: ut1
-	./ut1
-	lcov --capture --directory . --output-file coverage.info
-	genhtml coverage.info --output covhtml
-
-cov2: ut2
-	./ut2
-	lcov --capture --directory . --output-file coverage.info
-	genhtml coverage.info --output covhtml
-
-cov3: ut3
-	./ut3
-	lcov --capture --directory . --output-file coverage.info
-	genhtml coverage.info --output covhtml
-
-cov4: ut4
-	./ut4
-	lcov --capture --directory . --output-file coverage.info
-	genhtml coverage.info --output covhtml
-
-covc1: ct1
-	./ct1
-	lcov --capture --directory . --output-file coverage.info
-	genhtml coverage.info --output covhtml
-
-covc2: ct2
-	./ct2
-	lcov --capture --directory . --output-file coverage.info
-	genhtml coverage.info --output covhtml
-
-covc3: ct3
-	./ct3
-	lcov --capture --directory . --output-file coverage.info
-	genhtml coverage.info --output covhtml
-
-covc4: ct4
-	./ct4
-	lcov --capture --directory . --output-file coverage.info
-	genhtml coverage.info --output covhtml
