@@ -1,5 +1,5 @@
 # modify these variables to point to gcc and gcov
-CC="/usr/local/Cellar/gcc/8.2.0/bin/gcc-8"
+CC="gcc"
 GCOV="/usr/local/Cellar/gcc/8.2.0/bin/gcov-8"
 CFLAGS=-Wall -fpic -std=c99 -MMD -MP -fprofile-arcs -ftest-coverage 
 
