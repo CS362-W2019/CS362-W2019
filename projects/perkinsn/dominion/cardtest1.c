@@ -28,6 +28,7 @@ playSmithy()
     playCard(0, -1, -1, -1, &state);
     printf("\nPlayed smithy.\n\n");
 
+    debugGameState(0, &state);
     asserttrue(state.handCount[0] == 3);
     asserttrue(state.deckCount[0] == 1); 
     asserttrue(state.discardCount[0] == 1);
