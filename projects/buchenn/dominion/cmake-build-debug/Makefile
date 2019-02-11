@@ -39,10 +39,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /snap/clion/58/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/61/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /snap/clion/58/bin/cmake/linux/bin/cmake -E remove -f
+RM = /snap/clion/61/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominio
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/snap/clion/58/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/snap/clion/61/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -70,7 +70,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/snap/clion/58/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/snap/clion/61/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -177,6 +177,114 @@ betterTestDrawCard.c.s:
 	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/betterTestDrawCard.c.s
 .PHONY : betterTestDrawCard.c.s
 
+cardtest1.o: cardtest1.c.o
+
+.PHONY : cardtest1.o
+
+# target to build an object file
+cardtest1.c.o:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/cardtest1.c.o
+.PHONY : cardtest1.c.o
+
+cardtest1.i: cardtest1.c.i
+
+.PHONY : cardtest1.i
+
+# target to preprocess a source file
+cardtest1.c.i:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/cardtest1.c.i
+.PHONY : cardtest1.c.i
+
+cardtest1.s: cardtest1.c.s
+
+.PHONY : cardtest1.s
+
+# target to generate assembly for a file
+cardtest1.c.s:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/cardtest1.c.s
+.PHONY : cardtest1.c.s
+
+cardtest2.o: cardtest2.c.o
+
+.PHONY : cardtest2.o
+
+# target to build an object file
+cardtest2.c.o:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/cardtest2.c.o
+.PHONY : cardtest2.c.o
+
+cardtest2.i: cardtest2.c.i
+
+.PHONY : cardtest2.i
+
+# target to preprocess a source file
+cardtest2.c.i:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/cardtest2.c.i
+.PHONY : cardtest2.c.i
+
+cardtest2.s: cardtest2.c.s
+
+.PHONY : cardtest2.s
+
+# target to generate assembly for a file
+cardtest2.c.s:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/cardtest2.c.s
+.PHONY : cardtest2.c.s
+
+cardtest3.o: cardtest3.c.o
+
+.PHONY : cardtest3.o
+
+# target to build an object file
+cardtest3.c.o:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/cardtest3.c.o
+.PHONY : cardtest3.c.o
+
+cardtest3.i: cardtest3.c.i
+
+.PHONY : cardtest3.i
+
+# target to preprocess a source file
+cardtest3.c.i:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/cardtest3.c.i
+.PHONY : cardtest3.c.i
+
+cardtest3.s: cardtest3.c.s
+
+.PHONY : cardtest3.s
+
+# target to generate assembly for a file
+cardtest3.c.s:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/cardtest3.c.s
+.PHONY : cardtest3.c.s
+
+cardtest4.o: cardtest4.c.o
+
+.PHONY : cardtest4.o
+
+# target to build an object file
+cardtest4.c.o:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/cardtest4.c.o
+.PHONY : cardtest4.c.o
+
+cardtest4.i: cardtest4.c.i
+
+.PHONY : cardtest4.i
+
+# target to preprocess a source file
+cardtest4.c.i:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/cardtest4.c.i
+.PHONY : cardtest4.c.i
+
+cardtest4.s: cardtest4.c.s
+
+.PHONY : cardtest4.s
+
+# target to generate assembly for a file
+cardtest4.c.s:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/cardtest4.c.s
+.PHONY : cardtest4.c.s
+
 dominion.o: dominion.c.o
 
 .PHONY : dominion.o
@@ -230,6 +338,33 @@ interface.s: interface.c.s
 interface.c.s:
 	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/interface.c.s
 .PHONY : interface.c.s
+
+myTestSuite.o: myTestSuite.c.o
+
+.PHONY : myTestSuite.o
+
+# target to build an object file
+myTestSuite.c.o:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/myTestSuite.c.o
+.PHONY : myTestSuite.c.o
+
+myTestSuite.i: myTestSuite.c.i
+
+.PHONY : myTestSuite.i
+
+# target to preprocess a source file
+myTestSuite.c.i:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/myTestSuite.c.i
+.PHONY : myTestSuite.c.i
+
+myTestSuite.s: myTestSuite.c.s
+
+.PHONY : myTestSuite.s
+
+# target to generate assembly for a file
+myTestSuite.c.s:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/myTestSuite.c.s
+.PHONY : myTestSuite.c.s
 
 playdom.o: playdom.c.o
 
@@ -474,6 +609,114 @@ testShuffle.c.s:
 	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/testShuffle.c.s
 .PHONY : testShuffle.c.s
 
+unittest1.o: unittest1.c.o
+
+.PHONY : unittest1.o
+
+# target to build an object file
+unittest1.c.o:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/unittest1.c.o
+.PHONY : unittest1.c.o
+
+unittest1.i: unittest1.c.i
+
+.PHONY : unittest1.i
+
+# target to preprocess a source file
+unittest1.c.i:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/unittest1.c.i
+.PHONY : unittest1.c.i
+
+unittest1.s: unittest1.c.s
+
+.PHONY : unittest1.s
+
+# target to generate assembly for a file
+unittest1.c.s:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/unittest1.c.s
+.PHONY : unittest1.c.s
+
+unittest2.o: unittest2.c.o
+
+.PHONY : unittest2.o
+
+# target to build an object file
+unittest2.c.o:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/unittest2.c.o
+.PHONY : unittest2.c.o
+
+unittest2.i: unittest2.c.i
+
+.PHONY : unittest2.i
+
+# target to preprocess a source file
+unittest2.c.i:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/unittest2.c.i
+.PHONY : unittest2.c.i
+
+unittest2.s: unittest2.c.s
+
+.PHONY : unittest2.s
+
+# target to generate assembly for a file
+unittest2.c.s:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/unittest2.c.s
+.PHONY : unittest2.c.s
+
+unittest3.o: unittest3.c.o
+
+.PHONY : unittest3.o
+
+# target to build an object file
+unittest3.c.o:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/unittest3.c.o
+.PHONY : unittest3.c.o
+
+unittest3.i: unittest3.c.i
+
+.PHONY : unittest3.i
+
+# target to preprocess a source file
+unittest3.c.i:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/unittest3.c.i
+.PHONY : unittest3.c.i
+
+unittest3.s: unittest3.c.s
+
+.PHONY : unittest3.s
+
+# target to generate assembly for a file
+unittest3.c.s:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/unittest3.c.s
+.PHONY : unittest3.c.s
+
+unittest4.o: unittest4.c.o
+
+.PHONY : unittest4.o
+
+# target to build an object file
+unittest4.c.o:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/unittest4.c.o
+.PHONY : unittest4.c.o
+
+unittest4.i: unittest4.c.i
+
+.PHONY : unittest4.i
+
+# target to preprocess a source file
+unittest4.c.i:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/unittest4.c.i
+.PHONY : unittest4.c.i
+
+unittest4.s: unittest4.c.s
+
+.PHONY : unittest4.s
+
+# target to generate assembly for a file
+unittest4.c.s:
+	$(MAKE) -f CMakeFiles/dominion.dir/build.make CMakeFiles/dominion.dir/unittest4.c.s
+.PHONY : unittest4.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -489,12 +732,27 @@ help:
 	@echo "... betterTestDrawCard.o"
 	@echo "... betterTestDrawCard.i"
 	@echo "... betterTestDrawCard.s"
+	@echo "... cardtest1.o"
+	@echo "... cardtest1.i"
+	@echo "... cardtest1.s"
+	@echo "... cardtest2.o"
+	@echo "... cardtest2.i"
+	@echo "... cardtest2.s"
+	@echo "... cardtest3.o"
+	@echo "... cardtest3.i"
+	@echo "... cardtest3.s"
+	@echo "... cardtest4.o"
+	@echo "... cardtest4.i"
+	@echo "... cardtest4.s"
 	@echo "... dominion.o"
 	@echo "... dominion.i"
 	@echo "... dominion.s"
 	@echo "... interface.o"
 	@echo "... interface.i"
 	@echo "... interface.s"
+	@echo "... myTestSuite.o"
+	@echo "... myTestSuite.i"
+	@echo "... myTestSuite.s"
 	@echo "... playdom.o"
 	@echo "... playdom.i"
 	@echo "... playdom.s"
@@ -522,6 +780,18 @@ help:
 	@echo "... testShuffle.o"
 	@echo "... testShuffle.i"
 	@echo "... testShuffle.s"
+	@echo "... unittest1.o"
+	@echo "... unittest1.i"
+	@echo "... unittest1.s"
+	@echo "... unittest2.o"
+	@echo "... unittest2.i"
+	@echo "... unittest2.s"
+	@echo "... unittest3.o"
+	@echo "... unittest3.i"
+	@echo "... unittest3.s"
+	@echo "... unittest4.o"
+	@echo "... unittest4.i"
+	@echo "... unittest4.s"
 .PHONY : help
 
 

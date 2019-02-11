@@ -23,17 +23,27 @@ testAll: dominion.o testSuite.c
 
 interface.o: interface.h interface.c
 	gcc -c interface.c -g  $(CFLAGS)
+#gcc -Wall -std=c99 -o  prog compare.c bst.c main.c -ftest-coverage -fpro    file-arcs
 
 runtests: testDrawCard 
-	./testDrawCard &> unittestresult.out
-	gcov dominion.c >> unittestresult.out
-	cat dominion.c.gcov >> unittestresult.out
+	./testDrawCard &> unittestresult.out.sample
+	gcov dominion.c >> unittestresult.out.sample
+	cat dominion.c.gcov >> unittestresult.out.sample
 
+#add unit 2,3,4 card 1,2,3,4
+unitTests: dominion.o rngs.o unittest1.c testInit.c
+	gcc -Wall -std=c99 -o unitTests testInit.c unittest1.c -g dominion.o rngs.o $(CFLAGS)
+
+unittestresults: unitTests
+	./unitTests | tee unittestresult.out
+	gcov -b dominion.c >> unittestresult.out
+	cat dominion.c.gcov >> unittestresult.out
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
-all: playdom player 
+all: playdom player
+
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard unitTests testDrawCard.exe

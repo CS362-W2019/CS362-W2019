@@ -1,22 +1,28 @@
 #include "dominion.h"
+#include "dominion_helpers.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <memory.h>
 #include "rngs.h"
+#include "myTestSuite.h"
 
 int main (int argc, char** argv) {
 
   struct gameState G;
+  struct gameState mutable;
   
   int i;
 
   int start = -1;
 
-  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, 
+  int k[10] = {adventurer, gardens, embargo, village, minion, salvager, cutpurse,
 	       sea_hag, tribute, smithy};
+
+  int testResult;
   
   memset(&G, 'z', sizeof(struct gameState));
   
-  initializeGame(4, k, atoi(argv[1]), &G);
+  initializeGame(4, k, 30, &G);
   
   printf ("Rough guide to locations in structure:\n");
   printf ("0: numPlayers\n");
@@ -51,6 +57,19 @@ int main (int argc, char** argv) {
       printf ("Bytes %d-%d uninitialized.\n", start, i-1);
     }
   }
+
+	//copy to mutable gamestate
+	memcpy (&mutable, &G, sizeof(struct gameState));
+  	testResult = memcmp(&mutable, &G, sizeof(struct gameState));
+  	asserttrue(testResult);
+	testResult = myShuffleTest(2, &mutable, &G);
+	if(testResult){
+		printf("**COMPLETED TESTING: shuffle**");
+	}
+	else{
+		printf("**TEST SUITE ERROR: shuffle**");
+	}
+
 
   return 0;
 }

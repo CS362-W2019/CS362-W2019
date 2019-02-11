@@ -73,6 +73,10 @@ struct gameState {
   int playedCardCount;
 };
 
+int compare(const void* a, const void* b);
+
+
+
 /* All functions return -1 on failure, and DO NOT CHANGE GAME STATE;
    unless specified for other return, return 0 on success */
 

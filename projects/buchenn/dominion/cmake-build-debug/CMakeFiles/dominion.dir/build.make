@@ -34,10 +34,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /snap/clion/58/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/61/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /snap/clion/58/bin/cmake/linux/bin/cmake -E remove -f
+RM = /snap/clion/61/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -226,6 +226,123 @@ CMakeFiles/dominion.dir/testShuffle.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/dominion.dir/testShuffle.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/testShuffle.c -o CMakeFiles/dominion.dir/testShuffle.c.s
 
+CMakeFiles/dominion.dir/myTestSuite.c.o: CMakeFiles/dominion.dir/flags.make
+CMakeFiles/dominion.dir/myTestSuite.c.o: ../myTestSuite.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/dominion.dir/myTestSuite.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/dominion.dir/myTestSuite.c.o   -c /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/myTestSuite.c
+
+CMakeFiles/dominion.dir/myTestSuite.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/dominion.dir/myTestSuite.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/myTestSuite.c > CMakeFiles/dominion.dir/myTestSuite.c.i
+
+CMakeFiles/dominion.dir/myTestSuite.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/dominion.dir/myTestSuite.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/myTestSuite.c -o CMakeFiles/dominion.dir/myTestSuite.c.s
+
+CMakeFiles/dominion.dir/unittest1.c.o: CMakeFiles/dominion.dir/flags.make
+CMakeFiles/dominion.dir/unittest1.c.o: ../unittest1.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/dominion.dir/unittest1.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/dominion.dir/unittest1.c.o   -c /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest1.c
+
+CMakeFiles/dominion.dir/unittest1.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/dominion.dir/unittest1.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest1.c > CMakeFiles/dominion.dir/unittest1.c.i
+
+CMakeFiles/dominion.dir/unittest1.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/dominion.dir/unittest1.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest1.c -o CMakeFiles/dominion.dir/unittest1.c.s
+
+CMakeFiles/dominion.dir/unittest2.c.o: CMakeFiles/dominion.dir/flags.make
+CMakeFiles/dominion.dir/unittest2.c.o: ../unittest2.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/dominion.dir/unittest2.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/dominion.dir/unittest2.c.o   -c /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest2.c
+
+CMakeFiles/dominion.dir/unittest2.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/dominion.dir/unittest2.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest2.c > CMakeFiles/dominion.dir/unittest2.c.i
+
+CMakeFiles/dominion.dir/unittest2.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/dominion.dir/unittest2.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest2.c -o CMakeFiles/dominion.dir/unittest2.c.s
+
+CMakeFiles/dominion.dir/unittest3.c.o: CMakeFiles/dominion.dir/flags.make
+CMakeFiles/dominion.dir/unittest3.c.o: ../unittest3.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/dominion.dir/unittest3.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/dominion.dir/unittest3.c.o   -c /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest3.c
+
+CMakeFiles/dominion.dir/unittest3.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/dominion.dir/unittest3.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest3.c > CMakeFiles/dominion.dir/unittest3.c.i
+
+CMakeFiles/dominion.dir/unittest3.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/dominion.dir/unittest3.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest3.c -o CMakeFiles/dominion.dir/unittest3.c.s
+
+CMakeFiles/dominion.dir/unittest4.c.o: CMakeFiles/dominion.dir/flags.make
+CMakeFiles/dominion.dir/unittest4.c.o: ../unittest4.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/dominion.dir/unittest4.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/dominion.dir/unittest4.c.o   -c /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest4.c
+
+CMakeFiles/dominion.dir/unittest4.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/dominion.dir/unittest4.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest4.c > CMakeFiles/dominion.dir/unittest4.c.i
+
+CMakeFiles/dominion.dir/unittest4.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/dominion.dir/unittest4.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest4.c -o CMakeFiles/dominion.dir/unittest4.c.s
+
+CMakeFiles/dominion.dir/cardtest1.c.o: CMakeFiles/dominion.dir/flags.make
+CMakeFiles/dominion.dir/cardtest1.c.o: ../cardtest1.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/dominion.dir/cardtest1.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/dominion.dir/cardtest1.c.o   -c /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest1.c
+
+CMakeFiles/dominion.dir/cardtest1.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/dominion.dir/cardtest1.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest1.c > CMakeFiles/dominion.dir/cardtest1.c.i
+
+CMakeFiles/dominion.dir/cardtest1.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/dominion.dir/cardtest1.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest1.c -o CMakeFiles/dominion.dir/cardtest1.c.s
+
+CMakeFiles/dominion.dir/cardtest2.c.o: CMakeFiles/dominion.dir/flags.make
+CMakeFiles/dominion.dir/cardtest2.c.o: ../cardtest2.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/dominion.dir/cardtest2.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/dominion.dir/cardtest2.c.o   -c /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest2.c
+
+CMakeFiles/dominion.dir/cardtest2.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/dominion.dir/cardtest2.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest2.c > CMakeFiles/dominion.dir/cardtest2.c.i
+
+CMakeFiles/dominion.dir/cardtest2.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/dominion.dir/cardtest2.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest2.c -o CMakeFiles/dominion.dir/cardtest2.c.s
+
+CMakeFiles/dominion.dir/cardtest3.c.o: CMakeFiles/dominion.dir/flags.make
+CMakeFiles/dominion.dir/cardtest3.c.o: ../cardtest3.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/dominion.dir/cardtest3.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/dominion.dir/cardtest3.c.o   -c /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest3.c
+
+CMakeFiles/dominion.dir/cardtest3.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/dominion.dir/cardtest3.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest3.c > CMakeFiles/dominion.dir/cardtest3.c.i
+
+CMakeFiles/dominion.dir/cardtest3.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/dominion.dir/cardtest3.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest3.c -o CMakeFiles/dominion.dir/cardtest3.c.s
+
+CMakeFiles/dominion.dir/cardtest4.c.o: CMakeFiles/dominion.dir/flags.make
+CMakeFiles/dominion.dir/cardtest4.c.o: ../cardtest4.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/dominion.dir/cardtest4.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/dominion.dir/cardtest4.c.o   -c /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest4.c
+
+CMakeFiles/dominion.dir/cardtest4.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/dominion.dir/cardtest4.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest4.c > CMakeFiles/dominion.dir/cardtest4.c.i
+
+CMakeFiles/dominion.dir/cardtest4.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/dominion.dir/cardtest4.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest4.c -o CMakeFiles/dominion.dir/cardtest4.c.s
+
 # Object files for target dominion
 dominion_OBJECTS = \
 "CMakeFiles/dominion.dir/badTestDrawCard.c.o" \
@@ -240,7 +357,16 @@ dominion_OBJECTS = \
 "CMakeFiles/dominion.dir/testBuyCard.c.o" \
 "CMakeFiles/dominion.dir/testDrawCard.c.o" \
 "CMakeFiles/dominion.dir/testInit.c.o" \
-"CMakeFiles/dominion.dir/testShuffle.c.o"
+"CMakeFiles/dominion.dir/testShuffle.c.o" \
+"CMakeFiles/dominion.dir/myTestSuite.c.o" \
+"CMakeFiles/dominion.dir/unittest1.c.o" \
+"CMakeFiles/dominion.dir/unittest2.c.o" \
+"CMakeFiles/dominion.dir/unittest3.c.o" \
+"CMakeFiles/dominion.dir/unittest4.c.o" \
+"CMakeFiles/dominion.dir/cardtest1.c.o" \
+"CMakeFiles/dominion.dir/cardtest2.c.o" \
+"CMakeFiles/dominion.dir/cardtest3.c.o" \
+"CMakeFiles/dominion.dir/cardtest4.c.o"
 
 # External object files for target dominion
 dominion_EXTERNAL_OBJECTS =
@@ -258,9 +384,18 @@ dominion: CMakeFiles/dominion.dir/testBuyCard.c.o
 dominion: CMakeFiles/dominion.dir/testDrawCard.c.o
 dominion: CMakeFiles/dominion.dir/testInit.c.o
 dominion: CMakeFiles/dominion.dir/testShuffle.c.o
+dominion: CMakeFiles/dominion.dir/myTestSuite.c.o
+dominion: CMakeFiles/dominion.dir/unittest1.c.o
+dominion: CMakeFiles/dominion.dir/unittest2.c.o
+dominion: CMakeFiles/dominion.dir/unittest3.c.o
+dominion: CMakeFiles/dominion.dir/unittest4.c.o
+dominion: CMakeFiles/dominion.dir/cardtest1.c.o
+dominion: CMakeFiles/dominion.dir/cardtest2.c.o
+dominion: CMakeFiles/dominion.dir/cardtest3.c.o
+dominion: CMakeFiles/dominion.dir/cardtest4.c.o
 dominion: CMakeFiles/dominion.dir/build.make
 dominion: CMakeFiles/dominion.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking C executable dominion"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Linking C executable dominion"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/dominion.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

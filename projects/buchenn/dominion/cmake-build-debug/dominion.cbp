@@ -86,6 +86,18 @@
 		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/betterTestDrawCard.c">
 			<Option target="dominion"/>
 		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest1.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest2.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest3.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/cardtest4.c">
+			<Option target="dominion"/>
+		</Unit>
 		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/dominion.c">
 			<Option target="dominion"/>
 		</Unit>
@@ -99,6 +111,12 @@
 			<Option target="dominion"/>
 		</Unit>
 		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/interface.h">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/myTestSuite.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/myTestSuite.h">
 			<Option target="dominion"/>
 		</Unit>
 		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/playdom.c">
@@ -129,6 +147,18 @@
 			<Option target="dominion"/>
 		</Unit>
 		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/testShuffle.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest1.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest2.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest3.c">
+			<Option target="dominion"/>
+		</Unit>
+		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/unittest4.c">
 			<Option target="dominion"/>
 		</Unit>
 		<Unit filename="/home/noah2017/Documents/CS362-W2019/projects/buchenn/dominion/CMakeLists.txt">

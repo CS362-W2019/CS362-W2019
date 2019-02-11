@@ -5,7 +5,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-int compare(const void* a, const void* b) {
+int compare(const void *a, const void *b) {
   if (*(int*)a > *(int*)b)
     return 1;
   if (*(int*)a < *(int*)b)
@@ -146,7 +146,7 @@ int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
       for (j = 3; j < 10; j++)
 	{
 	  state->deck[i][j] = copper;
-	  state->deckCount[i]++;		
+	  state->deckCount[i]++;
 	}
     }
 
@@ -538,7 +538,7 @@ int drawCard(int player, struct gameState *state)
     state->deckCount[player] = state->discardCount[player];
     state->discardCount[player] = 0;//Reset discard
 
-    //Shufffle the deck
+    //Shuffle the deck
     shuffle(player, state);//Shuffle the deck up and make it so that we can draw
    
     if (DEBUG){//Debug statements

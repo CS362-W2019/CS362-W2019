@@ -22,4 +22,14 @@ add_executable(dominion
         testBuyCard.c
         testDrawCard.c
         testInit.c
-        testShuffle.c)
+        testShuffle.c
+        myTestSuite.c
+        myTestSuite.h
+        unittest1.c
+        unittest2.c
+        unittest3.c
+        unittest4.c
+        cardtest1.c
+        cardtest2.c
+        cardtest3.c
+        cardtest4.c)
