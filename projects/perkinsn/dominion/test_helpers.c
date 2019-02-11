@@ -39,7 +39,15 @@ void debugGameState(int player, struct gameState* state)
     char phase[20];
     phaseNumToName(state->phase, phase);
     printf("phase: %s\n", phase);
-    printf("\n");
+    printf("playedCardCount: %d\n", state->playedCardCount);
+
+    printf("playedCards: ");
+    for (int i = 0; i < state->playedCardCount; ++i) {
+        char name[20];
+        cardNumToName(state->playedCards[i], name);
+        printf("%s ", name); 
+    }
+    printf("\n\n");
     
     if (player > -1) {
         printf("handCount: %d\n", state->handCount[player]);
