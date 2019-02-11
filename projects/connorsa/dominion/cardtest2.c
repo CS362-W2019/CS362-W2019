@@ -14,7 +14,7 @@ extern int updateCoins(int player, struct gameState *state, int bonus);
 void testAdventurer()
 {
     int i, preCoins, postCoins, advPos, postDeck, preHand, preDeck, preDisc, cardsFound, badVal;
-
+    printf("\nCARD TEST 2 START\n");
     // create 2 identical game states to test if updateCoins() modifies other things
     // copy G into original AFTER preparing for test
     struct gameState G;
@@ -132,6 +132,8 @@ void testAdventurer()
         printf("FAIL --- deck size is %d, expected %d\n", postDeck, preDeck - 2);
     }
     compareStateFull(&G, &original, "");
+    printf("\nCARD TEST 2 COMPLETE\n");
+
 }
 
 void compareStateFull(struct gameState *g1, struct gameState *g2, char *ignore)

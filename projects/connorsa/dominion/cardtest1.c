@@ -10,36 +10,13 @@
 
 void compareStateFull(struct gameState *g1, struct gameState *g2, char *ignore);
 
-/*
-int smithyCard(struct gameState *state, int handPos)
-{
-  int i;
-  int currentPlayer = whoseTurn(state);
-  int nextPlayer = currentPlayer + 1;
-
-  if (nextPlayer > (state->numPlayers - 1))
-  {
-    nextPlayer = 0;
-  }
-  //+3 Cards
-  //for (i = 0; i < 3; i++) //UNBUGGED HERE
-  for (i = 0; i <= 3; i++) //INTRODUCED BUG HERE
-  {
-    drawCard(currentPlayer, state);
-  }
-
-  //discard card from hand
-  discardCard(handPos, currentPlayer, state, 0);
-  return 0;
-}
-*/
-
 void testSmithy()
 {
-    int i, nextCard, handSize, deckSize, allDeckSize, discSize, playedSize, smithyPos;
+    int nextCard, handSize, deckSize, allDeckSize, discSize, playedSize, smithyPos;
     int card1, card2, card3;
     const int P0 = 0;
     const int P1 = 1;
+    printf("\nCARD TEST 1 START\n");
     // create 2 identical game states to test if updateCoins() modifies other things
     struct gameState G;
     // initialize with all cards available
@@ -98,6 +75,9 @@ void testSmithy()
     }
 
     compareStateFull(&G, &original, "");
+
+    printf("\nCARD TEST 1 COMPLETE\n");
+
 }
 
 int main()

@@ -14,7 +14,8 @@ void compareStateFull(struct gameState *g1, struct gameState *g2, char *ignore);
 void testVillage()
 {
     int i, vPos;
-
+    int p1 = 1; // must start with player 1 for coverage purposes
+    printf("\nCARD TEST 3 START\n");
     // create 2 identical game states to test if updateCoins() modifies other things
     // copy G into original AFTER preparing for test
     struct gameState G;
@@ -26,62 +27,55 @@ void testVillage()
     struct gameState original;
 
     // manually set a hand for P0
-    G.handCount[0] = 5;
-    G.whoseTurn = 0;
+    G.handCount[p1] = 5;
+    G.whoseTurn = p1;
     
-    // put the adventurer in first card spot, fill the rest with curses
+    // put the village in first card spot, fill the rest with curses
     vPos = 0;
-    G.hand[0][vPos] = village;
-    for (i = 0; i < G.handCount[0]; i++)
+    G.hand[p1][vPos] = village;
+    for (i = 1; i < G.handCount[p1]; i++)
     {
-        if (i != 0)
-        {
-            G.hand[0][i] = curse; // curse cards
-        }
-         printf("%d  ", G.hand[0][i]);
+        G.hand[p1][i] = curse; // curse cards
     }
-    printf("hand \n");
-    // fill deck with estates and copper
-    // only 5 to force reshuffle to get to extra copper in discard
-    G.deckCount[0] = 5;
-    for (i = 0; i < G.deckCount[0]; i++)
+  
+    // empty deck to force reshuffle testing
+    G.deckCount[p1] = 0;
+  
+    // load discard to ensure shuffle can occur 
+    G.discardCount[p1] = 5;
+    for (i = 0; i < G.discardCount[p1]; i++)
     {
-        if (i == 3) // put one copper in the deck
-        {
-            G.deck[0][i] = copper;
-        }
-        else
-        {
-             G.deck[0][i] = estate;
-        }
-        //printf("%d  ", G.deck[0][i]);
+        G.discard[p1][i] = copper;
     }
-    //printf("deck \n");
-    // load discard to ensure shuffle must occur 
-    G.discardCount[0] = 5;
-    for (i = 0; i < G.discardCount[0]; i++)
-    {
-        if (i == 2 || i == 4)
-        {
-            G.discard[0][i] = copper;
-        }
-        else
-        {
-            G.discard[0][i] = estate;
-        }
-        //printf("%d  ", G.discard[0][i]);
-    }
-    //printf("discard \n");
 
-
-    // copy for comparison
+    // copy for later comparison
     memcpy(&original, &G, sizeof(G)); // use memcpy so that memory padding copies too
 
-    // check that actions happened
-    // check that hand increased
-    // check that 
+    // run that card!
+    cardEffect(village, 30, 30, 30, &G, vPos, 0);
 
+    // check that actions were added
+    if (G.numActions != (original.numActions + 2))
+    {
+        printf("FAIL --- Village failed to add +1 action\n");
+    }
+    // check that 1 card was drawn
+    if (G.handCount[p1] != 5)
+    {
+        printf("FAIL --- Expected deck size %d, got %d\n", 5, G.handCount[p1]);
+    }
+    // check that played pile contains the Village card
+    if (G.playedCards[0] != village)
+    {
+        printf("FAIL --- Village card wasn't in expected spot in played pile\n");
+    }    
+    if (G.discardCount[p1] != 0)
+    {
+        printf("FAIL --- Expected discard count of 0, got %d\n", G.discardCount[p1]);
+    }
 
+    compareStateFull(&G, &original, "");
+    printf("\nCARD TEST 3 COMPLETE\n");
 
 }
 
@@ -115,7 +109,7 @@ void compareStateFull(struct gameState *g1, struct gameState *g2, char *ignore)
     {
         printf("embargoTokens was modified\n");
     }
-    if (memcmp(g1->hand, g2->hand, sizeof(g1->hand)) && (strcmp(ignore, "hand") != 0))
+     if (memcmp(g1->hand, g2->hand, sizeof(g1->hand)) && (strcmp(ignore, "hand") != 0))
     {
         printf("hand was modified\n");
     }
@@ -165,5 +159,6 @@ int main()
 {
     srand(time(NULL));
     testVillage();
+
     return 0;
 }

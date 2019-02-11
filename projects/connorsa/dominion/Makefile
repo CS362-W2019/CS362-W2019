@@ -29,7 +29,6 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
-
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
@@ -48,6 +47,9 @@ ct2: clean cardtest2.c dominion.o rngs.o
 
 ct4: clean cardtest4.c dominion.o rngs.o
 	gcc  -o ct4 -g cardtest4.c dominion.o rngs.o $(CFLAGS)
+	
+ct3: clean cardtest3.c dominion.o rngs.o
+	gcc  -o ct3 -g cardtest3.c dominion.o rngs.o $(CFLAGS)
 
 ut1: clean unittest1.c dominion.o rngs.o
 	gcc  -o ut1 -g unittest1.c dominion.o rngs.o $(CFLAGS)
@@ -88,5 +90,15 @@ covc1: ct1
 
 covc2: ct2
 	./ct2
+	lcov --capture --directory . --output-file coverage.info
+	genhtml coverage.info --output covhtml
+
+covc3: ct3
+	./ct3
+	lcov --capture --directory . --output-file coverage.info
+	genhtml coverage.info --output covhtml
+
+covc4: ct4
+	./ct4
 	lcov --capture --directory . --output-file coverage.info
 	genhtml coverage.info --output covhtml

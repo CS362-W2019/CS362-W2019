@@ -13,6 +13,7 @@ void compareStateFull(struct gameState *g1, struct gameState *g2, char *ignore);
 void testIsGameOver()
 {
     int i, x;
+    printf("\nUNIT TEST 3 START\n");
     // create 2 identical game states to test if isGameOver() modifies other things
     // initialize with all cards available
     struct gameState G;
@@ -108,7 +109,7 @@ void testIsGameOver()
         G.supplyCount[i] = 100; // reset
         compareStateFull(&G, &original, "supplyCount");
     }
-
+    printf("\nUNIT TEST 3 COMPLETE\n");
 }
 
 void compareStateFull(struct gameState *g1, struct gameState *g2, char *ignore)

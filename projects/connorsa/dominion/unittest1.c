@@ -13,9 +13,9 @@ void testGetCost()
     int i, j, cost;
     int prices[] = {0, 2, 5, 8, 0, 3, 6, 6, 5, 4, 4, 5, 4, 4, 3, 4, 3, 5, 3, 5, 3, 4, 2, 5, 4, 4, 4};
     int fringe[] = {-1, -2, -3, INT_MIN, INT_MAX};
-
     int len = sizeof(prices) / sizeof(prices[0]);
 
+    printf("\nUNIT TEST 1 START\n");
     //  quick check of number of prices vs. CARD enums,
     //  this is duplicate effort, but could help if other tests crash without reporting
     if (len != treasure_map + 1)
@@ -57,6 +57,7 @@ void testGetCost()
             printf("FAIL --- getCost() returned %d for non-existent card %d\n", cost, i);
         }
     }
+    printf("\nUNIT TEST 1 COMPLETE\n");
 }
 
 int main()

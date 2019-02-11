@@ -14,7 +14,7 @@ extern int updateCoins(int player, struct gameState *state, int bonus);
 void testSteward()
 {
     int i, stewPos;
-
+    printf("\nCARD TEST 4 START\n");
     struct gameState G;
     struct gameState G2;
     struct gameState G_ORIG;
@@ -78,6 +78,8 @@ void testSteward()
     if (memcmp(&G, &G2, sizeof(G))) {
         printf("FAIL --- Trash 2 cards. Game state modified in unexpected ways\n");
     }
+    printf("\nCARD TEST 4 COMPLETE\n");
+
 }
 
 int main()

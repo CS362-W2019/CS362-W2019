@@ -16,7 +16,7 @@ extern int updateCoins(int player, struct gameState *state, int bonus);
 void testUpdateCoins()
 {
     int i, j, x, card, bonus, expected;
-
+    printf("\nUNIT TEST 2 START\n");
     // create 2 identical game states to test if updateCoins() modifies other things
     struct gameState G;
     // initialize with all cards available
@@ -84,7 +84,7 @@ void testUpdateCoins()
     // test bonus values
 
     // check results for player 1, but this time add various bonuses
-    for (i = -10; i < 20; i++)
+    for (i = -5; i < 20; i++)
     {
         bonus = i;
         expected = x + bonus;
@@ -100,6 +100,7 @@ void testUpdateCoins()
     }
 
     compareStateFull(&G, &original, "");
+    printf("\nUNIT TEST 2 COMPLETE\n");
 
 }
 

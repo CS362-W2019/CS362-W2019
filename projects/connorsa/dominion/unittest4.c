@@ -11,12 +11,12 @@
 void testKingdomCards()
 {
     int i;
-
     // 0, 7-26 are kingdom cards
     // 1-3 are victory cards, 4-6 are treasure cards
     // test standard game with valid CARD enums
     int set1[] = {0, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     int *deck1 = kingdomCards(0, 7, 8, 9, 10, 11, 12, 13, 14, 15); // all valid cards
+    printf("\nUNIT TEST 4 START\n");
     if (deck1 == NULL)
     {
         printf("FAIL --- kingdomCards() returned null for deck 1\n");
@@ -75,6 +75,7 @@ void testKingdomCards()
     free(deck1);
     free(deck2);
     free(deck3);
+    printf("\nUNIT TEST 4 COMPLETE\n");
 }
 
 int main()

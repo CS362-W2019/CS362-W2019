@@ -11,3 +11,5 @@ ut3
 *.o
 *.swp
 *.nfs*
+covhtml/
+*.dSYM/
