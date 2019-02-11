@@ -40,14 +40,17 @@ clean:
 	rm -rf badTestDrawCard.dSYM playdom.dSYM player.dSYM testDrawCard.dSYM ut1.dSYM ut2.dSYM
 	rm -f $(TESTS)
 
-TESTS=$(patsubst %.c,%,$(wildcard unittest*.c) $(wildcard cardtest*.c))
+TESTS=$(sort $(patsubst %.c,%,$(wildcard unittest*.c) $(wildcard cardtest*.c)))
 define TESTRULE
 $(test): $(test).c dominion.o rngs.o
 	gcc -o $$@ -g $$^ $(CFLAGS)
 endef
 $(foreach test,$(TESTS),$(eval $(TESTRULE)))
 
+.PHONY: unittestresults
 unittestresults: $(TESTS)
-	rm -f *.gcda *.gcno
-	for t in $(TESTS); do ./$$t; done
+	for t in $(TESTS); do ./$$t; done &> unittestresults.out
+	@echo >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
+	cat dominion.c.gcov >> unittestresults.out
 
