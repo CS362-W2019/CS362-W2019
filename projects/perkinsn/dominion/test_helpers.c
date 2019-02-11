@@ -36,6 +36,7 @@ void debugGameState(int player, struct gameState* state)
 {
     printf("numPlayers: %d\n", state->numPlayers);
     printf("whoseTurn: %d\n", state->whoseTurn);
+    printf("numActions: %d\n", state->numActions);
     char phase[20];
     phaseNumToName(state->phase, phase);
     printf("phase: %s\n", phase);
