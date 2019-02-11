@@ -36,6 +36,8 @@ void assertTrue(int testResult, int expectedResult, char* info)
 
 int main()
 {
+	printf("----------------------------- Test playCard() --------------------------\n");
+	fflush(stdout);
 	int numPlayers = 2;
 	int seed = 0;
 	int k[10] = {adventurer, feast, gardens, mine, smithy, village, baron, steward, outpost, treasure_map};

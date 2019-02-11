@@ -35,6 +35,8 @@ void assertTrue(int testResult, int expectedResult, char* info)
 
 int main()
 {
+	printf("------------------------------- Test whoseTurn() --------------------------------\n");
+	fflush(stdout);
 	int numPlayers = 4;
 	int seed = 0;
 	int k[10] = {adventurer, feast, gardens, mine, smithy, village, baron, steward, outpost, treasure_map};

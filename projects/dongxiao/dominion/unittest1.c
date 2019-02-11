@@ -35,6 +35,8 @@ void assertTrue(int testResult, int expectedResult, char* info)
 
 int main()
 {
+	printf("------------------------ Test kindomCards() --------------------------\n");
+	fflush(stdout);
 	int k[10] = {adventurer, feast, gardens, mine, smithy, village, baron, steward, outpost, treasure_map};
 	int *r = kingdomCards(k[0], k[1], k[2], k[3], k[4], k[5], k[6], k[7], k[8], k[9]);
 
