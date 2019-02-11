@@ -7,7 +7,7 @@ CFLAGS=-Wall -lm -fpic -std=c99 -MMD -MP -fprofile-arcs -ftest-coverage
 SRCS=cards.c dominion.c interface.c rngs.c
 OBJS=$(SRCS:.c=.o)
 TESTS=testDrawCard testBuyCard testShuffle testInit
-UNITTESTS=unittest1 unittest2 unittest3
+UNITTESTS=unittest1 unittest2 unittest3 unittest4
 CARDTESTS=cardtest1
 BINARIES=$(TESTS) $(UNITTESTS) $(CARDTESTS) playdom player
 
@@ -42,6 +42,7 @@ unittestresults: $(UNITTESTS) $(OBJS) $(SRCS)
 	./unittest1 >> unittestresults.out
 	./unittest2 >> unittestresults.out
 	./unittest3 >> unittestresults.out
+	./unittest4 >> unittestresults.out
 	$(GCOV) dominion.c -b -f >> unittestresults.out
 
 .PHONY=clean
