@@ -1437,5 +1437,6 @@ int sea_hagEffect(struct gameState *state){
 }
 
 //end Tera's assignment 2 functions
+//Does this thing work??
 
 //end of dominion.c
