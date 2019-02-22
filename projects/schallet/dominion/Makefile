@@ -44,13 +44,13 @@ randomtestcard2: randomtestcard2.c dominion.o rngs.o
 randomtestResults: randomtestadventurer randomtestcard1 randomtestcard2
 		./randomtestadventurer &> randomtestadventurer.out
 		gcov dominion.c >> randomtestadventurer.out
-		cat dominion.c.gov >> randomtestadventurer.out
+		cat dominion.c.gcov >> randomtestadventurer.out
 		./randomtestcard1 &> randomtestcard1.out
 		gcov dominion.c >> randomtestcard1.out
-		cat dominion.c.gov >> randomtestcard1.out
+		cat dominion.c.gcov >> randomtestcard1.out
 		./randomtestcard2 &> randomtestcard2.out
 		gcov dominion.c >> randomtestcard2.out
-		cat dominion.c.gov >> randomtestcard2.out
+		cat dominion.c.gcov >> randomtestcard2.out
 
 
 all: playdom player randomtestResults
