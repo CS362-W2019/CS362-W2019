@@ -13,6 +13,24 @@
 #include "rngs.h"
 int main(){
   printf("~~~~~Begining Card 1 Random Testing~~~~~\n");
+  printf("~~~~~Random Testing: Villiage effect~~~~~\n");
+  printf("Test 1: positive control, call villiage effect\n");
+  //need a valid game in progress to call adventurerEffect
+  //or else it segfaults
+  int myHandPos = 0;
+  int numPlayers = 2;
+  int k[10] = {adventurer, embargo, village, minion, mine,
+    cutpurse,sea_hag, tribute, smithy, council_room};
+  int seed = 1000;
+  //create and initialize a game state
+  struct gameState myState;
+  memset(&myState, 0, sizeof(myState));
+  initializeGame(numPlayers, k, seed, &myState);
+
+  //call villiage effect and show result
+  result = villiageEffect(&myState, myHandPos);
+  printf("Test result: %d\n", result);
+
 
 }
 
