@@ -13,8 +13,8 @@
 #include "rngs.h"
 int main(){
   printf("~~~~~Begining Card 1 Random Testing~~~~~\n");
-  printf("~~~~~Random Testing: Villiage effect~~~~~\n");
-  printf("Test 1: positive control, call villiage effect\n");
+  printf("~~~~~Random Testing: Village effect~~~~~\n");
+  printf("Test 1: positive control, call village effect\n");
   //need a valid game in progress to call adventurerEffect
   //or else it segfaults
   int myHandPos = 0;
@@ -29,7 +29,7 @@ int main(){
   initializeGame(numPlayers, k, seed, &myState);
 
   //call villiage effect and show result
-  result = villiageEffect(&myState, myHandPos);
+  result = villageEffect(&myState, myHandPos);
   printf("Test result: %d\n", result);
 
 
