@@ -22,13 +22,14 @@ int main(){
   int k[10] = {adventurer, embargo, village, minion, mine,
     cutpurse,sea_hag, tribute, smithy, council_room};
   int seed = 1000;
+  int result;
   //create and initialize a game state
   struct gameState myState;
   memset(&myState, 0, sizeof(myState));
   initializeGame(numPlayers, k, seed, &myState);
 
   //call villiage effect and show result
-  int result = villiageEffect(&myState, myHandPos);
+  result = villiageEffect(&myState, myHandPos);
   printf("Test result: %d\n", result);
 
 
