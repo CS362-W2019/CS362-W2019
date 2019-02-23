@@ -28,7 +28,7 @@ int main(){
   initializeGame(numPlayers, k, seed, &myState);
 
   //call villiage effect and show result
-  result = villiageEffect(&myState, myHandPos);
+  int result = villiageEffect(&myState, myHandPos);
   printf("Test result: %d\n", result);
 
 
