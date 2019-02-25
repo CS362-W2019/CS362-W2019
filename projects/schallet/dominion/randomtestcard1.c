@@ -18,7 +18,6 @@ int main(){
   printf("~~~~~Random Testing: Village effect~~~~~\n");
   printf("Test 1: positive control, call villageEffect: ");
   //need a valid game in progress to call adventurerEffect
-  //or else it segfaults
   int myHandPos = 0;
   int numPlayers = 2;
   int k[10] = {adventurer, embargo, village, minion, mine,
@@ -46,7 +45,7 @@ int main(){
   srand(time(0));
   int randPlayer;
   int gameSeed;
-  //repeat 100 times
+  //repeat 100 times:
   //start game with 2-4 players
   //rand() % 3 + 2
   //seed InitializeGame with 1-1000
@@ -58,14 +57,14 @@ int main(){
     testFail = 0;
     randPlayer = rand() % 3 + 2;
     gameSeed = rand() % 1000;
-    //printf("random player number: %d\n", randPlayer);
-    //printf("random seed number: %d\n", gameSeed);
+
+    //initialize game state
     memset(&myState, 0, sizeof(myState));
     memset(&myState2, 0, sizeof(myState));
     initializeGame(randPlayer, k, gameSeed, &myState);
-    //copy game state for testing
+    //copy initialized game state for testing
     memcpy(&myState2, &myState, sizeof(struct gameState));
-    //printf("villiageEffec on random game state: ");
+    //run villiageEffect on second game state, compare states in tests
     result1 = villageEffect(&myState2, myHandPos);
     if (result1 != 0){
       printf("Test 1: return villiageEffect: FAILED - ");
@@ -143,12 +142,9 @@ int main(){
     }
   }
 
-
 //if tests pass, we dont want to print anything but number of
 //tests passed
   printf("Total tests passed: %d out of 100\n", passedTests);
-
-
 }
 
 //end randomtestcard1.c
