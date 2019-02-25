@@ -66,7 +66,7 @@ int main(){
     //copy game state for testing
     memcpy(&myState2, &myState, sizeof(struct gameState));
     //printf("villiageEffec on random game state: ");
-    result1 = villageEffect(&myState, myHandPos);
+    result1 = villageEffect(&myState2, myHandPos);
     if (result1 != 0){
       printf("Test 1: return villiageEffect: FAILED\n");
       printf("random player number: %d\n", randPlayer);
@@ -81,7 +81,7 @@ int main(){
     int result3 = myState2.handCount[currentPlayer];
     //printf("Test 2 - num cards in hand: ");
     if (result3 != result2){
-      printf("Test 2: num cards in hand: FAILED");
+      printf("Test 2: num cards in hand: FAILED\n");
       printf("random player number: %d\n", randPlayer);
       printf("random seed number: %d\n", gameSeed);
       testFail = 1;
@@ -90,10 +90,24 @@ int main(){
     //discard pile
     int result4 = myState.discardCount[currentPlayer];
     int result5 = myState2.discardCount[currentPlayer];
-    printf("Test 3 - num cards in discard pile: ");
-    printf("result4: %d\n", result4);
-    printf("result5: %d\n", result5);
+    //printf("Test 3 - num cards in discard pile: ");
+    if ((result5 - result4) != 1){
+      printf("Test 3: discard pile: FAILED");
+      printf("random player number: %d\n", randPlayer);
+      printf("random seed number: %d\n", gameSeed);
+      testFail = 1;
+    }
 
+    //deck
+    int result6 = myState.deckCount[currentPlayer];
+    int result7 = myState2.deckCount[currentPlayer];
+    //printf("Test 4 - num cards in deck: ");
+    if ((result7 - result6) != -1){
+      printf("Test 4: num cards in deck: FAILED\n");
+      printf("random player number: %d\n", randPlayer);
+      printf("random seed number: %d\n", gameSeed);
+      testFail = 1;
+    }
 
 
     //if all tests passed, add to total passed
@@ -102,6 +116,9 @@ int main(){
     }
   }
 
+
+//if tests pass, we dont want to print anything but number of
+//tests passed
   printf("Total tests passed: %d out of 100\n", passedTests);
 
 
