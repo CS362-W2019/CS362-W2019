@@ -74,6 +74,19 @@ int main(){
       testFail = 1;
     }
 
+    //test drawing a card
+    //hand - difference should be zero, 1 card drawn & 1 card discarded
+    int currentPlayer = whoseTurn(&myState2);
+    int result2 = myState.handCount[currentPlayer];
+    int result3 = myState2.handCount[currentPlayer];
+    printf("Test 2 - num cards in hand: ");
+    if (result3 == result2){
+      printf("PASSED\n");
+    } else {
+      printf("FAILED\n");
+    }
+
+
 
     //if all tests passed, add to total passed
     if (testFail == 0){
