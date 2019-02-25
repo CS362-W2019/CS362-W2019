@@ -46,11 +46,11 @@ int main(){
   int gameSeed;
   //repeat 100 times
   //seed game with 2-4 players
+  //rand() % 3 + 2
   int i;
-  int myNum;
+
   for (i = 0; i < 10; i++){
-    myNum = (rand() % 3 + 2);
-    printf("random player number: %d\n", myNum);
+    printf("random seed number: %d\n", (rand() % 1000));
   }
 
   //select random seed to shuffle deck
