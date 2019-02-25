@@ -92,9 +92,9 @@ int main(){
     int result5 = myState2.discardCount[currentPlayer];
     //printf("Test 3 - num cards in discard pile: ");
     if ((result5 - result4) != 1){
-      printf("Test 3: discard pile: FAILED");
-      printf("random player number: %d\n", randPlayer);
-      printf("random seed number: %d\n", gameSeed);
+      printf("Test 3: discard pile: FAILED - ");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
       testFail = 1;
     }
 
