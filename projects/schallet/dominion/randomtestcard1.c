@@ -53,11 +53,11 @@ int main(){
   for (i = 0; i < 100; i++){
     randPlayer = rand() % 3 + 2;
     gameSeed = rand() % 1000;
-    printf("random player number: %d\n", randPlayer;
-    printf("random seed number: %d\n", gameSeed;
+    printf("random player number: %d\n", randPlayer);
+    printf("random seed number: %d\n", gameSeed);
     memset(&myState, 0, sizeof(myState));
     initializeGame(randPlayer, k, gameSeed, &myState);
-    printf("villiageEffec on random game state: ")
+    printf("villiageEffec on random game state: ");
     result1 = villageEffect(&myState, myHandPos);
     if (result1 == 0){
       printf("PASSED\n");
