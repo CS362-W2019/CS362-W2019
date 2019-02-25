@@ -27,7 +27,9 @@ int main(){
   int result, result1;
   //create and initialize a game state
   struct gameState myState;
+  struct gameState myState2;
   memset(&myState, 0, sizeof(myState));
+  memset(&myState2, 0, sizeof(myState));
   initializeGame(numPlayers, k, seed, &myState);
 
   //call villiage effect and show result
@@ -50,21 +52,36 @@ int main(){
   //seed InitializeGame with 1-1000
   //rand() % 1000
   int i;
+  int testFail = 0;
+  int passedTests = 0;
   for (i = 0; i < 100; i++){
+    testFail = 0;
     randPlayer = rand() % 3 + 2;
     gameSeed = rand() % 1000;
-    printf("random player number: %d\n", randPlayer);
-    printf("random seed number: %d\n", gameSeed);
+    //printf("random player number: %d\n", randPlayer);
+    //printf("random seed number: %d\n", gameSeed);
     memset(&myState, 0, sizeof(myState));
+    memset(&myState2, 0, sizeof(myState));
     initializeGame(randPlayer, k, gameSeed, &myState);
-    printf("villiageEffec on random game state: ");
+    //copy game state for testing
+    memcpy(&myState2, &myState, sizeof(struct gameState));
+    //printf("villiageEffec on random game state: ");
     result1 = villageEffect(&myState, myHandPos);
-    if (result1 == 0){
-      printf("PASSED\n");
-    } else {
-      printf("FAILED\n");
+    if (result1 != 0){
+      printf("Test 1: return villiageEffect: FAILED\n");
+      printf("random player number: %d\n", randPlayer);
+      printf("random seed number: %d\n", gameSeed);
+      testFail = 1;
+    }
+
+
+    //if all tests passed, add to total passed
+    if (testFail == 0){
+      passedTests += 1; 
     }
   }
+
+  printf("Total tests passed: %d out of 100\n", passedTests)
 
 
 
