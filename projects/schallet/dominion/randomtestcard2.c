@@ -14,7 +14,7 @@
 int main(){
   printf("~~~~~Begining Card 2 Random Testing~~~~~\n");
   printf("~~~~~Random Testing: sea_hag effect~~~~~\n");
-  printf("Test 1: positive control, call sea_hag effect\n");
+  printf("Test 1: positive control, call sea_hag effect: ");
   //need a valid game in progress to call sea_hagEffect
   int numPlayers = 2;
   int k[10] = {adventurer, embargo, village, minion, mine,
@@ -30,7 +30,7 @@ int main(){
 
   //call villageEffect, should return zero
   result = sea_hagEffect(&myState);
-  printf("Test result: %d\n", result);
+  //printf("Test result: %d\n", result);
   if (result == 0){
     printf("PASSED\n");
   } else {
@@ -67,6 +67,19 @@ int main(){
     result1 = sea_hagEffect(&myState2);
     if (result1 != 0){
       printf("Test 1: return sea_hagEffect: FAILED - ");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
+      testFail = 1;
+    }
+
+    //test drawing a card
+    //hand - difference should be zero
+    int currentPlayer = whoseTurn(&myState2);
+    int result2 = myState.handCount[currentPlayer];
+    int result3 = myState2.handCount[currentPlayer];
+    //printf("Test 2 - num cards in hand: ");
+    if (result3 != result2){
+      printf("Test 2: num cards in hand: FAILED - ");
       printf("players: %d, ", randPlayer);
       printf("seed: %d\n", gameSeed);
       testFail = 1;
