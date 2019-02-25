@@ -49,7 +49,7 @@ int main(){
   int i;
   int myNum;
   for (i = 0; i < 10; i++){
-    myNum = (rand() % 2 + 2);
+    myNum = (rand() % 3 + 2);
     printf("random player number: %d\n", myNum);
   }
 
