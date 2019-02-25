@@ -20,10 +20,12 @@ int main(){
   int k[10] = {adventurer, embargo, village, minion, mine,
     cutpurse,sea_hag, tribute, smithy, council_room};
   int seed = 1000;
-  int result;
+  int result, result1;
   //create and initialize a game state
   struct gameState myState;
+  struct gameState myState2;
   memset(&myState, 0, sizeof(myState));
+  memset(&myState2, 0, sizeof(myState2));
   initializeGame(numPlayers, k, seed, &myState);
 
   //call villageEffect, should return zero
