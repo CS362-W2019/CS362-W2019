@@ -79,11 +79,12 @@ int main(){
     int currentPlayer = whoseTurn(&myState2);
     int result2 = myState.handCount[currentPlayer];
     int result3 = myState2.handCount[currentPlayer];
-    printf("Test 2 - num cards in hand: ");
-    if (result3 == result2){
-      printf("PASSED\n");
-    } else {
-      printf("FAILED\n");
+    //printf("Test 2 - num cards in hand: ");
+    if (result3 != result2){
+      printf("Test 2: num cards in hand: FAILED");
+      printf("random player number: %d\n", randPlayer);
+      printf("random seed number: %d\n", gameSeed);
+      testFail = 1;
     }
 
 
