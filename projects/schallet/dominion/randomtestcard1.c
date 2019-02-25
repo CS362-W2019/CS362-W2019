@@ -68,9 +68,9 @@ int main(){
     //printf("villiageEffec on random game state: ");
     result1 = villageEffect(&myState2, myHandPos);
     if (result1 != 0){
-      printf("Test 1: return villiageEffect: FAILED\n");
-      printf("random player number: %d\n", randPlayer);
-      printf("random seed number: %d\n", gameSeed);
+      printf("Test 1: return villiageEffect: FAILED - ");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
       testFail = 1;
     }
 
@@ -81,9 +81,9 @@ int main(){
     int result3 = myState2.handCount[currentPlayer];
     //printf("Test 2 - num cards in hand: ");
     if (result3 != result2){
-      printf("Test 2: num cards in hand: FAILED\n");
-      printf("random player number: %d\n", randPlayer);
-      printf("random seed number: %d\n", gameSeed);
+      printf("Test 2: num cards in hand: FAILED - ");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
       testFail = 1;
     }
 
@@ -103,12 +103,39 @@ int main(){
     int result7 = myState2.deckCount[currentPlayer];
     //printf("Test 4 - num cards in deck: ");
     if ((result7 - result6) != -1){
-      printf("Test 4: num cards in deck: FAILED\n");
-      printf("random player number: %d\n", randPlayer);
-      printf("random seed number: %d\n", gameSeed);
+      printf("Test 4: num cards in deck: FAILED - ");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
       testFail = 1;
     }
 
+    //test other players hand
+    int nextPlayer = currentPlayer + 1;
+    if (nextPlayer > numPlayers-1){
+      nextPlayer = 0;
+    }
+    int result8 = myState.handCount[nextPlayer];
+    int result9 = myState2.handCount[nextPlayer];
+    //printf("result4: %d, result5 %d\n", result4, result5);
+    printf("Test 5: other players hand unaffected: ");
+    if (result8 != result9){
+      printf("Test 5: other players hand unaffected: FAILED - ");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
+      testFail = 1;
+    }
+
+    //test actions
+    int result10 = myState.numActions;
+    int result11 = myState2.numActions;
+    //printf("result11: %d, result 10: %d\n", result11, result10);
+    //printf("Test 6: number of actions: ");
+    if ((result11 - result10) != 2){
+      printf("Test 6: number of actions: FAILED - ");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
+      testFail = 1;
+    }
 
     //if all tests passed, add to total passed
     if (testFail == 0){
