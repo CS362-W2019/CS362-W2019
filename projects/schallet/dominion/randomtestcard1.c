@@ -87,6 +87,16 @@ int main(){
       testFail = 1;
     }
 
+    //discard pile
+    int result4 = myState.discardCount[currentPlayer];
+    int result5 = myState2.discardCount[currentPlayer];
+    printf("Test 3 - num cards in discard pile: ");
+    if ((result5 - result4) == 1){
+      printf("PASSED\n");
+    } else {
+      printf("FAILED\n");
+    }    
+
 
 
     //if all tests passed, add to total passed
