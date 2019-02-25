@@ -50,7 +50,7 @@ int main(){
   int myNum;
   for (i = 0; i < 10; i++){
     myNum = (rand() % 2 + 2);
-    printf("random player number: %d\n, myNum");
+    printf("random player number: %d\n", myNum);
   }
 
   //select random seed to shuffle deck
