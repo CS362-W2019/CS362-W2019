@@ -77,11 +77,11 @@ int main(){
 
     //if all tests passed, add to total passed
     if (testFail == 0){
-      passedTests += 1; 
+      passedTests += 1;
     }
   }
 
-  printf("Total tests passed: %d out of 100\n", passedTests)
+  printf("Total tests passed: %d out of 100\n", passedTests);
 
 
 
