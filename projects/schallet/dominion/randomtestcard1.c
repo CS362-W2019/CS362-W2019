@@ -117,7 +117,7 @@ int main(){
     int result8 = myState.handCount[nextPlayer];
     int result9 = myState2.handCount[nextPlayer];
     //printf("result4: %d, result5 %d\n", result4, result5);
-    printf("Test 5: other players hand unaffected: ");
+    //printf("Test 5: other players hand unaffected: ");
     if (result8 != result9){
       printf("Test 5: other players hand unaffected: FAILED - ");
       printf("players: %d, ", randPlayer);
@@ -147,9 +147,6 @@ int main(){
 //if tests pass, we dont want to print anything but number of
 //tests passed
   printf("Total tests passed: %d out of 100\n", passedTests);
-
-
-
 
 
 }
