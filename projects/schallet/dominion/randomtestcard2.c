@@ -134,12 +134,12 @@ int main(){
       testFail = 1;
     }
 
-    //deck - other player, stays same
+    //deck - other player, stays same (discard, then add curse)
     int result12 = myState.deckCount[nextPlayer];
     int result13 = myState2.deckCount[nextPlayer];
-    printf("Test 7 - opponent deck: ");
+    //printf("Test 7 - opponent deck: ");
     if (result12 != result13){
-      printf("Test 7: opponent deck: FAILED");
+      printf("Test 7: opponent deck: FAILED - ");
       printf("players: %d, ", randPlayer);
       printf("seed: %d\n", gameSeed);
       testFail = 1;
