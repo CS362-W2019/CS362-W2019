@@ -143,9 +143,30 @@ int main(){
       printf("players: %d, ", randPlayer);
       printf("seed: %d\n", gameSeed);
       testFail = 1;
-
     }
 
+    //scores
+    //current player should be the same
+    int result14 = scoreFor(currentPlayer, &myState);
+    int result15 = scoreFor(currentPlayer, &myState2);
+    //printf("Test 8 - curent player score: ");
+    if (result14 != result15){
+      printf("Test 8: curent player score: FAILED -");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
+      testFail = 1;
+    }
+
+    //opponent should have -1
+    int result16 = scoreFor(nextPlayer, &myState);
+    int result17 = scoreFor(nextPlayer, &myState2);
+    //printf("Test 9 - opponent score: ");
+    if ((result17 - result16) != -1){
+      printf("Test 9: opponent score: FAILED - ");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
+      testFail = 1;
+    }
 
     //if all tests passed, add to total passed
     if (testFail == 0){
