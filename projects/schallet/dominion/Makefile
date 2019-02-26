@@ -45,13 +45,15 @@ randomtestResults: randomtestadventurer randomtestcard1 randomtestcard2
 		./randomtestadventurer &> randomtestadventurer.out
 		gcov dominion.c >> randomtestadventurer.out
 		cat dominion.c.gcov >> randomtestadventurer.out
+		rm -f *.gcov *.gcda *gcno
 		./randomtestcard1 &> randomtestcard1.out
 		gcov dominion.c >> randomtestcard1.out
 		cat dominion.c.gcov >> randomtestcard1.out
+		rm -f *.gcov *.gcda *gcno
 		./randomtestcard2 &> randomtestcard2.out
 		gcov dominion.c >> randomtestcard2.out
 		cat dominion.c.gcov >> randomtestcard2.out
-
+		rm -f *.gcov *.gcda *gcno 
 
 all: playdom player randomtestResults
 
