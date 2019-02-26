@@ -1426,7 +1426,7 @@ int sea_hagEffect(struct gameState *state){
   int currentPlayer = whoseTurn(state);
   //switch statement code
   for (int i = 0; i < state->numPlayers; i++){
-    if (i == currentPlayer){ //bug I introduced, correct !=
+    if (i != currentPlayer){ //bug I introduced, correct !=
       state->discard[i][state->discardCount[i]] = state->deck[i][state->deckCount[i]--];
       state->deckCount[i]--;
       state->discardCount[i]++;
