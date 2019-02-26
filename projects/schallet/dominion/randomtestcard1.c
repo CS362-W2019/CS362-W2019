@@ -145,6 +145,7 @@ int main(){
 //if tests pass, we dont want to print anything but number of
 //tests passed
   printf("Total tests passed: %d out of 100\n", passedTests);
+    printf("~~~~~End Random Testing: village effect~~~~~\n");
 }
 
 //end randomtestcard1.c
