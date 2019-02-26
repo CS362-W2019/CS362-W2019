@@ -85,17 +85,27 @@ int main(){
       testFail = 1;
     }
 
-    //discard pile
+    //discard pile - should be the same before and after
     int result4 = myState.discardCount[currentPlayer];
     int result5 = myState2.discardCount[currentPlayer];
     //printf("Test 3 - num cards in discard pile: ");
-    if ((result5 - result4) != 1){
+    if ((result5 != result4){
       printf("Test 3: discard pile: FAILED - ");
       printf("players: %d, ", randPlayer);
       printf("seed: %d\n", gameSeed);
       testFail = 1;
     }
 
+    //deck - players deck should be same before and after sea_hag
+    int result6 = myState.deckCount[currentPlayer];
+    int result7 = myState2.deckCount[currentPlayer];
+    //printf("Test 4 - num cards in deck: ");
+    if (result7 != result6){
+      printf("Test 4: num cards in deck: FAILED - ");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
+      testFail = 1;
+    }
 
 
     //if all tests passed, add to total passed
@@ -106,6 +116,7 @@ int main(){
   } //end of for loop
 
   printf("Total tests passed: %d out of 100\n", passedTests);
+  printf("~~~~~End Random Testing: sea_hag effect~~~~~\n");
 }
 
 //end randomtestcard2.c
