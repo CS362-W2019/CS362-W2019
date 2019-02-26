@@ -33,7 +33,7 @@ int main(){
   initializeGame(numPlayers, k, seed, &myState);
 
   //call villiage effect and show result
-  result = villageEffect(&myState, myHandPos);
+  result = adventurerEffect(&myState);
   //printf("Test result: %d\n", result);
   if (result == 0){
     printf("PASSED\n");
