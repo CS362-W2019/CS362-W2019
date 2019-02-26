@@ -72,13 +72,29 @@ int main(){
     int currentPlayer = whoseTurn(&myState2);
     int result2 = myState.handCount[currentPlayer];
     int result3 = myState2.handCount[currentPlayer];
-    printf("Test 2 - gained 2 treasure to hand: ");
+    //printf("Test 2 - gained 2 treasure to hand: ");
     if ((result3 - result2) != 2){
       printf("Test 2: gained 2 treasure to hand: FAILED - ");
       printf("players: %d, ", randPlayer);
       printf("seed: %d\n", gameSeed);
       testFail = 1;
+    }
 
+    //check that coinage has increased by at least 2
+    //printf("Test 3 - treasure to correct coinage: ");
+    //printf("FAILED\n");
+    //See bug report. This needs to be tested but is nothandled by code at all
+    //update this test after refactoring
+
+    //check that deck has decreased
+    int result4 = myState.deckCount[currentPlayer];
+    int result5 = myState2.deckCount[currentPlayer];
+    //printf("Test 4 - deck decreased: ");
+    if ((result4 - result5) < 2){
+      printf("Test 4: deck decreased: FAILED - ");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
+      testFail = 1;
     }
 
 
