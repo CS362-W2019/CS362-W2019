@@ -107,6 +107,45 @@ int main(){
       testFail = 1;
     }
 
+    //test other player
+    int nextPlayer = currentPlayer + 1;
+    if (nextPlayer > numPlayers-1){
+      nextPlayer = 0;
+    }
+    //hand - other player, should be same
+    int result8 = myState.handCount[nextPlayer];
+    int result9 = myState2.handCount[nextPlayer];
+    //printf("Test 5 - opponent hand: ");
+    if (result8 != result9){
+      printf("Test 5: opponent hand: FAILED - ");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
+      testFail = 1;
+    }
+
+    //discard - other player, one card discarded
+    int result10 = myState.discardCount[nextPlayer];
+    int result11 = myState2.discardCount[nextPlayer];
+    //printf("Test 6 - opponent discard: ");
+    if ((result11 - result10) != 1){
+      printf("Test 6: opponent discard: FAILED - ");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
+      testFail = 1;
+    }
+
+    //deck - other player, stays same
+    int result12 = myState.deckCount[nextPlayer];
+    int result13 = myState2.deckCount[nextPlayer];
+    printf("Test 7 - opponent deck: ");
+    if (result12 != result13){
+      printf("Test 7: opponent deck: FAILED");
+      printf("players: %d, ", randPlayer);
+      printf("seed: %d\n", gameSeed);
+      testFail = 1;
+
+    }
+
 
     //if all tests passed, add to total passed
     if (testFail == 0){
