@@ -8,8 +8,9 @@ SRCS=cards.c dominion.c interface.c rngs.c test_helpers.c
 OBJS=$(SRCS:.c=.o)
 TESTS=testDrawCard testBuyCard testShuffle testInit
 UNITTESTS=unittest1 unittest2 unittest3 unittest4
+RANDOMTESTS=randomtestcard1 randomtestcard2 randomtestadventurer
 CARDTESTS=cardtest1 cardtest2 cardtest3 cardtest4
-BINARIES=$(TESTS) $(UNITTESTS) $(CARDTESTS) playdom player
+BINARIES=$(TESTS) $(UNITTESTS) $(CARDTESTS) $(RANDOMTESTS) playdom player
 
 # default action to build all binaries
 .PHONY: all
@@ -49,6 +50,14 @@ unittestresults: $(UNITTESTS) $(CARDTESTS) $(OBJS) $(SRCS)
 	./cardtest4 >> unittestresults.out
 	$(GCOV) dominion.c -bf >> unittestresults.out
 	$(GCOV) cards.c -bf >> unittestresults.out
+
+.PHONY:randomtestresults 
+randomtestresults: $(RANDOMTESTS) $(OBJS) $(SRCS)
+	rm -f randomtestresults.out
+	./randomtestcard1 >> randomtestresults.out
+	./randomtestcard2 >> randomtestresults.out
+	./randomtestadventurer >> randomtestresults.out
+	$(GCOV) cards.c -bf >> randomtestresults.out	
 
 .PHONY: clean
 clean:
