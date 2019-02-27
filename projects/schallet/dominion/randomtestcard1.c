@@ -18,8 +18,8 @@ int main(){
   printf("~~~~~Random Testing: Village effect~~~~~\n");
   printf("Test 1: positive control, call villageEffect: ");
   //timing
-  clock_t start, end;
-  double cpu_time_used;
+  time_t start_t, end_t;
+  double diff_t;
   //need a valid game in progress to call adventurerEffect
   int myHandPos = 0;
   int numPlayers = 2;
@@ -56,7 +56,7 @@ int main(){
   int i;
   int testFail = 0;
   int passedTests = 0;
-  start = clock();
+  time(&start_t);
   for (i = 0; i < 100; i++){
     testFail = 0;
     randPlayer = rand() % 3 + 2;
@@ -148,9 +148,10 @@ int main(){
 
 //if tests pass, we dont want to print anything but number of
 //tests passed
-  end = clock();
-  cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-  printf("randomtestcard1.c took %f seconds to execute.\n", cpu_time_used);
+  time(&end_t);
+  diff_t = difftime(end_t, start_t);
+  printf("randomtestcard1.c took %f seconds to execute.\n", diff_t);
+
   printf("Total tests passed: %d out of 100\n", passedTests);
   printf("~~~~~End Random Testing: village effect~~~~~\n");
 }
