@@ -60,7 +60,7 @@ int main(){
   int testFail = 0;
   int passedTests = 0;
   time(&start_t);
-  sleep(3);
+  //sleep(3);
   for (i = 0; i < 100; i++){
     testFail = 0;
     randPlayer = rand() % 3 + 2;
