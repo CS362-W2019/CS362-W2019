@@ -20,7 +20,7 @@ int main(){
   printf("Test 1: positive control, call sea_hag effect: ");
   //timing
   clock_t start, end;
-  long double cpu_time_used;
+  double cpu_time_used;
   //need a valid game in progress to call sea_hagEffect
   int numPlayers = 2;
   int k[10] = {adventurer, embargo, village, minion, mine,
@@ -59,7 +59,7 @@ int main(){
   int i;
   int testFail = 0;
   int passedTests = 0;
-  start = clock();
+  start = time(NULL);
   //sleep(3);
   for (i = 0; i < 100; i++){
     testFail = 0;
@@ -182,9 +182,9 @@ int main(){
     }
 
   } //end of for loop
-  end = clock();
-  cpu_time_used = ((long double) (end - start)) / CLOCKS_PER_SEC;
-  printf("randomtestcard2.c took %Lf seconds to execute.\n", cpu_time_used);
+  end = time(NULL);
+  cpu_time_used = ((double) (end - start)) / (double) CLOCKS_PER_SEC;
+  printf("randomtestcard2.c took %f seconds to execute.\n", cpu_time_used);
 
   printf("Total tests passed: %d out of 100\n", passedTests);
   printf("~~~~~End Random Testing: sea_hag effect~~~~~\n");
