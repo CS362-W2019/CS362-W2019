@@ -2,6 +2,7 @@
 #include "interface.h"
 
 #include <string.h>
+#include <stdlib.h>
 
 void initGameState(int players, struct gameState* state)
 {
@@ -30,6 +31,41 @@ void addCards(int player, int* hand, int* deck, int* discard, struct gameState* 
         state->deck[player][i] = deck[i];
         state->deckCount[player]++;
     }
+}
+
+void fillDeck(int player, struct gameState* state, int max)
+{
+    state->deckCount[player] = max;
+
+    for (int i = 0; i < MAX_DECK; ++i)
+        state->deck[player][i] = -1;
+
+    for (int i = 0; i < max; ++i)
+    {
+        state->deck[player][i] = rand() % (LAST_CARD + 1);
+    }
+}
+
+void fillHand(int player, struct gameState* state, int max)
+{
+    state->handCount[player] = max;
+
+    for (int i = 0; i < MAX_HAND; ++i)
+        state->hand[player][i] = -1;
+
+    for (int i = 0; i < max; ++i)
+        state->hand[player][i] = rand() % (LAST_CARD + 1);
+}
+
+void fillDiscard(int player, struct gameState* state, int max)
+{
+    state->discardCount[player] = max;
+
+    for (int i = 0; i < MAX_DECK; ++i)
+        state->discard[player][i] = -1;
+
+    for (int i = 0; i < max; ++i)
+        state->discard[player][i] = rand() % (LAST_CARD);
 }
 
 void debugGameState(int player, struct gameState* state)

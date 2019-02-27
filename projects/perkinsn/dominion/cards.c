@@ -37,7 +37,7 @@ int playSmithy(struct gameState* state, int handPos)
     int currentPlayer = state->whoseTurn;
 
     //+3 Cards
-    for (int i = 0; i <= 3; i++)
+    for (int i = 0; i < 3; i++)
 	{
 	  drawCard(currentPlayer, state);
 	}

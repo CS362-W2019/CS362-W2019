@@ -52,6 +52,8 @@ enum CARD
    treasure_map
   };
 
+#define LAST_CARD treasure_map
+
 struct gameState {
   int numPlayers; //number of players
   int supplyCount[treasure_map+1];  //this is the amount of a specific type of card given a specific number.
