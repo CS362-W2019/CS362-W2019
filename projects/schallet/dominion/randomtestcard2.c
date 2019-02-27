@@ -12,6 +12,7 @@
 #include <assert.h>
 #include "rngs.h"
 #include <time.h>
+#include <unistd.h>
 
 int main(){
   printf("~~~~~Begining Card 2 Random Testing~~~~~\n");
@@ -59,6 +60,7 @@ int main(){
   int testFail = 0;
   int passedTests = 0;
   start = clock();
+  sleep(3);
   for (i = 0; i < 100; i++){
     testFail = 0;
     randPlayer = rand() % 3 + 2;
@@ -182,7 +184,7 @@ int main(){
   } //end of for loop
   end = clock();
   cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-  printf("randomtestcard1.c took %f seconds to execute.\n", cpu_time_used);
+  printf("randomtestcard2.c took %f seconds to execute.\n", cpu_time_used);
 
   printf("Total tests passed: %d out of 100\n", passedTests);
   printf("~~~~~End Random Testing: sea_hag effect~~~~~\n");
