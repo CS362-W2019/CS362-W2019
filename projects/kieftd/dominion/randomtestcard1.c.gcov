@@ -1,0 +1,198 @@
+        -:    0:Source:randomtestcard1.c
+        -:    0:Graph:randomtestcard1.gcno
+        -:    0:Data:randomtestcard1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*********************************
+        -:    2:*  Author: Derk Kieft (kieftd)
+        -:    3:*  File: randomtestcard1.c testing Garden
+        -:    4:*
+        -:    5:* 
+        -:    6:* Include the following lines in makefile:
+        -:    7:*
+        -:    8:* randomtestcard1: randomtestcard1.c dominion.o rngs.o
+        -:    9:*      gcc -o randomtestcard1 -g  randomtestcard1.c dominion.o rngs.o $(CFLAGS)
+        -:   10:********************************/
+        -:   11:
+        -:   12:
+        -:   13:#include "dominion.h"
+        -:   14:#include "dominion_helpers.h"
+        -:   15:#include <string.h>
+        -:   16:#include <stdio.h>
+        -:   17:#include <assert.h>
+        -:   18:#include "rngs.h"
+        -:   19:#include <stdlib.h>
+        -:   20:#include <time.h> 
+        -:   21:
+        -:   22:#define TESTCARD "garden"
+        -:   23:
+      221:   24:int randomGen (int lower, int upper) {
+        -:   25:    int result;
+      442:   26:    result = (rand() % 
+      221:   27:        (upper - lower + 1)) + lower; 
+        -:   28:        //printf("Result is: %d ", result); 
+        -:   29:
+      221:   30:    return result;
+        -:   31:}
+        -:   32:
+        -:   33:
+        1:   34:int main() {
+        1:   35:    int newCards = 0;
+        1:   36:    int discarded = 1;
+        -:   37:    //int xtraCoins = 0;
+        1:   38:    int shuffledCards = 0;
+        -:   39:
+        -:   40:
+        1:   41:    int handpos = 0, choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
+        -:   42:    //int remove1, remove2;
+        1:   43:    int seed = randomGen(0, 3000);
+        1:   44:    int numPlayers = 2;
+        1:   45:    int thisPlayer = 0;
+        -:   46:	struct gameState G, testG;
+        1:   47:	int k[10] = {adventurer, gardens, village, minion, mine, cutpurse,
+        -:   48:			sea_hag, tribute, smithy, council_room};
+        -:   49:
+        -:   50:	// initialize a game state and player cards
+        1:   51:	initializeGame(numPlayers, k, seed, &G);
+        -:   52:
+        -:   53:    /*LOOP TEST PORCESS*/
+        -:   54:int x;    
+       11:   55:for (x=0; x<10;x++)  {
+        -:   56:
+        -:   57:    /*RESET VARIABLES AS NEEDED*/
+       10:   58:    newCards = 0;
+       10:   59:    discarded = 1;
+        -:   60:    //int xtraCoins = 0;
+       10:   61:    shuffledCards = 0;
+        -:   62:    //int remove1, remove2;
+       10:   63:    numPlayers = 2;
+       10:   64:    thisPlayer = 0;
+        -:   65:
+        -:   66:    /*RANDOMIZE CARD INPUT*/
+       10:   67:    handpos = randomGen(0,5); 
+       10:   68:    choice1 = randomGen(0,2); 
+       10:   69:    choice2 = randomGen(0,2); 
+       10:   70:    choice3 = randomGen(0,2); 
+       10:   71:    bonus = randomGen(0,3);
+        -:   72:
+        -:   73:    /*RANDOMIZE GAME STATE*/
+       10:   74:    G.whoseTurn = randomGen(0,1); 
+       10:   75:    G.phase = randomGen(1,3); 
+       10:   76:    G.coins = randomGen(0,8); // Use as you see fit! 
+       10:   77:    G.numBuys = randomGen(0,5); // Starts at 1 each turn  
+        -:   78:    int i;
+       50:   79:    for (i=0; i<MAX_PLAYERS; i++) {
+       40:   80:        G.handCount[i] = randomGen(1, MAX_HAND);
+        -:   81:        
+        -:   82:    }
+       50:   83:    for (i=0; i<MAX_PLAYERS; i++) {
+       40:   84:        G.deckCount[i] = randomGen(9, 30);
+        -:   85:    } 
+       50:   86:    for (i=0; i<MAX_PLAYERS; i++) {
+       40:   87:        G.discardCount[i] = randomGen(1, MAX_HAND); 
+        -:   88:    }
+       10:   89:    G.playedCardCount = randomGen(1,5); 
+        -:   90:
+       10:   91:	printf("----------------- Test Card is %s ----------------\n", TESTCARD);
+        -:   92:
+        -:   93:	// copy the game state to a test case for later comparison
+       10:   94:	memcpy(&testG, &G, sizeof(struct gameState));
+       10:   95:	cardEffect(TESTCARD, choice1, choice2, choice3, &G, handpos, &bonus);
+        -:   96:    //ref_gardens(&G);
+        -:   97:
+        -:   98:    //Set expected changes
+        -:   99:    //No changes expected for Garden
+        -:  100:
+       10:  101:if (G.numPlayers == testG.numPlayers)  {
+       10:  102:    printf("PASS: #Players = %d, expected = %d\n", G.numPlayers,testG.numPlayers);
+        -:  103:}
+        -:  104:else {
+    #####:  105:    printf("FAIL: #Players = %d, expected = %d\n", G.numPlayers,testG.numPlayers);
+        -:  106:}
+        -:  107: 
+       10:  108:if (G.whoseTurn == testG.whoseTurn)
+        -:  109:    {
+       10:  110:    printf("PASS: whoseTurn = %d, expected = %d\n", G.whoseTurn,testG.whoseTurn);
+        -:  111:    }
+        -:  112:else {
+    #####:  113:    printf("FAIL: whoseTurn = %d, expected = %d\n", G.whoseTurn,testG.whoseTurn);
+        -:  114:}
+        -:  115:
+       10:  116:if (G.phase == testG.phase)
+        -:  117:    {
+       10:  118:    printf("PASS: phase = %d, expected = %d\n", G.phase,testG.phase);
+        -:  119:    }
+        -:  120:else {
+    #####:  121:    printf("FAIL: phase = %d, expected = %d\n", G.phase,testG.phase);
+        -:  122:}
+        -:  123:
+       10:  124:if (G.numActions == testG.numActions-1)
+        -:  125:    {
+    #####:  126:    printf("PASS: numActions = %d, expected = %d\n", G.numActions,testG.numActions-1);
+        -:  127:    }
+        -:  128:else {
+       10:  129:    printf("FAIL: numActions = %d, expected = %d\n", G.numActions,testG.numActions-1);
+        -:  130:}
+        -:  131:
+       10:  132:if (G.coins == testG.coins)
+        -:  133:    {
+       10:  134:    printf("PASS:coins = %d, expected = %d\n", G.coins,testG.coins);
+        -:  135:    }
+        -:  136:else {
+    #####:  137:    printf("FAIL:coins = %d, expected = %d\n", G.coins,testG.coins);
+        -:  138:}
+        -:  139: 
+       10:  140:if (G.phase == testG.phase)
+        -:  141:    {
+       10:  142:    printf("PASS: phase = %d, expected = %d\n", G.phase,testG.phase);
+        -:  143:    }
+        -:  144:else {
+    #####:  145:    printf("FAIL: phase = %d, expected = %d\n", G.phase,testG.phase);
+        -:  146:}
+        -:  147:
+        -:  148:/*G.hand[MAX_PLAYERS][MAX_HAND]; */
+        -:  149: 
+       10:  150:if (G.handCount[thisPlayer] == testG.handCount[thisPlayer] + newCards - discarded)
+        -:  151:    {
+    #####:  152:    printf("PASS: hand count = %d, expected = %d\n", G.handCount[thisPlayer],testG.handCount[thisPlayer] + newCards - discarded);
+        -:  153:    }
+        -:  154:else {
+       10:  155:    printf("FAIL: hand count = %d, expected = %d\n", G.handCount[thisPlayer],testG.handCount[thisPlayer] + newCards - discarded);
+        -:  156:    
+        -:  157:}
+        -:  158:
+        -:  159:/*G.deck[MAX_PLAYERS][MAX_DECK]; */
+        -:  160:
+       10:  161:if (G.deckCount[thisPlayer] == testG.deckCount[thisPlayer])
+        -:  162:    {
+       10:  163:    printf("PASS: deck count = %d, expected = %d\n", G.deckCount[thisPlayer],testG.deckCount[thisPlayer] - newCards + shuffledCards);
+        -:  164:    }
+        -:  165:else {
+    #####:  166:    printf("FAIL: deck count = %d, expected = %d\n", G.deckCount[thisPlayer],testG.deckCount[thisPlayer] - newCards + shuffledCards);
+        -:  167:    
+        -:  168:}
+        -:  169:
+        -:  170:/*G.discard[MAX_PLAYERS][MAX_DECK]; */
+        -:  171:
+       10:  172:if (G.discardCount[thisPlayer] == testG.discardCount[thisPlayer]-1)  //Card is discarded
+        -:  173:    {
+    #####:  174:    printf("PASS: discardCount = %d, expected = %d\n", G.discardCount[thisPlayer],testG.discardCount[thisPlayer]-1);
+        -:  175:    }
+        -:  176:else {
+       10:  177:    printf("FAIL: discardCount = %d, expected = %d\n", G.discardCount[thisPlayer],testG.discardCount[thisPlayer]-1);
+        -:  178:}
+        -:  179:
+        -:  180:/*G.playedCards[MAX_DECK]; */
+        -:  181:
+       10:  182:if (G.playedCardCount == testG.playedCardCount+1)  //card is played
+        -:  183:    {
+    #####:  184:    printf("PASS: playedCardCount = %d, expected = %d\n", G.playedCardCount+1,testG.playedCardCount);
+        -:  185:    }
+        -:  186:else {
+       10:  187:    printf("FAIL: playedCardCount = %d, expected = %d\n", G.playedCardCount+1,testG.playedCardCount);
+        -:  188:}
+        -:  189:
+        -:  190:}
+        1:  191:	return 0;
+        -:  192:}
+        -:  193:
