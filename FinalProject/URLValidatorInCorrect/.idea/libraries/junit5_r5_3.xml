@@ -1,0 +1,43 @@
+<component name="libraryTable">
+  <library name="junit5-r5.3">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/documentation/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/documentation/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-jupiter-api/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-jupiter-engine/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-jupiter-engine/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-jupiter-migrationsupport/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-jupiter-migrationsupport/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-jupiter-params/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-jupiter-params/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-platform-commons-java-9/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-platform-commons-java-9/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-platform-commons/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-platform-console-standalone/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-platform-console/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-platform-engine/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-platform-engine/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-platform-launcher/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-platform-runner/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-platform-suite-api/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-platform-surefire-provider/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-platform-surefire-provider/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-vintage-engine/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/junit-vintage-engine/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/platform-tests/src/jmh/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/platform-tests/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/platform-tooling-support-tests/projects/ant-starter/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/platform-tooling-support-tests/projects/ant-starter/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/platform-tooling-support-tests/projects/gradle-missing-engine/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/platform-tooling-support-tests/projects/gradle-starter/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/platform-tooling-support-tests/projects/gradle-starter/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/platform-tooling-support-tests/projects/maven-starter/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/platform-tooling-support-tests/projects/maven-starter/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/platform-tooling-support-tests/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/junit5-r5.3.2/platform-tooling-support-tests/src/test/java" />
+    </SOURCES>
+  </library>
+</component>
