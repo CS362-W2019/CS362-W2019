@@ -1,0 +1,129 @@
+        -:    0:Source:randomtestadventurer.c
+        -:    0:Graph:randomtestadventurer.gcno
+        -:    0:Data:randomtestadventurer.gcda
+        -:    0:Runs:2
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include "rngs.h"
+        -:    7:
+        -:    8:#define TESTCARD "adventurer"
+        -:    9:#define MAXRUN 1000
+        -:   10:
+function main called 2 returned 0% blocks executed 75%
+        -:   11:int main()
+        -:   12:{
+    #####:   13:    printf("\n----------------- Random Testing Card: %s ----------------\n", TESTCARD);
+        -:   14:    int seed;
+        -:   15:    int numPlayers;
+        -:   16:    int player, j, i, m, n, r;
+        -:   17:    int topCard;
+        -:   18:    int treasureCount;
+    #####:   19:    int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
+        -:   20:    struct gameState G, testG;
+    #####:   21:    int maxHandCount = 5;
+    #####:   22:    int testfailed = 0;
+    #####:   23:    int testpassed = 0;
+    #####:   24:    int validator = 1;
+        -:   25:
+      202:   26:    for (i = 0; i < MAXRUN; i++)
+branch  0 taken 200
+branch  1 taken 2
+        -:   27:    {
+        -:   28:        // generate random seed
+      200:   29:        seed = rand() % 100000;
+        -:   30:        // generate random number of player from 2 to 4
+      200:   31:        numPlayers = (rand() % 3) + 2;
+        -:   32:
+     1402:   33:        for (j = 0; j < maxHandCount; j++)
+branch  0 taken 1000
+branch  1 taken 200
+        -:   34:        {
+     3000:   35:            memset(&G, 23, sizeof(struct gameState)); //clear the game state
+     3000:   36:            memset(&testG, 23, sizeof(struct gameState)); //clear the game state
+     3000:   37:            r = initializeGame(numPlayers, k, seed, &testG);
+     3000:   38:            if (r != 0)
+branch  0 taken 1000
+branch  1 taken 2000
+        -:   39:            {
+     1000:   40:                validator = 0;
+     1000:   41:                printf("FAIL when initializing playing %s card.\n", TESTCARD);
+     1000:   42:            }
+    10300:   43:            for (m = 0; m < 2; m++)
+branch  0 taken 6100
+branch  1 taken 2000
+        -:   44:            {
+    25400:   45:                for (player = 0; player < numPlayers; player++)
+branch  0 taken 12200
+branch  1 taken 6100
+        -:   46:                {
+        -:   47:                    // copy the game state to a test case
+    12200:   48:                    memcpy(&G, &testG, sizeof(struct gameState));
+        -:   49:                    // play the card
+    12200:   50:                    adventurerCard(player, &testG, maxHandCount);
+        -:   51:
+        -:   52:                    // check the treasure cards
+    12200:   53:                    treasureCount = 0;
+    14950:   54:                    for (n = 0; n < 2; n++)
+branch  0 never executed
+branch  1 never executed
+        -:   55:                    {
+    #####:   56:                        topCard = testG.hand[player][testG.handCount[player] - (n + 1)];
+    36600:   57:                        if (topCard == copper || topCard == silver || topCard == gold)
+branch  0 never executed
+branch  1 never executed
+branch  2 taken 12200
+branch  3 taken 0
+branch  4 taken 12200
+branch  5 taken 12200
+        -:   58:                        {
+     5660:   59:                            treasureCount++;
+     5660:   60:                        }
+      440:   61:                    }
+    17860:   62:                    if ((testG.handCount[player] == G.handCount[player] + 2) && (testG.deckCount[player] == G.deckCount[player] - 2) && treasureCount == 2)
+branch  0 taken 2910
+branch  1 taken 2750
+branch  2 taken 0
+branch  3 taken 2750
+branch  4 taken 3350
+branch  5 taken 6100
+        -:   63:                    {
+     6100:   64:                        testpassed++;
+     6100:   65:                    }
+        -:   66:                    else
+        -:   67:                    {
+     2000:   68:                        validator = 0;
+     2000:   69:                        testfailed++;
+     2000:   70:                        printf("Test FAILED - incorrect number of Treasure cards!\n");
+        -:   71:                    }
+     2000:   72:                }
+     1000:   73:            }
+      200:   74:        }
+    #####:   75:        if (validator)
+branch  0 never executed
+branch  1 never executed
+        -:   76:        {
+    #####:   77:            printf("\n\n");
+    #####:   78:            printf("*****************************************\n");
+    #####:   79:            printf("*** All tests passed for %s card! ***\n", TESTCARD);
+    #####:   80:            printf("*****************************************\n");
+    #####:   81:            printf("\n\n");
+    #####:   82:        }
+        -:   83:        else
+        -:   84:        {
+    #####:   85:            printf("\n\n");
+    #####:   86:            printf("************************************\n");
+    #####:   87:            printf("*** There is BUG in %s card! ***\n", TESTCARD);
+    #####:   88:            printf("************************************\n");
+    #####:   89:            printf("\n\n");
+        -:   90:        }
+    #####:   91:    }
+    #####:   92:    printf("\n < < < < RESULTS > > > >\n\n");
+    #####:   93:    printf("\t Number of cases passed: %d\n", testpassed);
+    #####:   94:    printf("\t Number of cases failed: %d\n\n", testfailed);
+        -:   95:
+    #####:   96:    return 0;
+        -:   97:}

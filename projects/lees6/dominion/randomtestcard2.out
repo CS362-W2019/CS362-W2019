@@ -1,3 +1,222 @@
+
+----------------- Random Testing Card: village ----------------
+discard : 1
+totalCards : 53
+addedCards : 4
+discard : 1
+totalCards : 99
+addedCards : 4
+discard : 1
+totalCards : 185
+addedCards : 4
+discard : 1
+totalCards : 354
+addedCards : 4
+discard : 1
+totalCards : 155
+addedCards : 4
+discard : 1
+totalCards : 172
+addedCards : 4
+discard : 1
+totalCards : 177
+addedCards : 4
+discard : 1
+totalCards : 344
+addedCards : 4
+discard : 1
+totalCards : 402
+addedCards : 4
+discard : 1
+totalCards : 135
+addedCards : 4
+
+
+*****************************************
+*** All tests passed for village card! ***
+*****************************************
+
+
+File 'randomtestcard2.c'
+Lines executed:79.45% of 73
+Branches executed:100.00% of 24
+Taken at least once:79.17% of 24
+No calls
+randomtestcard2.c:creating 'randomtestcard2.c.gcov'
+
+File 'dominion.c'
+Lines executed:29.80% of 688
+Branches executed:35.90% of 415
+Taken at least once:26.75% of 415
+No calls
+dominion.c:creating 'dominion.c.gcov'
+
+        -:    0:Source:randomtestcard2.c
+        -:    0:Graph:randomtestcard2.gcno
+        -:    0:Data:randomtestcard2.gcda
+        -:    0:Runs:5
+        -:    0:Programs:1
+        -:    1:/* -----------------------------------------------------------------------
+        -:    2: * Random test for Village Card.
+        -:    3: *
+        -:    4: * randomtestcard2: randomtestcard2.c dominion.o rngs.o
+        -:    5: *      gcc -o randomtestcard2 randomtestcard2.c -g dominion.o rngs.o $(CFLAGS)
+        -:    6: * -----------------------------------------------------------------------
+        -:    7: */
+        -:    8:
+        -:    9:#include "dominion.h"
+        -:   10:#include "dominion_helpers.h"
+        -:   11:#include <string.h>
+        -:   12:#include <stdio.h>
+        -:   13:#include <assert.h>
+        -:   14:#include "rngs.h"
+        -:   15:#include <stdlib.h>
+        -:   16:#include <math.h>
+        -:   17:#include <time.h>
+        -:   18:
+        -:   19:#define TESTCARD "village"
+        -:   20:
+function main called 5 returned 100% blocks executed 85%
+        -:   21:int main()
+        -:   22:{
+        5:   23:    printf("\n----------------- Random Testing Card: %s ----------------\n", TESTCARD);
+        5:   24:    int validator = 1;
+        -:   25:    struct gameState G, testG;
+        -:   26:    //int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy};
+        -:   27:
+        5:   28:    int numTests = 10;
+        -:   29:    int i, n, r;
+        5:   30:    int handPos = 0;
+        5:   31:    int choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
+        -:   32:    int currentPlayer;
+        5:   33:    int addedCards = 4;
+        5:   34:    int discard = 1;
+        5:   35:    int addedBuys = 1;
+        5:   36:    int otherPlrAdded = 1;
+        -:   37:    int playerHand[4];
+        -:   38:    int copyPlayerHand[4];
+        -:   39:    int totalCards, copytotalCards;
+        -:   40:
+        -:   41:    //initialize game state
+        -:   42:    //initializeGame(numbPlayers, k, randSeed, &G);
+        -:   43:
+        -:   44:    //initialize random
+        5:   45:    srand(time(NULL));
+        -:   46:
+     2090:   47:    for (i = 0; i < numTests; i++)
+branch  0 taken 1040
+branch  1 taken 5
+        -:   48:    {
+ 13678080:   49:        for (n = 0; n < sizeof(struct gameState) / sizeof(int); n++)
+branch  0 taken 6838000
+branch  1 taken 1040
+        -:   50:        {
+  6838000:   51:            ((int *)&G)[n] = rand() % 128;
+  6838000:   52:        }
+        -:   53:
+     1040:   54:        G.numPlayers = (rand() % 3) + 2;
+     1040:   55:        G.whoseTurn = rand() % G.numPlayers;
+     1040:   56:        currentPlayer = whoseTurn(&G);
+     1040:   57:        G.handCount[currentPlayer] = (rand() % (MAX_HAND / 2)) + 1;
+     1040:   58:        G.deckCount[currentPlayer] = (rand() % (MAX_DECK / 2)) + 1;
+     1040:   59:        G.discardCount[currentPlayer] = (rand() % (MAX_DECK / 2)) + 1;
+     1040:   60:        G.numBuys = 0;
+     1040:   61:        handPos = (rand() % G.handCount[currentPlayer]);
+        -:   62:
+     1040:   63:        memcpy(&testG, &G, sizeof(struct gameState));
+        -:   64:
+     1040:   65:        r = cardEffect(council_room, choice1, choice2, choice3, &testG, handPos, &bonus);
+     1040:   66:        if (r != 0)
+branch  0 taken 0
+branch  1 taken 1040
+        -:   67:        {
+    #####:   68:            printf("Return Fail");
+    #####:   69:            validator = 0;
+    #####:   70:        };
+        -:   71:
+     1040:   72:        printf("discard : %d\n", discard);
+     1040:   73:        if (testG.handCount[currentPlayer] != G.handCount[currentPlayer] + addedCards - discard)
+branch  0 taken 0
+branch  1 taken 1040
+        -:   74:        {
+    #####:   75:            validator = 0;
+    #####:   76:            printf("Hand Count: %d, Expected: %d \n\n", testG.handCount[currentPlayer], G.handCount[currentPlayer] + addedCards - discard);
+    #####:   77:        }
+        -:   78:
+     1040:   79:        totalCards = G.deckCount[currentPlayer] + G.discardCount[currentPlayer];
+     1040:   80:        copytotalCards = testG.deckCount[currentPlayer] + testG.discardCount[currentPlayer];
+     1040:   81:        printf("totalCards : %d\n", totalCards);
+     1040:   82:        printf("addedCards : %d\n", addedCards);
+     1040:   83:        if (copytotalCards != totalCards - addedCards)
+branch  0 taken 0
+branch  1 taken 1040
+        -:   84:        {
+    #####:   85:            validator = 0;
+    #####:   86:            printf("Total Cards: %d, Expected: %d \n\n", copytotalCards, totalCards - addedCards);
+    #####:   87:        };
+        -:   88:
+     1040:   89:        if (testG.numBuys != G.numBuys + addedBuys)
+branch  0 taken 0
+branch  1 taken 1040
+        -:   90:        {
+    #####:   91:            validator = 0;
+    #####:   92:            printf("Buy Count: %d, Expected: %d \n\n", testG.numBuys, G.numBuys + addedBuys);
+    #####:   93:        }
+        -:   94:
+     8362:   95:        for (n = 0; n < G.numPlayers; n++)
+branch  0 taken 3141
+branch  1 taken 1040
+        -:   96:        {
+     3141:   97:            if (n != currentPlayer)
+branch  0 taken 2101
+branch  1 taken 1040
+        -:   98:            {
+     2101:   99:                copyPlayerHand[n] = testG.handCount[n];
+     2101:  100:                playerHand[n] = G.handCount[n];
+     2101:  101:            }
+     3141:  102:        }
+        -:  103:
+     8362:  104:        for (n = 0; n < G.numPlayers; n++)
+branch  0 taken 3141
+branch  1 taken 1040
+        -:  105:        {
+     3141:  106:            if (n != currentPlayer)
+branch  0 taken 2101
+branch  1 taken 1040
+        -:  107:            {
+     2101:  108:                if (copyPlayerHand[n] != playerHand[n] + otherPlrAdded)
+branch  0 taken 0
+branch  1 taken 2101
+        -:  109:                {
+    #####:  110:                    validator = 0;
+        -:  111:                    //printf("%d, %d, %d, %d, %d", G.numPlayers, G.whoseTurn, G.handCount[currentPlayer], G.deckCount[currentPlayer], G.discardCount[currentPlayer]);
+    #####:  112:                    printf("Other Player Hand Count: %d, Expected: %d \n\n", copyPlayerHand[n], playerHand[n] + otherPlrAdded);
+    #####:  113:                }
+     2101:  114:            }
+     3141:  115:        }
+     1040:  116:    }
+        -:  117:
+        5:  118:    if (validator)
+branch  0 taken 4
+branch  1 taken 1
+        -:  119:    {
+        4:  120:        printf("\n\n");
+        4:  121:        printf("*****************************************\n");
+        4:  122:        printf("*** All tests passed for %s card! ***\n", TESTCARD);
+        4:  123:        printf("*****************************************\n");
+        4:  124:        printf("\n\n");
+        4:  125:    }
+        -:  126:    else
+        -:  127:    {
+        1:  128:        printf("\n\n");
+        1:  129:        printf("************************************\n");
+        1:  130:        printf("*** There is BUG in %s card! ***\n", TESTCARD);
+        1:  131:        printf("************************************\n");
+        1:  132:        printf("\n\n");
+        -:  133:    }
+        -:  134:
+        5:  135:    return 0;
+        -:  136:};
         -:    0:Source:dominion.c
         -:    0:Graph:dominion.gcno
         -:    0:Data:dominion.gcda
