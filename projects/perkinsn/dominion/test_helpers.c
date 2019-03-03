@@ -117,3 +117,17 @@ void debugGameState(int player, struct gameState* state)
 
     printf("\n");
 }
+
+int countCards(int card, int* pile, int size)
+{
+  int count = 0;
+  for (int i = 0; i < size &&  i != -1; ++i)
+  {
+    if (pile[i] == card)
+    {
+      ++count;
+    }   
+  }
+
+  return count;
+}

@@ -20,5 +20,6 @@ void debugGameState(int player, struct gameState* state);
 void fillDeck(int player, struct gameState* state, int max);
 void fillHand(int player, struct gameState* state, int max);
 void fillDiscard(int player, struct gameState* state, int max);
+int countCards(int card, int* pile, int size);
 
 #endif
