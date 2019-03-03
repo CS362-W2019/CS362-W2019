@@ -51,6 +51,7 @@ unittestresults: $(UNITTESTS) $(CARDTESTS) $(OBJS) $(SRCS)
 	$(GCOV) dominion.c -bf >> unittestresults.out
 	$(GCOV) cards.c -bf >> unittestresults.out
 
+.PHONY: randomtestresults
 randomtestresults: randomtestcard1.out randomtestcard2.out randomtestadventurer.out
 
 randomtestcard1.out: randomtestcard1
