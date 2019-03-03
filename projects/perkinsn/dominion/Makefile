@@ -56,15 +56,15 @@ randomtestresults: randomtestcard1.out randomtestcard2.out randomtestadventurer.
 
 randomtestcard1.out: randomtestcard1
 	./$^ > $@
-	$(GCOV) cards.c bf >> $@
+	$(GCOV) cards.c -bf >> $@
 
 randomtestcard2.out: randomtestcard2
 	./$^ > $@
-	$(GCOV) cards.c bf >> $@
+	$(GCOV) cards.c -bf >> $@
 
 randomtestadventurer.out: randomtestadventurer
 	./$^ > $@
-	$(GCOV) cards.c bf >> $@
+	$(GCOV) cards.c -bf >> $@
 
 .PHONY: clean
 clean:
