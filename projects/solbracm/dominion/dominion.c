@@ -651,7 +651,7 @@ int adventurerCard(int drawntreasure, struct gameState *state, int currentPlayer
 	drawCard(currentPlayer, state);
 	int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
 	if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
-	  drawntreasure--;
+	  drawntreasure++;
 	else{
 	  temphand[z]=cardDrawn;
 	  state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
@@ -666,7 +666,7 @@ int adventurerCard(int drawntreasure, struct gameState *state, int currentPlayer
   }
 
 int smithyCard(struct gameState *state, int currentPlayer, int handPos){
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 3; i++)
 	{
 	  drawCard(currentPlayer, state);
 	}
@@ -720,6 +720,7 @@ int stewardCard(int choice1, int choice2, int choice3, int currentPlayer, struct
 	{
 	  //+2 cards
 	  drawCard(currentPlayer, state);
+	drawCard(currentPlayer, state);	
 	}
       else if (choice1 == 2)
 	{

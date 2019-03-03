@@ -1,0 +1,59 @@
+        -:    0:Source:randomtestcard1.c
+        -:    0:Graph:randomtestcard1.gcno
+        -:    0:Data:randomtestcard1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* Random tests smithy */
+        -:    2:
+        -:    3:
+        -:    4:#include "dominion.h"
+        -:    5:#include "dominion_helpers.h"
+        -:    6:#include <string.h>
+        -:    7:#include <stdio.h>
+        -:    8:#include <stdlib.h>
+        -:    9:#include <time.h>
+        -:   10:#include "rngs.h"
+        -:   11:
+        -:   12:
+        -:   13:
+        1:   14:int main() {
+        1:   15:	printf("----------------------- Random Testing: Smithy Card --------------\n");
+        -:   16:
+        1:   17:	srand(time(NULL));
+        -:   18:
+        1:   19:	int randomTestNumber = 0;
+        1:   20:	int draw3Cards = 0;
+        -:   21:
+        1:   22:	int k[10] = { adventurer, gardens, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy };
+        -:   23:
+     2002:   24:	while (randomTestNumber < 2000)
+        -:   25:	{
+     2000:   26:		int players = (rand() % MAX_PLAYERS-1) + 2;
+        -:   27:		struct gameState state;
+        -:   28:
+     2000:   29:		initializeGame(players, k, rand(), &state);
+        -:   30:
+     2000:   31:		int player = rand() % players;
+        -:   32:
+     2000:   33:		int bonus = -1;
+     2000:   34:		int choice1 = -1;
+     2000:   35:		int choice2 = -1;
+     2000:   36:		int choice3 = -1;
+     2000:   37:		int handPos = rand() % MAX_HAND;
+        -:   38:
+        -:   39:		struct gameState orig;
+     2000:   40:		memcpy(&orig, &state, sizeof(struct gameState));
+        -:   41:
+     2000:   42:		cardEffect(13, choice1, choice2, choice3, &state, handPos, &bonus);
+     2000:   43:		if (state.handCount[player] != orig.handCount[player] + 2)
+        -:   44:		{
+     1463:   45:			printf("Player %d, handPos %d, Test Failed Draw 3 Cards.\n", player, handPos);
+     1463:   46:			draw3Cards++;
+        -:   47:		}
+     2000:   48:		randomTestNumber++;
+        -:   49:	}
+        1:   50:	printf("Number of failed Draw 3 Cards Test: %d\n", draw3Cards);
+        -:   51:
+        1:   52:	return(0);
+        -:   53:
+        -:   54:}

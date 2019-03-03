@@ -1,0 +1,77 @@
+        -:    0:Source:randomtestadventurer.c
+        -:    0:Graph:randomtestadventurer.gcno
+        -:    0:Data:randomtestadventurer.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* Random tests adventurer card */
+        -:    2:
+        -:    3:#include "dominion.h"
+        -:    4:#include "dominion_helpers.h"
+        -:    5:#include <string.h>
+        -:    6:#include <stdio.h>
+        -:    7:#include <stdlib.h>
+        -:    8:#include <time.h>
+        -:    9:#include "rngs.h"
+        -:   10:
+        -:   11:
+        -:   12:
+        1:   13:int main(){
+        1:   14:        printf("----------------------- Random Testing: Adventurer Card --------------\n");
+        -:   15:
+        1:   16:        srand(time(NULL));
+        -:   17:
+        1:   18:        int randomTestNumber = 0;
+        1:   19:        int draw2Cards = 0;
+        1:   20:        int firstCard = 0;
+        1:   21:        int secondCard = 0;
+        -:   22:
+        1:   23:        int k[10]={adventurer, gardens, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy};
+        -:   24:
+     2002:   25:        while (randomTestNumber < 2000)
+        -:   26:        {
+     2000:   27:                int players = (rand() % MAX_PLAYERS-1)+2;
+        -:   28:                struct gameState state;
+        -:   29:
+     2000:   30:                initializeGame(players, k, rand(), &state);
+        -:   31:
+     2000:   32:                int player = rand() % players;
+        -:   33:
+     2000:   34:                int bonus = -1;
+     2000:   35:                int choice1 = -1;
+     2000:   36:                int choice2 = -1;
+     2000:   37:                int choice3 = -1;
+     2000:   38:                int handPos = rand() % MAX_HAND;
+        -:   39:
+        -:   40:                struct gameState orig;
+     2000:   41:                memcpy(&orig, &state, sizeof(struct gameState));
+        -:   42:
+     2000:   43:                cardEffect(7, choice1, choice2, choice3, &state, handPos, &bonus);
+        -:   44:
+     2000:   45:                if(state.handCount[player] != orig.handCount[player] + 2)
+        -:   46:                {
+     1256:   47:            		printf("Player %d, handPos %d, Test Failed Draw 2 Cards.\n", player, handPos);
+     1256:   48:			draw2Cards++;
+        -:   49:        	}
+        -:   50:
+     2000:   51:        	int firstCardD = state.hand[player][state.handCount[player] - 1];
+     2000:   52:        	if(firstCardD != copper && firstCardD != silver && firstCardD != gold)
+        -:   53:		{
+      928:   54:            		printf("Player %d, handPos %d, Test Failed Card 1 is not money.\n", player, handPos);
+      928:   55:			firstCard++;        	
+        -:   56:		}	
+        -:   57:
+     2000:   58:        	int secondCardD = state.hand[player][state.handCount[player] - 2];
+     2000:   59:        	if(secondCardD != copper && secondCardD != silver && secondCardD != gold)
+        -:   60:		{
+      928:   61:            		printf("Player %d, handPos %d, Test Failed Card 2 is not money.\n", player, handPos);
+      928:   62:			secondCard++;        	
+        -:   63:		}
+        -:   64:    	
+     2000:   65:		randomTestNumber++;
+        -:   66:	}	
+        -:   67:
+        1:   68:	printf("Number of failed Draw 2 Cards Test: %d\nNumber of failed Card 1 not money: %d\nNumber of failed Card2 not money: %d\n", draw2Cards, firstCard, secondCard); 		
+        -:   69:
+        1:   70:	return(0);
+        -:   71:}
+        -:   72:
