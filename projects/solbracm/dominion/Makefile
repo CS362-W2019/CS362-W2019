@@ -42,18 +42,21 @@ randomtestresults : randomtestadventurer.c randomtestcard1.c randomtestcard2.c d
 	gcc -o randomtestadventurer -g randomtestadventurer.c dominion.c dominion.h rngs.c rngs.h $(CFLAGS)
 	./randomtestadventurer >> randomtestadventurer.out
 	gcov dominion.c >> randomtestadventurer.out
+	gcov dominion.c -b >> randomtestadventurer.out
 
 	echo "Results for randomtestcard1:">> randomtestcard1.out
 	echo "randomtestcard1.c:" >> randomtestcard1.out
 	gcc -o randomtestcard1 -g randomtestcard1.c dominion.c dominion.h rngs.c rngs.h $(CFLAGS)
 	./randomtestcard1 >> randomtestcard1.out
 	gcov dominion.c >> randomtestcard1.out
+	gcov dominion.c -b >> randomtestcard1.out
 
 	echo "Results for randomtestcard2:" >> randomtestcard2.out
 	echo "randomtestcard2.c:" >> randomtestcard2.out
 	gcc -o randomtestcard2 -g randomtestcard2.c dominion.c dominion.h rngs.c rngs.h $(CFLAGS)
 	./randomtestcard2 >> randomtestcard2.out
 	gcov dominion.c >> randomtestcard2.out
+	gcov dominion.c -b >> randomtestcard2.out
 
 cleanresults :
 	rm randomtestadventurer.out
