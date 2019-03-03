@@ -61,9 +61,6 @@ Put those Treasure cards into your hand and discard the other revealed cards.
         }
 
         // adventurer was found
-        int handCountBefore = state.handCount[player];
-        int deckCountBefore = state.deckCount[player];
-        int discardCountBefore = state.discardCount[player];
         int playedCardCountBefore = state.playedCardCount;
         int actionsBefore   = state.numActions; 
 
