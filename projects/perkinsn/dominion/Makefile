@@ -51,13 +51,19 @@ unittestresults: $(UNITTESTS) $(CARDTESTS) $(OBJS) $(SRCS)
 	$(GCOV) dominion.c -bf >> unittestresults.out
 	$(GCOV) cards.c -bf >> unittestresults.out
 
-.PHONY:randomtestresults 
-randomtestresults: $(RANDOMTESTS) $(OBJS) $(SRCS)
-	rm -f randomtestresults.out
-	./randomtestcard1 >> randomtestresults.out
-	./randomtestcard2 >> randomtestresults.out
-	./randomtestadventurer >> randomtestresults.out
-	$(GCOV) cards.c -bf >> randomtestresults.out	
+randomtestresults: randomtestcard1.out randomtestcard2.out randomtestadventurer.out
+
+randomtestcard1.out: randomtestcard1
+	./$^ > $@
+	$(GCOV) cards.c bf >> $@
+
+randomtestcard2.out: randomtestcard2
+	./$^ > $@
+	$(GCOV) cards.c bf >> $@
+
+randomtestadventurer.out: randomtestadventurer
+	./$^ > $@
+	$(GCOV) cards.c bf >> $@
 
 .PHONY: clean
 clean:
