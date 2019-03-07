@@ -21,8 +21,19 @@ public class UrlValidatorTest extends TestCase {
    
    public void testManualTest()
    {
-//You can use this function to implement your manual testing	   
-	   System.out.println("Hello, final project");
+       //You can use this function to implement your manual testing
+      UrlValidator urlVal = new UrlValidator(null, null, 1);
+
+      boolean expected = true;
+      String url = "http://www.google.com";
+      boolean actual = urlVal.isValid(url);
+      assertEquals(url, expected, actual);
+
+      expected = false;
+      url = "garbage.garbage";
+      actual = urlVal.isValid(url);
+      assertEquals(url, expected, actual);
+
    }
    
    
