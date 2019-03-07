@@ -22,7 +22,7 @@ public class UrlValidatorTest extends TestCase {
    public void testManualTest()
    {
 //You can use this function to implement your manual testing	   
-	   System.out.println("Hello");
+	   System.out.println("Hello, final project");
    }
    
    
