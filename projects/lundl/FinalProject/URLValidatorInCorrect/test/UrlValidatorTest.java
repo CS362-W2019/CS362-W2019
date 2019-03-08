@@ -1,15 +1,12 @@
 
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import org.junit.Test;
 
 //You can use this as a skeleton for your 3 different test approach
 //It is an optional to use this file, you can generate your own test file(s) to test the target function!
 // Again, it is up to you to use this file or not!
-
-
-
-
 
 public class UrlValidatorTest extends TestCase {
 
@@ -19,19 +16,20 @@ public class UrlValidatorTest extends TestCase {
    }
 
    @Test
-   public void isThisATest1()
+   public void hostnamesAlone(String host, boolean expected, UrlValidator urlVal)
    {
+       String url;
+       boolean actual;
+
+       url = host;
+
+       actual = urlVal.isValid(url);
+       //System.out.println(url);
+       assertEquals(url, expected, actual);
 
    }
 
-   @Test
-   public void ISThisAnotherFlippingTest()
-   {
 
-   }
-
-   
-   @Test
    /* This function implements manual tests of UrlValidator.isValid() */
    public void testManualTest()
    {
@@ -63,17 +61,23 @@ public class UrlValidatorTest extends TestCase {
 
        /* These tests should all return true */
        boolean expected = true;
-       boolean actual;
-       String url;
        // build and test all possible valid combinations of urls
 
-       // hostnames alone
+       // hostnames alone (this tests empty schemes)
        for (String host : validHosts) {
-           url = host;
-           actual = urlVal.isValid(url);
-           System.out.println(url);
-           assertEquals(url, expected, actual);
+           try
+           {
+               hostnamesAlone(host, expected, urlVal);
+           }
+           catch(AssertionFailedError e)
+           {
+               System.out.println("FAIL: " + e.getMessage());
+           }
        }
+
+
+
+/*
 
        // schemes + hostnames
        StringBuilder[] validSchemesUrls = new StringBuilder[100];
@@ -124,7 +128,7 @@ public class UrlValidatorTest extends TestCase {
 
       //boolean actual = urlVal.isValid(url);
       //assertEquals(url, expected, actual);
-
+*/
       /* These tests should all return false */
       //expected = false;
       //url = "garbage.garbage";
