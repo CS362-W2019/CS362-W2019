@@ -1,6 +1,7 @@
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 //You can use this as a skeleton for your 3 different test approach
 //It is an optional to use this file, you can generate your own test file(s) to test the target function!
@@ -17,105 +18,109 @@ public class UrlValidatorTest extends TestCase {
       super(testName);
    }
 
+   @Test
+   public void isThisATest1()
+   {
+
+   }
+
+   @Test
+   public void ISThisAnotherFlippingTest()
+   {
+
+   }
+
    
-   
+   @Test
    /* This function implements manual tests of UrlValidator.isValid() */
    public void testManualTest()
    {
       UrlValidator urlVal = new UrlValidator(null,
               null, 1);
 
-      String[] validSchemes = {"http://", "ftp://", "file://", "https://",
-              "telnet://", ""};
-      String[] invalidSchemes = {"http:/", "://", "http/", "http//", "/"};
+       /* URL Components */
+       String[] validSchemes = {"http://", "ftp://", "file://", "https://",
+              "telnet://"};
+       String[] invalidSchemes = {"http:/", "://", "http/", "http//", "/"};
 
-      String[] validHosts = {"www.myschool.edu", "myschool.edu",
-              "cs.myschool.edu", "cs.myschool.edu:80", "172.217.11.164"};
+       String[] validHosts = {"www.myschool.edu", "myschool.edu",
+              "cs.myschool.edu", "www.myschool.edu:80", "cs.myschool.edu:80", "172.217.11.164"};
 
-      String[] invalidHosts = {
+       String[] invalidHosts = {
               "www.thisismyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallylonghostname.org",
               "mywebsite.garbage", "org", ".com", "myschool.edu:-1",
               "255.255.255.256"};
 
-      String[] validPaths = {"/", "/cs", "/cs/", "/cs/courses",
+       String[] validPaths = {"/", "/cs", "/cs/", "/cs/courses",
               "cs/courses/list.html", "/cs/courses/list.html#fall%20term", ""};
 
-      String[] invalidPaths = {"cs", "cs/", "/cs/courses/list.html#fall term", "//"};
+       String[] invalidPaths = {"cs", "cs/", "/cs/courses/list.html#fall term", "//"};
 
-      String[] validQueries = {"?field=2", "?firstname=Laura&lastname=Lund", ""};
+       String[] validQueries = {"?field=2", "?firstname=Laura&lastname=Lund", ""};
 
-      String[] invalidQueries = {"field=2", "? problem=space", "?marks=2?valid=false"};
+       String[] invalidQueries = {"field=2", "? problem=space", "?marks=2?valid=false"};
 
 
-      /* These tests should all return true */
-      boolean expected = true;
-      String url;
-      // build all possible valid combinations of urls
-       // Iterate through all valid schemes
+       /* These tests should all return true */
+       boolean expected = true;
+       boolean actual;
+       String url;
+       // build and test all possible valid combinations of urls
+
+       // hostnames alone
+       for (String host : validHosts) {
+           url = host;
+           actual = urlVal.isValid(url);
+           System.out.println(url);
+           assertEquals(url, expected, actual);
+       }
+
+       // schemes + hostnames
+       StringBuilder[] validSchemesUrls = new StringBuilder[100];
+       int validSchemeIndex = 0;
+
        for (String scheme : validSchemes) {
-           StringBuilder urlBuffer = new StringBuilder();
+           // get a new string builder
+           StringBuilder newUrl = new StringBuilder();
 
-           // Start with a valid scheme
-           urlBuffer.append(scheme);
+           // Add scheme to url
+           newUrl.append(scheme);
+           for(String host : validHosts) {
+               // Add host to url
+                newUrl.append(host);
 
-           // Iterate through all valid hosts
-           for (String host : validHosts) {
-               // save start and end indices for host name
-               int hostStart = scheme.length();
-               int hostEnd = host.length() + hostStart;
+                // Save this string for future use
+                validSchemesUrls[validSchemeIndex] = newUrl;
+                validSchemeIndex++;
 
-               // Add this host to the string
-               urlBuffer.append(host);
+                // convert this url to a string
 
-               // Iterate through all valid paths
-               for (String path : validPaths) {
-                   // Save indices of path
-                   int pathStart = hostEnd;
-                   int pathEnd = pathStart + path.length();
+               url = newUrl.toString();
+               System.out.println(url);
 
-                   // Add path to string
-                   urlBuffer.append(path);
+               // test this url
+                actual = urlVal.isValid(url);
+               assertEquals(url, expected, actual);
 
-                   // Iterate through all valid queries if current path is
-                   // valid for queries
-                   if ((path != "") && !((path.substring(path.length() - 1) == "/"))) {
-                       for (String query : validQueries) {
-                           // Save indices of query
-                           int queryStart = pathEnd;
-                           int queryEnd = queryStart + query.length();
-
-                           // Add query to string
-                           urlBuffer.append(query);
-
-                           // Convert string builder to string
-                           url = urlBuffer.toString();
-
-                           // test this url
-                           //boolean actual = urlVal.isValid(url);
-                           //assertEquals(url, expected, actual);
-                           System.out.println(url);
-
-                           // remove this query from the string
-                           urlBuffer.delete(queryStart, queryEnd);
-                       }
-                   }
-                   // The previous path is not valid for queries
-                   else {
-                       // Convert string builder to string
-                       url = urlBuffer.toString();
-
-                       // test this url
-                       //boolean actual = urlVal.isValid(url);
-                       //assertEquals(url, expected, actual);
-                       System.out.println(url);
-                   }
-                   // remove this path from the string
-                   urlBuffer.delete(pathStart, pathEnd);
-               }
-               // remove this host from the string
-               urlBuffer.delete(hostStart, hostEnd);
+                // remove this host
+               newUrl.delete(scheme.length(), (scheme.length() + host.length()));
            }
        }
+
+       // hostnames + paths
+       StringBuilder[] validHostUrls = new StringBuilder[100];
+       int hostIndex = 0;
+
+       // schemes + hostnames + paths
+
+       // hostnames + paths + queries
+
+       // schemes + hostnames + paths + queries
+
+
+
+       // schemes + hostnames
+
 
       //boolean actual = urlVal.isValid(url);
       //assertEquals(url, expected, actual);
@@ -151,6 +156,7 @@ public class UrlValidatorTest extends TestCase {
 
       UrlValidatorTest fct = new UrlValidatorTest("url test");
       fct.testManualTest();
+
    }
 
 
