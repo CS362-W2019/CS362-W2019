@@ -2,14 +2,9 @@
 
 import junit.framework.TestCase;
 import org.junit.Test;
+import org.junit.runners.AllTests;
 
-//You can use this as a skeleton for your 3 different test approach
-//It is an optional to use this file, you can generate your own test file(s) to test the target function!
-// Again, it is up to you to use this file or not!
-
-
-
-
+import java.util.Random; // needed to generate random numbers
 
 public class UrlValidatorTest extends TestCase {
 
@@ -69,28 +64,67 @@ public class UrlValidatorTest extends TestCase {
       //assertFalse(urlVal.isValid("https://osu.edu/beav=ers")); // unsafe char
       //assertFalse(urlVal.isValid("https://osu.edu/beav ers")); // invalid space
 
-
-
-
-
-
-
-
-
    }
-   
-   
+
+   //Object[] testUrlParts = {testUrlScheme, testUrlAuthority, testUrlPort, testPath, testUrlQuery};
+
+
+
    public void testYourFirstPartition()
    {
-	 //You can use this function to implement your First Partition testing	   
+      UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+
+      // randomly select one of each result path component to construct a URL
+
+      // if any are false, then assert false, else assert true
+
+      // instantiate a Random class obj
+      Random rand = new Random();
+
+      int i = 0;
+      int tests = 100;
+      do {
+
+         // generate 4 integers to be our indices into the Result Pairs
+         int idx1 = rand.nextInt(testUrlScheme.length - 1);
+         int idx2 = rand.nextInt(testUrlAuthority.length - 1);
+         int idx3 = rand.nextInt(testUrlPort.length - 1);
+         int idx4 = rand.nextInt(testPath.length - 1);
+
+         System.out.printf("%d %d %d %d\n", idx1, idx2, idx3, idx4);
+
+         // construct the URL to test
+         String testURL = testUrlScheme[idx1].item + testUrlAuthority[idx2].item + testUrlPort[idx3].item + testPath[idx4].item;
+
+         System.out.printf("Testing: %s\n", testURL);
+
+
+         boolean validURL = true;
+         // if any component is false, then the entire URL is false
+         if (testUrlScheme[idx1].valid == false) {
+            validURL = false;
+         } else if (testUrlAuthority[idx2].valid == false) {
+            validURL = false;
+         } else if (testUrlPort[idx3].valid == false) {
+            validURL = false;
+         } else if (testPath[idx4].valid == false) {
+            validURL = false;
+         }
+
+         boolean result = urlVal.isValid(testURL);
+
+         assertEquals(validURL, result); // check for expected result
+
+         i++;
+
+      } while (i < tests);
 
    }
-   
+
    public void testYourSecondPartition(){
       //You can use this function to implement your Second Partition testing
 
    }
-   //You need to create more test cases for your Partitions if you need to 
 
    public void testIsValid()
    {
@@ -98,4 +132,86 @@ public class UrlValidatorTest extends TestCase {
 
    }
 
+   // Result Pairs taken from the URLValidatorCorrect code
+
+   ResultPair[] testUrlScheme = {new ResultPair("http://", true),
+           new ResultPair("ftp://", true),
+           new ResultPair("h3t://", true),
+           new ResultPair("3ht://", false),
+           new ResultPair("http:/", false),
+           new ResultPair("http:", false),
+           new ResultPair("http/", false),
+           new ResultPair("://", false)};
+
+   ResultPair[] testUrlAuthority = {new ResultPair("www.google.com", true),
+           new ResultPair("www.google.com.", true),
+           new ResultPair("go.com", true),
+           new ResultPair("go.au", true),
+           new ResultPair("0.0.0.0", true),
+           new ResultPair("255.255.255.255", true),
+           new ResultPair("256.256.256.256", false),
+           new ResultPair("255.com", true),
+           new ResultPair("1.2.3.4.5", false),
+           new ResultPair("1.2.3.4.", false),
+           new ResultPair("1.2.3", false),
+           new ResultPair(".1.2.3.4", false),
+           new ResultPair("go.a", false),
+           new ResultPair("go.a1a", false),
+           new ResultPair("go.cc", true),
+           new ResultPair("go.1aa", false),
+           new ResultPair("aaa.", false),
+           new ResultPair(".aaa", false),
+           new ResultPair("aaa", false),
+           new ResultPair("", false)
+   };
+   ResultPair[] testUrlPort = {new ResultPair(":80", true),
+           new ResultPair(":65535", true), // max possible
+           new ResultPair(":65536", false), // max possible +1
+           new ResultPair(":0", true),
+           new ResultPair("", true),
+           new ResultPair(":-1", false),
+           new ResultPair(":65636", false),
+           new ResultPair(":999999999999999999", false),
+           new ResultPair(":65a", false)
+   };
+   ResultPair[] testPath = {new ResultPair("/test1", true),
+           new ResultPair("/t123", true),
+           new ResultPair("/$23", true),
+           new ResultPair("/..", false),
+           new ResultPair("/../", false),
+           new ResultPair("/test1/", true),
+           new ResultPair("", true),
+           new ResultPair("/test1/file", true),
+           new ResultPair("/..//file", false),
+           new ResultPair("/test1//file", false)
+   };
+   //Test allow2slash, noFragment
+   ResultPair[] testUrlPathOptions = {new ResultPair("/test1", true),
+           new ResultPair("/t123", true),
+           new ResultPair("/$23", true),
+           new ResultPair("/..", false),
+           new ResultPair("/../", false),
+           new ResultPair("/test1/", true),
+           new ResultPair("/#", false),
+           new ResultPair("", true),
+           new ResultPair("/test1/file", true),
+           new ResultPair("/t123/file", true),
+           new ResultPair("/$23/file", true),
+           new ResultPair("/../file", false),
+           new ResultPair("/..//file", false),
+           new ResultPair("/test1//file", true),
+           new ResultPair("/#/file", false)
+   };
+
+   ResultPair[] testUrlQuery = {new ResultPair("?action=view", true),
+           new ResultPair("?action=edit&mode=up", true),
+           new ResultPair("", true)
+   };
+
+   Object[] testUrlParts = {testUrlScheme, testUrlAuthority, testUrlPort, testPath, testUrlQuery};
+   Object[] testUrlPartsOptions = {testUrlScheme, testUrlAuthority, testUrlPort, testUrlPathOptions, testUrlQuery};
+   int[] testPartsIndex = {0, 0, 0, 0, 0};
+
+
 }
+
