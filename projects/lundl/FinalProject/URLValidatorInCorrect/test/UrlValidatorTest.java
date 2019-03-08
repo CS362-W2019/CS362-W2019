@@ -11,7 +11,7 @@ import org.junit.Test;
 public class UrlValidatorTest extends TestCase {
 
 
-   public UrlValidatorTest(String testName) {
+  public UrlValidatorTest(String testName) {
       super(testName);
    }
 
@@ -35,6 +35,10 @@ public class UrlValidatorTest extends TestCase {
    {
       UrlValidator urlVal = new UrlValidator(null,
               null, 1);
+      // if this is true after running all the tests in testManualTest, pass the whole test
+      boolean testPasses = true;
+      StringBuilder testMessage = new StringBuilder();
+      testMessage.append("testManualTest()\n");
 
        /* URL Components */
        String[] validSchemes = {"http://", "ftp://", "file://", "https://",
@@ -71,7 +75,10 @@ public class UrlValidatorTest extends TestCase {
            }
            catch(AssertionFailedError e)
            {
-               System.out.println("FAIL: " + e.getMessage());
+               //System.out.println("FAIL: " + e.getMessage());
+               testMessage.append(e.getMessage());
+               testMessage.append("\n");
+               testPasses = false;
            }
        }
 
@@ -135,6 +142,10 @@ public class UrlValidatorTest extends TestCase {
       //actual = urlVal.isValid(url);
       //assertEquals(url, expected, actual);
 
+       // If any of the above tests returned unexpected results, fail
+       testMessage.append("RESULTS of testManualTest(): ");
+       assertEquals(testMessage.toString(), true, testPasses);
+
    }
    
    
@@ -156,12 +167,12 @@ public class UrlValidatorTest extends TestCase {
 
    }
 
-   public static void main(String[] argv) {
+/*   public static void main(String[] argv) {
 
       UrlValidatorTest fct = new UrlValidatorTest("url test");
       fct.testManualTest();
 
-   }
+   }*/
 
 
 }
