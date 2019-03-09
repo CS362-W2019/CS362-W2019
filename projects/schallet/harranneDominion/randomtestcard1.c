@@ -38,7 +38,7 @@ int main(){
   //result = villageEffect(&myState, myHandPos);
 
   //call cardEffect instead to make compatible with Annie's Code
-  int myHandPos = 0;
+  //int myHandPos = 0;
   int choice1 = 0;
   int choice2 = 0;
   int choice3 = 0;
