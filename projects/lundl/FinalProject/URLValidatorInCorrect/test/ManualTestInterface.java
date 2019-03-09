@@ -33,6 +33,7 @@ public class ManualTestInterface {
             System.out.println(userURL);
             System.out.println("Please enter a URL for validation:");
         }
+        System.out.println();
         System.out.println("----- Manual Testing Complete -----");
         System.out.println("Valid URLs tested:");
         for(String valid : validUrls) {
