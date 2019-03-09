@@ -16,7 +16,7 @@
 int main(){
   printf("~~~~~Begining Card 1 Random Testing~~~~~\n");
   printf("~~~~~Random Testing: Village effect~~~~~\n");
-  printf("Test 1: positive control, call villageEffect: ");
+  //printf("Test 1: positive control, call villageEffect: ");
   //timing
   time_t start_t, end_t;
   double diff_t;
@@ -35,7 +35,21 @@ int main(){
   initializeGame(numPlayers, k, seed, &myState);
 
   //call villiage effect and show result
-  result = villageEffect(&myState, myHandPos);
+  //result = villageEffect(&myState, myHandPos);
+
+  //call cardEffect instead to make compatible with Annie's Code
+  int myHandPos = 0;
+  int choice1 = 0;
+  int choice2 = 0;
+  int choice3 = 0;
+  int bonus = 0;
+
+  //call cardEffect - village
+  result = cardEffect(village, choice1, choice2, choice3, &myState, myHandPos, &bonus);
+  printf("Test 1 - call cardEffect(village): ");
+
+
+
   //printf("Test result: %d\n", result);
   if (result == 0){
     printf("PASSED\n");
@@ -69,7 +83,12 @@ int main(){
     //copy initialized game state for testing
     memcpy(&myState2, &myState, sizeof(struct gameState));
     //run villiageEffect on second game state, compare states in tests
-    result1 = villageEffect(&myState2, myHandPos);
+    //result1 = villageEffect(&myState2, myHandPos);
+
+    //change result1 from adventurerEffect to cardEffect
+    result1 = cardEffect(village, choice1, choice2, choice3, &myState2, myHandPos, &bonus);
+
+
     if (result1 != 0){
       printf("Test 1: return villiageEffect: FAILED - ");
       printf("players: %d, ", randPlayer);
