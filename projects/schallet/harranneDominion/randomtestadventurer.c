@@ -15,7 +15,7 @@
 int main(){
   printf("~~~~~Begining Adventurer Card Random Testing~~~~~\n");
   printf("~~~~~Random Testing: Adventurer Effect~~~~~\n");
-  printf("Test 1: positive control, call adventurer effect: ");
+  //printf("Test 1: positive control, call adventurer effect: ");
   //need a valid game in progress to call adventurerEffect
   //or else it segfaults
   //int myHandPos = 0;
@@ -33,7 +33,19 @@ int main(){
   initializeGame(numPlayers, k, seed, &myState);
 
   //call villiage effect and show result
-  result = adventurerEffect(&myState);
+  //result = adventurerEffect(&myState);
+
+  //call cardEffect instead to make compatible with Annie's Code
+  int myHandPos = 0;
+  int choice1 = 0;
+  int choice2 = 0;
+  int choice3 = 0;
+  int bonus = 0;
+
+  //call cardEffect - adventurer
+  result = cardEffect(adventurer, choice1, choice2, choice3, &myState2, myHandPos, &bonus);
+  printf("Test 1 - call cardEffect(adventurer): ");
+
   //printf("Test result: %d\n", result);
   if (result == 0){
     printf("PASSED\n");
