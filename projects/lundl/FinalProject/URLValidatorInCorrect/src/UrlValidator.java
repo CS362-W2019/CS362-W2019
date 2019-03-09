@@ -314,7 +314,7 @@ public class UrlValidator implements Serializable {
         }
 
         String authority = urlMatcher.group(PARSE_URL_AUTHORITY);
-
+        //BUG "http" should be "file"
         if ("http".equals(scheme)) {// Special case - file: allows an empty authority
             if (authority != null) {
                 if (authority.contains(":")) { // but cannot allow trailing :
@@ -411,6 +411,7 @@ public class UrlValidator implements Serializable {
             DomainValidator domainValidator = DomainValidator.getInstance(isOn(ALLOW_LOCAL_URLS));
             if (!domainValidator.isValid(hostLocation)) {
                 // try an IPv4 address
+                // BUG getInstance() returns null instead of returning a validator
                 InetAddressValidator inetAddressValidator = InetAddressValidator.getInstance();
                 if (!inetAddressValidator.isValidInet4Address(hostLocation)) {
                     // isn't IPv4, so the URL is invalid

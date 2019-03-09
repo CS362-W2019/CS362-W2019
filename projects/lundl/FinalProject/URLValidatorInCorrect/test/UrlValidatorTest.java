@@ -1,8 +1,11 @@
 
 
+
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import org.junit.Test;
+
+import java.util.Scanner;
 
 //You can use this as a skeleton for your 3 different test approach
 //It is an optional to use this file, you can generate your own test file(s) to test the target function!
@@ -13,6 +16,15 @@ public class UrlValidatorTest extends TestCase {
 
   public UrlValidatorTest(String testName) {
       super(testName);
+   }
+
+   @Test
+   public void urlChecker(String url, boolean expected, UrlValidator urlVal)
+   {
+       boolean actual = urlVal.isValid(url);
+       //System.out.println(url);
+       assertEquals(url, expected, actual);
+
    }
 
    @Test
@@ -30,17 +42,46 @@ public class UrlValidatorTest extends TestCase {
    }
 
 
+
    /* This function implements manual tests of UrlValidator.isValid() */
    public void testManualTest()
    {
-      UrlValidator urlVal = new UrlValidator(null,
-              null, 1);
+       //String userString = manualTestInterface();
+       //System.out.println("Got this:" + userString);
+       // Use this UrlValidator for http, https
+       //String[] schemes = {"http", "https"};
+       //UrlValidator urlVal = new UrlValidator(schemes, null, 1);
+        //UrlValidator urlVal = new UrlValidator(null, null, 0);
+       UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+       assertTrue(urlVal.isValid("http://www.google.com"));
+       assertTrue(urlVal.isValid("http://www.google.com/"));
+       assertTrue(urlVal.isValid("http://www.myschool.edu"));
+
+        boolean result = urlVal.isValid("www.myschool.edu");
+        System.out.println("result:" + (result?"true":"false"));
+
+
+
+       //UrlValidator urlFtp = new UrlValidator();
+       //boolean result = urlFtp.isValid("ftp://foo");
+       try {
+           result = urlVal.isValid("foo.com");
+           System.out.println("result:" + (result ? "true" : "false"));
+       }
+       catch(NullPointerException e) {
+           System.out.println(e);
+       }
+/*
+       // Use this UrlValidator for other schemes such as ftp
+      UrlValidator urlValAllSchemes = new UrlValidator();
+
       // if this is true after running all the tests in testManualTest, pass the whole test
       boolean testPasses = true;
       StringBuilder testMessage = new StringBuilder();
       testMessage.append("testManualTest()\n");
-
+*/
        /* URL Components */
+/*
        String[] validSchemes = {"http://", "ftp://", "file://", "https://",
               "telnet://"};
        String[] invalidSchemes = {"http:/", "://", "http/", "http//", "/"};
@@ -63,7 +104,9 @@ public class UrlValidatorTest extends TestCase {
        String[] invalidQueries = {"field=2", "? problem=space", "?marks=2?valid=false"};
 
 
-       /* These tests should all return true */
+       */
+/* These tests should all return true *//*
+
        boolean expected = true;
        // build and test all possible valid combinations of urls
 
@@ -71,7 +114,8 @@ public class UrlValidatorTest extends TestCase {
        for (String host : validHosts) {
            try
            {
-               hostnamesAlone(host, expected, urlVal);
+               urlChecker(host, expected, urlVal);
+               //hostnamesAlone(host, expected, urlVal);
            }
            catch(AssertionFailedError e)
            {
@@ -83,8 +127,6 @@ public class UrlValidatorTest extends TestCase {
        }
 
 
-
-/*
 
        // schemes + hostnames
        StringBuilder[] validSchemesUrls = new StringBuilder[100];
@@ -106,17 +148,32 @@ public class UrlValidatorTest extends TestCase {
 
                 // convert this url to a string
 
-               url = newUrl.toString();
-               System.out.println(url);
+               String url = newUrl.toString();
+               //System.out.println(url);
 
                // test this url
-                actual = urlVal.isValid(url);
-               assertEquals(url, expected, actual);
-
+               try {
+                   //if((scheme == "http://") || (scheme == "https://")) {
+                   if(scheme == "http://") {
+                       System.out.println("http");
+                       System.out.println(url);
+                       urlChecker(url, expected, urlVal);
+                   } else {
+                       System.out.println("NOT http");
+                       System.out.println(url);
+                       urlChecker(url, expected, urlValAllSchemes);
+                   }
+               }
+               catch(AssertionFailedError e) {
+                   testMessage.append(e.getMessage());
+                   testMessage.append("\n");
+                   testPasses = false;
+               }
                 // remove this host
                newUrl.delete(scheme.length(), (scheme.length() + host.length()));
            }
        }
+
 
        // hostnames + paths
        StringBuilder[] validHostUrls = new StringBuilder[100];
@@ -136,6 +193,7 @@ public class UrlValidatorTest extends TestCase {
       //boolean actual = urlVal.isValid(url);
       //assertEquals(url, expected, actual);
 */
+
       /* These tests should all return false */
       //expected = false;
       //url = "garbage.garbage";
@@ -143,8 +201,8 @@ public class UrlValidatorTest extends TestCase {
       //assertEquals(url, expected, actual);
 
        // If any of the above tests returned unexpected results, fail
-       testMessage.append("RESULTS of testManualTest(): ");
-       assertEquals(testMessage.toString(), true, testPasses);
+      /* testMessage.append("RESULTS of testManualTest(): ");
+       assertEquals(testMessage.toString(), true, testPasses);*/
 
    }
    
@@ -167,12 +225,11 @@ public class UrlValidatorTest extends TestCase {
 
    }
 
-/*   public static void main(String[] argv) {
+   public static void main(String[] argv) {
 
       UrlValidatorTest fct = new UrlValidatorTest("url test");
       fct.testManualTest();
 
-   }*/
-
+   }
 
 }

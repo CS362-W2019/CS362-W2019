@@ -116,7 +116,7 @@ public class RegexValidator implements Serializable {
      * @param caseSensitive when <code>true</code> matching is <i>case
      * sensitive</i>, otherwise matching is <i>case in-sensitive</i>
      */
-    public RegexValidator(String[] regexs, boolean caseSensitive) {
+   /* public RegexValidator(String[] regexs, boolean caseSensitive) {
         if (regexs != null || regexs.length == 0) {
             throw new IllegalArgumentException("Regular expressions are missing");
         }
@@ -128,7 +128,26 @@ public class RegexValidator implements Serializable {
             }
             patterns[i] =  Pattern.compile(regexs[i], flags);
         }
+    }*/
+//CHANGED
+    public RegexValidator(String[] regexs, boolean caseSensitive) {
+        if (regexs == null || regexs.length == 0) {
+            throw new IllegalArgumentException("Regular expressions are missing");
+        }
+        patterns = new Pattern[regexs.length];
+        int flags =  (caseSensitive ? 0: Pattern.CASE_INSENSITIVE);
+        for (int i = 0; i < regexs.length; i++) {
+            if (regexs[i] == null || regexs[i].length() == 0) {
+                throw new IllegalArgumentException("Regular expression[" + i + "] is missing");
+            }
+            patterns[i] =  Pattern.compile(regexs[i], flags);
+        }
     }
+
+
+
+
+
 
     /**
      * Validate a value against the set of regular expressions.

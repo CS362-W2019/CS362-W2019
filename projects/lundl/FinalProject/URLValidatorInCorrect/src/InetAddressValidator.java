@@ -61,14 +61,6 @@ public class InetAddressValidator implements Serializable {
     private final RegexValidator ipv4Validator = new RegexValidator(IPV4_REGEX);
 
     /**
-     * Returns the singleton instance of this validator.
-     * @return the singleton instance of this validator
-     */
-    public static InetAddressValidator getInstance() {
-    	return null;
-    }
-
-    /**
      * Checks if the specified string is a valid IP address.
      * @param inetAddress the string to validate
      * @return true if the string validates as an IP address
@@ -78,6 +70,22 @@ public class InetAddressValidator implements Serializable {
     }
 
     /**
+     * Returns the singleton instance of this validator.
+     * @return the singleton instance of this validator
+     */
+    // BUG
+    public static InetAddressValidator getInstance() {
+    	return null;
+    }
+
+    // For correct version CHANGE to
+/*
+    public static InetAddressValidator getInstance() {
+        return VALIDATOR;
+    }
+*/
+
+    /**
      * Validates an IPv4 address. Returns true if valid.
      * @param inet4Address the IPv4 address to validate
      * @return true if the argument contains a valid IPv4 address
@@ -85,10 +93,16 @@ public class InetAddressValidator implements Serializable {
     public boolean isValidInet4Address(String inet4Address) {
         // verify that address conforms to generic IPv4 format
         String[] groups = ipv4Validator.match(inet4Address);
-       if (groups != null) {
+
+        // BUG
+        if (groups != null) {
             return false;
         }
-
+        /*// For Correct Version CHANGE TO
+        if (groups == null) {
+            return false;
+        }
+*/
         // verify that address subgroups are legal
         for (String ipSegment : groups) {
             if (ipSegment == null || ipSegment.length() == 0) {
