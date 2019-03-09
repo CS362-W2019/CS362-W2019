@@ -43,7 +43,7 @@ int main(){
   int bonus = 0;
 
   //call cardEffect - adventurer
-  result = cardEffect(adventurer, choice1, choice2, choice3, &myState2, myHandPos, &bonus);
+  result = cardEffect(adventurer, choice1, choice2, choice3, &myState, myHandPos, &bonus);
   printf("Test 1 - call cardEffect(adventurer): ");
 
   //printf("Test result: %d\n", result);
@@ -72,7 +72,9 @@ int main(){
     //copy initialized game state for testing
     memcpy(&myState2, &myState, sizeof(struct gameState));
     //run advenurerEffect on second game state, compare states in tests
-    result1 = adventurerEffect(&myState2);
+    //change result1 from adventurerEffect to cardEffect
+    //result1 = adventurerEffect(&myState2);
+    result1 = cardEffect(adventurer, choice1, choice2, choice3, &myState2, myHandPos, &bonus);
     if (result1 != 0){
       printf("Test 1: return adventurerEffect: FAILED - ");
       printf("players: %d, ", randPlayer);
