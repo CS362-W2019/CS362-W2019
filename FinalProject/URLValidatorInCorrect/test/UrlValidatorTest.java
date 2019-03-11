@@ -1,10 +1,6 @@
 
 
 import junit.framework.TestCase;
-import org.junit.Test;
-import org.junit.runners.AllTests;
-
-import java.util.Random; // needed to generate random numbers
 
 public class UrlValidatorTest extends TestCase {
 
@@ -13,205 +9,357 @@ public class UrlValidatorTest extends TestCase {
       super(testName);
    }
 
-
-
-   //You can use this function to implement your manual testing
+   /*
+   Manual test for isValid()
+   Simply enter a URL inside quotes below and run testManualTest individually
+    */
    public void testManualTest()
    {
 
+      // ENTER URL BELOW
+      String input = "3ht://";
       UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-      assertTrue(urlVal.isValid("http://www.google.com"));
-
-      //Object[] testUrlParts = {testUrlScheme, testUrlAuthority, testUrlPort, testPath, testUrlQuery};
-
-      // various bogus URLs - missing scheme, authority, or other invalid fields
-      assertFalse(urlVal.isValid(null));
-      assertFalse(urlVal.isValid(""));
-      assertFalse(urlVal.isValid(" "));
-      assertFalse(urlVal.isValid("alphabet"));
-      assertFalse(urlVal.isValid("www.百度.com")); // shouldn't read han yu
-      assertFalse(urlVal.isValid("www.bǎidù.com")); // shouldn't read pinyin
-      assertFalse(urlVal.isValid("www.goo_gle.com")); // invalid underscore
-      assertFalse(urlVal.isValid("3ht://")); // scheme only
-      assertFalse(urlVal.isValid("google.com")); // authority only
-      assertFalse(urlVal.isValid("255.255.255.255")); // invalid IP
-      // bogus ports
-      assertFalse(urlVal.isValid("www.google.com:65536")); // invalid port (too big by 1)
-      assertFalse(urlVal.isValid("www.google.com:000001")); // invalid port
-      assertFalse(urlVal.isValid("www.google.com:-1")); // port too small
-      // bogus queries
-      assertFalse(urlVal.isValid("www.google.com?action=view")); // missing preceding slash
-      assertFalse(urlVal.isValid("www.google.com/action??))")); // too many questions
-      assertFalse(urlVal.isValid("www.google.com/things.stuff?it=5?sure=whynot")); // crazy
-
-      // a few legit URLs - must have valid scheme AND authority
-      assertTrue(urlVal.isValid("http://255.255.255.255")); // broadcast address
-      assertTrue(urlVal.isValid("http://0.0.0.0")); // any IP
-
-      // possible bugs
-      //assertTrue(urlVal.isValid("https://oregonstate.edu/sites/default/files/lab.jpg")); // vanilla path
-      //assertTrue(urlVal.isValid("ir.baidu.com")); // unusual but valid authority
-      //assertFalse(urlVal.isValid("http://256.256.256.256")); // IP out of range, passes!
-      //assertTrue(urlVal.isValid("www.google.com/?action=view")); // valid query fails
-      //assertTrue(urlVal.isValid("www.google.com:0")); // reserved but valid port
-      //assertTrue(urlVal.isValid("www.google.com:65535")); // largest possible por
-
-      // bogus paths all pass - are paths not checked at all?
-      //assertFalse(urlVal.isValid("https://osu.edu/")); // slash without path
-      //assertFalse(urlVal.isValid("https://osu.edu/beavers//test.jpg")); // double slash
-      //assertFalse(urlVal.isValid("https://osu.edu/beavers//test{}")); // unsafe chars for URL
-      //assertFalse(urlVal.isValid("https://osu.edu/#eavers")); // unsafe char for URL
-      //assertFalse(urlVal.isValid("https://osu.edu/beav=ers")); // unsafe char
-      //assertFalse(urlVal.isValid("https://osu.edu/beav ers")); // invalid space
-
+      if(urlVal.isValid(input)) {
+         System.out.println(input + " is valid!");
+      }
+      else {
+         System.out.println(input + " is NOT valid!");
+      }
    }
 
-   //Object[] testUrlParts = {testUrlScheme, testUrlAuthority, testUrlPort, testPath, testUrlQuery};
-
-
-
-   public void testYourFirstPartition()
+   /*
+   Helper function that prints pass if the url is valid and the return
+   value of the isvalid() function is true. Prints fail is the url is
+   valid, but the return value is false.
+   */
+   public boolean helperGood(String url, boolean good)
    {
-      UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-
-      // randomly select one of each result path component to construct a URL
-
-      // if any are false, then assert false, else assert true
-
-      // instantiate a Random class obj
-      Random rand = new Random();
-
-      int i = 0;
-      int tests = 100;
-      do {
-
-         // generate 4 integers to be our indices into the Result Pairs
-         int idx1 = rand.nextInt(testUrlScheme.length - 1);
-         int idx2 = rand.nextInt(testUrlAuthority.length - 1);
-         int idx3 = rand.nextInt(testUrlPort.length - 1);
-         int idx4 = rand.nextInt(testPath.length - 1);
-
-         System.out.printf("%d %d %d %d\n", idx1, idx2, idx3, idx4);
-
-         // construct the URL to test
-         String testURL = testUrlScheme[idx1].item + testUrlAuthority[idx2].item + testUrlPort[idx3].item + testPath[idx4].item;
-
-         System.out.printf("Testing: %s\n", testURL);
-
-
-         boolean validURL = true;
-         // if any component is false, then the entire URL is false
-         if (testUrlScheme[idx1].valid == false) {
-            validURL = false;
-         } else if (testUrlAuthority[idx2].valid == false) {
-            validURL = false;
-         } else if (testUrlPort[idx3].valid == false) {
-            validURL = false;
-         } else if (testPath[idx4].valid == false) {
-            validURL = false;
-         }
-
-         boolean result = urlVal.isValid(testURL);
-
-         assertEquals(validURL, result); // check for expected result
-
-         i++;
-
-      } while (i < tests);
-
+      if(good)
+      {
+         System.out.println(url + " PASS");
+      }
+      else
+      {
+         System.out.println(url + " -- Fail, url is valid, returned invalid");
+      }
+      return good;
    }
 
-   public void testYourSecondPartition(){
-      //You can use this function to implement your Second Partition testing
-
-   }
-
-   public void testIsValid()
+   /*
+   Helper function that prints pass if the url is invalid and the return
+   value of the isvalid() function is false. Prints fail if the url is
+   invalid, but the return value is true.
+   */
+   public boolean helperBad(String url, boolean good)
    {
-	   //You can use this function for programming based testing
-
+      if(!good)
+      {
+         System.out.println(url + " PASS");
+      }
+      else
+      {
+         System.out.println(url + " -- Fail, url is invalid, returned valid");
+      }
+      return good;
    }
 
-   // Result Pairs taken from the URLValidatorCorrect code
+   /*
+   Function that tests the isValid() function with valid urls using the
+   default constructor for the function. The return value of the
+   function should be true. Uses good helper function to
+   print results.
+   */
+   public void testDefaultGood()
+   {
+      System.out.println();
+      System.out.println("Default Good");
+      UrlValidator urlValidator = new UrlValidator();
+      boolean validUrl = true;
+      if(!helperGood("https://github.com", urlValidator.isValid("https://github.com")))
+         validUrl = false;
+      if(!helperGood("http://foo.bar.com", urlValidator.isValid("http://foo.bar.com")))
+         validUrl = false;
+      if(!helperGood("ftp://foo.bar.com/", urlValidator.isValid("ftp://foo.bar.com")))
+         validUrl = false;
+      if(!helperGood("https://foo.bar.com", urlValidator.isValid("https://foo.bar.com")))
+         validUrl = false;
+      if(!helperGood("https://google.com/thispage", urlValidator.isValid("https://google.com/thispage")))
+         validUrl = false;
+      if(!helperGood("http://255.255.255.255", urlValidator.isValid("http://255.255.255.255")))
+         validUrl = false;
+      if(!helperGood("http://0.0.0.0", urlValidator.isValid("http://0.0.0.0")))
+         validUrl = false;
+      if(!helperGood("http://80.80.80.80", urlValidator.isValid("http://80.80.80.80")))
+         validUrl = false;
+      if(!helperGood("https://oregonstate.edu/sites/default/files/lab.jpg", urlValidator.isValid("https://oregonstate.edu/sites/default/files/lab.jpg")))
+         validUrl = false;
+      if(!helperGood("https://google.com/?action=view", urlValidator.isValid("https://google.com/?action=view")))
+         validUrl = false;
+      if(!helperGood("http://google.com:65535", urlValidator.isValid("http://google.com:65535")))
+         validUrl = false;
+      assertTrue(validUrl);
+   }
 
-   ResultPair[] testUrlScheme = {new ResultPair("http://", true),
-           new ResultPair("ftp://", true),
-           new ResultPair("h3t://", true),
-           new ResultPair("3ht://", false),
-           new ResultPair("http:/", false),
-           new ResultPair("http:", false),
-           new ResultPair("http/", false),
-           new ResultPair("://", false)};
+   /*
+   Function that tests the isValid() function with invalid urls using the
+   default constructor for the function. The return value of the
+   function should be false. Uses bad helper function to
+   print results.
+   */
+   public void testDefaultBad()
+   {
+      System.out.println();
+      System.out.println("Default Bad");
+      UrlValidator urlValidator = new UrlValidator();
+      boolean invalidUrl = false;
+      if(helperBad("htt://github.com", urlValidator.isValid("htt://github.com")))
+         invalidUrl = true;
+      if(helperBad("http://foo.bar..com", urlValidator.isValid("http://foo.bar..com")))
+         invalidUrl = true;
+      if(helperBad("ftp://foo.bar..com/", urlValidator.isValid("ftp://foo.bar..com")))
+         invalidUrl = true;
+      if(helperBad("https://foo.bar..com", urlValidator.isValid("https://foo.bar..com")))
+         invalidUrl = true;
+      if(helperBad("http://256.256.256.256", urlValidator.isValid("http://256.256.256.256")))
+         invalidUrl = true;
+      if(helperBad("http/80.80.80.80", urlValidator.isValid("http/80.80.80.80")))
+         invalidUrl = true;
+      if(helperBad("", urlValidator.isValid("")))
+         invalidUrl = true;
+      if(helperBad(" ", urlValidator.isValid(" ")))
+         invalidUrl = true;
+      if(helperBad("alphabet", urlValidator.isValid("alphabet")))
+         invalidUrl = true;
+      if(helperBad("www.goo_gle.com", urlValidator.isValid("www.goo_gle.com")))
+         invalidUrl = true;
+      if(helperBad("google.com", urlValidator.isValid("google.com")))
+         invalidUrl = true;
+      if(helperBad("http://google.com:65536", urlValidator.isValid("http://google.com:65536")))
+         invalidUrl = true;
+      if(helperBad("www.google.com?action=view", urlValidator.isValid("www.google.com?action=view")))
+         invalidUrl = true;
+      if(helperBad("www.google.com/action??", urlValidator.isValid("www.google.com/action??")))
+         invalidUrl = true;
+      if(helperBad("https://osu.edu/", urlValidator.isValid("https://osu.edu/")))
+         invalidUrl = true;
+      if(helperBad("www.google.com/action??", urlValidator.isValid("www.google.com/action??")))
+         invalidUrl = true;
+      if(helperBad("https://osu.edu/beavers//test.jpg", urlValidator.isValid("https://osu.edu/beavers//test.jpg")))
+         invalidUrl = true;
+      if(helperBad("https://osu.edu/beavers//test{}", urlValidator.isValid("https://osu.edu/beavers//test{}")))
+         invalidUrl = true;
+      if(helperBad("https://osu.edu/beav ers", urlValidator.isValid("https://osu.edu/beav ers")))
+         invalidUrl = true;
+      if(helperBad("www.github.com", urlValidator.isValid("www.github.com")))
+         invalidUrl = true;
+      assertFalse(invalidUrl);
+   }
 
-   ResultPair[] testUrlAuthority = {new ResultPair("www.google.com", true),
-           new ResultPair("www.google.com.", true),
-           new ResultPair("go.com", true),
-           new ResultPair("go.au", true),
-           new ResultPair("0.0.0.0", true),
-           new ResultPair("255.255.255.255", true),
-           new ResultPair("256.256.256.256", false),
-           new ResultPair("255.com", true),
-           new ResultPair("1.2.3.4.5", false),
-           new ResultPair("1.2.3.4.", false),
-           new ResultPair("1.2.3", false),
-           new ResultPair(".1.2.3.4", false),
-           new ResultPair("go.a", false),
-           new ResultPair("go.a1a", false),
-           new ResultPair("go.cc", true),
-           new ResultPair("go.1aa", false),
-           new ResultPair("aaa.", false),
-           new ResultPair(".aaa", false),
-           new ResultPair("aaa", false),
-           new ResultPair("", false)
-   };
-   ResultPair[] testUrlPort = {new ResultPair(":80", true),
-           new ResultPair(":65535", true), // max possible
-           new ResultPair(":65536", false), // max possible +1
-           new ResultPair(":0", true),
-           new ResultPair("", true),
-           new ResultPair(":-1", false),
-           new ResultPair(":65636", false),
-           new ResultPair(":999999999999999999", false),
-           new ResultPair(":65a", false)
-   };
-   ResultPair[] testPath = {new ResultPair("/test1", true),
-           new ResultPair("/t123", true),
-           new ResultPair("/$23", true),
-           new ResultPair("/..", false),
-           new ResultPair("/../", false),
-           new ResultPair("/test1/", true),
-           new ResultPair("", true),
-           new ResultPair("/test1/file", true),
-           new ResultPair("/..//file", false),
-           new ResultPair("/test1//file", false)
-   };
-   //Test allow2slash, noFragment
-   ResultPair[] testUrlPathOptions = {new ResultPair("/test1", true),
-           new ResultPair("/t123", true),
-           new ResultPair("/$23", true),
-           new ResultPair("/..", false),
-           new ResultPair("/../", false),
-           new ResultPair("/test1/", true),
-           new ResultPair("/#", false),
-           new ResultPair("", true),
-           new ResultPair("/test1/file", true),
-           new ResultPair("/t123/file", true),
-           new ResultPair("/$23/file", true),
-           new ResultPair("/../file", false),
-           new ResultPair("/..//file", false),
-           new ResultPair("/test1//file", true),
-           new ResultPair("/#/file", false)
-   };
+   /*
+   Function that tests the isValid() function with valid urls using the
+   schemes passed to the constructor for the function. The return value of the
+   function should be true. Uses good helper function to
+   print results.
+   */
+   public void testSchemeGood()
+   {
+      System.out.println();
+      System.out.println("Scheme Good");
+      String[] schemes = {"http","https"};
+      UrlValidator urlValidator = new UrlValidator(schemes);
+      boolean validUrl = true;
+      if(!helperGood("https://github.com", urlValidator.isValid("https://github.com")))
+         validUrl = false;
+      if(!helperGood("http://foo.bar.com", urlValidator.isValid("http://foo.bar.com")))
+         validUrl = false;
+      if(!helperGood("https://foo.bar.com", urlValidator.isValid("https://foo.bar.com")))
+         validUrl = false;
+      if(!helperGood("http://255.255.255.255", urlValidator.isValid("http://255.255.255.255")))
+         validUrl = false;
+      if(!helperGood("http://0.0.0.0", urlValidator.isValid("http://0.0.0.0")))
+         validUrl = false;
+      if(!helperGood("https://80.80.80.80", urlValidator.isValid("https://80.80.80.80")))
+         validUrl = false;
+      if(!helperGood("https://oregonstate.edu/sites/default/files/lab.jpg", urlValidator.isValid("https://oregonstate.edu/sites/default/files/lab.jpg")))
+         validUrl = false;
+      assertTrue(validUrl);
+   }
 
-   ResultPair[] testUrlQuery = {new ResultPair("?action=view", true),
-           new ResultPair("?action=edit&mode=up", true),
-           new ResultPair("", true)
-   };
+   /*
+   Function that tests the isValid() function with invalid urls using the
+   schemes passed to the constructor for the function. The return value of the
+   function should be false. Uses bad helper function to
+   print results.
+   */
+   public void testSchemeBad()
+   {
+      System.out.println();
+      System.out.println("Scheme Bad");
+      String[] schemes = {"http","https"};
+      UrlValidator urlValidator = new UrlValidator(schemes);
+      boolean invalidUrl = false;
+      if(helperBad("ftp://github.com", urlValidator.isValid("ftp://github.com")))
+         invalidUrl = true;
+      if(helperBad("ftp://foo.bar.com", urlValidator.isValid("ftp://foo.bar.com")))
+         invalidUrl = true;
+      if(helperBad("ftp://80.80.80.80", urlValidator.isValid("ftp://80.80.80.80")))
+         invalidUrl = true;
+      if(helperBad("", urlValidator.isValid("")))
+         invalidUrl = true;
+      if(helperBad(" ", urlValidator.isValid(" ")))
+         invalidUrl = true;
+      if(helperBad("alphabet", urlValidator.isValid("alphabet")))
+         invalidUrl = true;
+      if(helperBad("www.goo_gle.com", urlValidator.isValid("www.goo_gle.com")))
+         invalidUrl = true;
+      if(helperBad("google.com", urlValidator.isValid("google.com")))
+         invalidUrl = true;
+      if(helperBad("ftp://google.com:65536", urlValidator.isValid("ftp://google.com:65536")))
+         invalidUrl = true;
+      if(helperBad("www.google.com?action=view", urlValidator.isValid("www.google.com?action=view")))
+         invalidUrl = true;
+      if(helperBad("www.google.com/action??", urlValidator.isValid("www.google.com/action??")))
+         invalidUrl = true;
+      if(helperBad("ftp://osu.edu/", urlValidator.isValid("https://osu.edu/")))
+         invalidUrl = true;
+      if(helperBad("www.google.com/action??", urlValidator.isValid("www.google.com/action??")))
+         invalidUrl = true;
+      if(helperBad("ftp://osu.edu/beavers//test.jpg", urlValidator.isValid("ftp://osu.edu/beavers//test.jpg")))
+         invalidUrl = true;
+      if(helperBad("ftp://osu.edu/beavers//test{}", urlValidator.isValid("ftp://osu.edu/beavers//test{}")))
+         invalidUrl = true;
+      if(helperBad("ftp://osu.edu/beav ers", urlValidator.isValid("ftp://osu.edu/beav ers")))
+         invalidUrl = true;
+      if(helperBad("www.github.com", urlValidator.isValid("www.github.com")))
+         invalidUrl = true;
+      assertFalse(invalidUrl);
+   }
 
-   Object[] testUrlParts = {testUrlScheme, testUrlAuthority, testUrlPort, testPath, testUrlQuery};
-   Object[] testUrlPartsOptions = {testUrlScheme, testUrlAuthority, testUrlPort, testUrlPathOptions, testUrlQuery};
-   int[] testPartsIndex = {0, 0, 0, 0, 0};
+   /*
+   Function that tests the isValid() function with valid urls using the
+   allow 2 slashes passed to the constructor for the function. The return value of the
+   function should be true. Uses good helper function to
+   print results.
+   */
+   public void testTwoSlashGood()
+   {
+      System.out.println();
+      System.out.println("Two Slash Good");
+      UrlValidator urlValidator = new UrlValidator(UrlValidator.ALLOW_2_SLASHES);
+      boolean validUrl = true;
+      if(!helperGood("https://github.com//", urlValidator.isValid("https://github.com//")))
+         validUrl = false;
+      if(!helperGood("http://foo.bar.com//bars", urlValidator.isValid("http://foo.bar.com//bars")))
+         validUrl = false;
+      if(!helperGood("https://oregonstate.edu//sites/default/files/lab.jpg", urlValidator.isValid("https://oregonstate.edu//sites/default/files/lab.jpg")))
+         validUrl = false;
+      if(!helperGood("ir.baidu.com//good", urlValidator.isValid("ir.baidu.com//good")))
+         validUrl = false;
+      if(!helperGood("www.google.com//?action=view", urlValidator.isValid("www.google.com//?action=view")))
+         validUrl = false;
+      assertTrue(validUrl);
+   }
 
+   /*
+   Function that tests the isValid() function with invalid urls using the
+   allow 2 slashes passed to the constructor for the function. The return value of the
+   function should be false. Uses good helper function to
+   print results.
+   */
+   public void testTwoSlashBad()
+   {
+      System.out.println();
+      System.out.println("Two Slash Bad");
+      UrlValidator urlValidator = new UrlValidator(UrlValidator.ALLOW_2_SLASHES);
+      boolean invalidUrl = false;
+      if(helperBad("ht://github.com//", urlValidator.isValid("ht://github.com//")))
+         invalidUrl = true;
+      if(helperBad("http://foo.bar.//bars", urlValidator.isValid("http://foo.bar.//bars")))
+         invalidUrl = true;
+      assertFalse(invalidUrl);
+   }
+
+   /*
+   Function that tests the isValid() function with valid urls using the
+   allow all schemes constructor for the function. The return value of the
+   function should be true. Uses good helper function to
+   print results.
+   */
+   public void testAllGood()
+   {
+      System.out.println();
+      System.out.println("All Good");
+      UrlValidator urlValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+      boolean validUrl = true;
+      if(!helperGood("http://github.com", urlValidator.isValid("http://github.com")))
+         validUrl = false;
+      if(!helperGood("https://google.com", urlValidator.isValid("https://google.com")))
+         validUrl = false;
+      if(!helperGood("ftp://github.com", urlValidator.isValid("ftp://github.com")))
+         validUrl = false;
+      if(!helperGood("ht://github.com", urlValidator.isValid("ht://github.com")))
+         validUrl = false;
+      if(!helperGood("https://oregonstate.edu/sites/default/files/lab.jpg", urlValidator.isValid("https://oregonstate.edu/sites/default/files/lab.jpg")))
+         validUrl = false;
+      if(!helperGood("ir.baidu.com", urlValidator.isValid("ir.baidu.com")))
+         validUrl = false;
+      if(!helperGood("www.google.com/?action=view", urlValidator.isValid("www.google.com/?action=view")))
+         validUrl = false;
+      if(!helperGood("www.google.com:65535", urlValidator.isValid("www.google.com:65535")))
+         validUrl = false;
+      assertTrue(validUrl);
+   }
+
+   /*
+   Function that tests the isValid() function with invalid urls using the
+   allow all schemes constructor for the function. The return value of the
+   function should be false. Uses bad helper function to
+   print results.
+   */
+   public void testAllBad()
+   {
+      System.out.println();
+      System.out.println("All bad");
+      UrlValidator urlValidator = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+      boolean invalidUrl = false;
+      if(helperBad("http/github.com", urlValidator.isValid("http/github.com")))
+         invalidUrl = true;
+      if(helperBad("./github.com", urlValidator.isValid("./github.com")))
+         invalidUrl = true;
+      if(helperBad("b/b/github.com", urlValidator.isValid("b/b/bgithub.com")))
+         invalidUrl = true;
+      if(helperBad("::github.com", urlValidator.isValid("::github.com")))
+         invalidUrl = true;
+      if(helperBad("", urlValidator.isValid("")))
+         invalidUrl = true;
+      if(helperBad(" ", urlValidator.isValid(" ")))
+         invalidUrl = true;
+      if(helperBad("alphabet", urlValidator.isValid("alphabet")))
+         invalidUrl = true;
+      if(helperBad("www.goo_gle.com", urlValidator.isValid("www.goo_gle.com")))
+         invalidUrl = true;
+      if(helperBad("google.com", urlValidator.isValid("google.com")))
+         invalidUrl = true;
+      if(helperBad("http://google.com:65536", urlValidator.isValid("http://google.com:65536")))
+         invalidUrl = true;
+      if(helperBad("www.google.com?action=view", urlValidator.isValid("www.google.com?action=view")))
+         invalidUrl = true;
+      if(helperBad("www.google.com/action??", urlValidator.isValid("www.google.com/action??")))
+         invalidUrl = true;
+      if(helperBad("https://osu.edu/", urlValidator.isValid("https://osu.edu/")))
+         invalidUrl = true;
+      if(helperBad("www.google.com/action??", urlValidator.isValid("www.google.com/action??")))
+         invalidUrl = true;
+      if(helperBad("https://osu.edu/beavers//test.jpg", urlValidator.isValid("https://osu.edu/beavers//test.jpg")))
+         invalidUrl = true;
+      if(helperBad("https://osu.edu/beavers//test{}", urlValidator.isValid("https://osu.edu/beavers//test{}")))
+         invalidUrl = true;
+      if(helperBad("https://osu.edu/beav ers", urlValidator.isValid("https://osu.edu/beav ers")))
+         invalidUrl = true;
+      if(helperBad("www.github.com", urlValidator.isValid("www.github.com")))
+         invalidUrl = true;
+      assertFalse(invalidUrl);
+   }
 
 }
 

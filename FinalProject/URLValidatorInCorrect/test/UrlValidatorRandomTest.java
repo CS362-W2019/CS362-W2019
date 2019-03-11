@@ -8,6 +8,14 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 
+/*
+This file constructs random URLs from possible components (see TestResultPairs)
+and tests each constructed URL for validity
+Note that 2 sets are created:
+1 where VALID or INVALID urls may be constructed
+1 where only VALID cases are constructed (done because valid cases occur so rarely otherwise)
+*/
+
 @RunWith(Parameterized.class)
 public class UrlValidatorRandomTest {
 
@@ -28,7 +36,7 @@ public class UrlValidatorRandomTest {
         boolean validURL = true;
 
         // construct 1000 cases (VALID or INVALID) to test
-        for (int i=0; i<1000; i++) {
+        for (var i = 0; i<1000; i++) {
 
             // generate 5 integers to be our indices into the Result Pair partitions
             int idx1 = rand.nextInt(testUrlScheme.length);
@@ -75,7 +83,7 @@ public class UrlValidatorRandomTest {
             cases.add(new Object[]{testURL, validURL}); // add 1 int and 1 bool to each list item
         }
 
-        // construct 1000 VALID cases to test
+        // construct 1000 VALID ONLY cases to test
         for (int i=0; i<1000; i++) {
 
             int idx1 = -1;
@@ -85,10 +93,11 @@ public class UrlValidatorRandomTest {
             int idx5 = -1;
             int idx6 = -1;
 
-
-            // generate 5 integers to be our indices into the Result Pair partitions
-            // generate for each index until a valid one selected
-            // randInt is bound by a count of how many valid components are in the array
+            /*
+            generate 5 integers to be our indices into the Result Pair partitions
+            generate for each index until a valid one selected
+            randInt is bound by a count of how many valid components are in the array
+            */
             while(idx1 < 0 || !testUrlScheme[idx1].valid) {
                 idx1 = rand.nextInt(3);
             }
@@ -101,7 +110,6 @@ public class UrlValidatorRandomTest {
             while(idx6 < 0 || !testUrlQuery[idx6].valid) {
                 idx6 = rand.nextInt(3);
             }
-
 
             // alternate between using path/path options and construct URL
             if (i % 2 == 0) { // path
@@ -136,8 +144,6 @@ public class UrlValidatorRandomTest {
 
         }
 
-
-
         return cases; // return the completely constructed list of object arrays
     }
 
@@ -150,15 +156,15 @@ public class UrlValidatorRandomTest {
         fResult = validURL; // the UrlVal object takes the second element in list
     }
 
-    // this block is the actual test
+    // this block is the actual test of each URL in cases
     @Test
     public void test() {
         assertEquals(fResult, urlVal.isValid(toTest));
     }
 
     /*
-    Result Pairs taken from the URLValidatorCorrect code
-    Use these to construct cases
+    Modified from Apache's example URLs
+    These are used to construct random test cases
     */
 
     public static TestResultPair[] testUrlScheme = {
