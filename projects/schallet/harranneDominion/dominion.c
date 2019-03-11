@@ -681,11 +681,11 @@ int adventurerEffect(int drawntreasure, struct gameState *state, int currentPlay
 	while (drawntreasure < 2) {
 		//BUG
 		//commenting out the section where we check to see if we need to shuffle the deck
-		//start bug
+		/*
 		if (state->deckCount[currentPlayer] < 1) {//if the deck is empty we need to shuffle discard and add to deck
 			shuffle(currentPlayer, state);
 		}
-		//*///end bug
+		*/
 		drawCard(currentPlayer, state);
 		cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];//top card of hand is most recently drawn card.
 		printf("card draw: %d\n", cardDrawn);
