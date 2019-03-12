@@ -816,6 +816,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       }
       return 0;
 	*/
+      //Tera debugging bug #7
+      return 0;
 
     case council_room:
 		councilRoomEffect(currentPlayer, state, handPos);
