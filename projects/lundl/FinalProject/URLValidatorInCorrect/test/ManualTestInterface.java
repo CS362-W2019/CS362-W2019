@@ -1,3 +1,17 @@
+/******************************************************************************
+ * Author: Laura Lund, lundl@oregonstate.edu
+ * Assignment: Final Project Part B
+ * Group Members: Laura Lund, lundl
+ *  Elisabeth Mansfield, mansfiee
+ *  Graham Roese, roeseg
+ * Description: ManualTestInterface allows a user to input a url string,
+ *  indicate whether it is valid, and then compare the result of calling
+ *  isValid() with the expected result. Because JUnit hangs on user input,
+ *  manual testing must be run separately from the other tests. To run
+ *  manual tests, run ManualTestInterface main() and type input into the
+ *  console.
+ *****************************************************************************/
+
 import java.util.Scanner;
 
 public class ManualTestInterface {
@@ -42,12 +56,13 @@ public class ManualTestInterface {
                         System.out.println("PASSED: " + userURL);
                     } else {
                         System.out.println("FAILED: " + userURL);
-                        System.out.println("Expected: " + userAssertion + ", Actual: " + result);
+                        System.out.println("    Expected: " + userAssertion + ", Actual: " + result);
                         didPass = false;
                     }
                 }
                 catch(Throwable t) {
-                    System.out.println("FAILED: " + userURL + " with ERROR or EXCEPTION: " + t);
+                    System.out.println("FAILED: " + userURL);
+                    System.out.println("     ERROR or EXCEPTION: " + t);
                     didPass = false;
                 }
             }
