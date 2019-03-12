@@ -665,7 +665,7 @@ int smithyEffect(struct gameState *state, int currentPlayer, int handPos){
 	// original statement: for(i=0; i < 3; i++)
 	// bug intorudced: changed i < 3 to i <= 3
 	// the bug will allow to draw one extra card
-	for (i = 0; i <= 3; i++){
+	for (i = 0; i < 3; i++){
 		printf("i = %d\n", i);
 		drawCard(currentPlayer, state);
 	}
