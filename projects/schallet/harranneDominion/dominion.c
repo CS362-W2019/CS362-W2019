@@ -845,6 +845,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
       return 0;
 			*/
+      //Tera debugging
+      return 0;
 
     case feast:
       //gain card with cost up to 5
@@ -979,6 +981,9 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		*/
 
+    //Tera REFACTORING
+    return 0;
+
 		//refactored
     case village:
 		villageEffect(currentPlayer, state, handPos);
@@ -993,6 +998,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       discardCard(handPos, currentPlayer, state, 0);
       return 0;
 		*/
+      //Tera refactoring
+      return 0;
 
     case baron:
       state->numBuys++;//Increase buys by 1!
@@ -1059,6 +1066,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       discardCard(handPos, currentPlayer, state, 0);
       return 0;
 	  */
+      //Tera debugging
+      return 0;
 
     case minion:
       //+1 action
