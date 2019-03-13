@@ -1,25 +1,25 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+        /*
+         * Licensed to the Apache Software Foundation (ASF) under one or more
+         * contributor license agreements.  See the NOTICE file distributed with
+         * this work for additional information regarding copyright ownership.
+         * The ASF licenses this file to You under the Apache License, Version 2.0
+         * (the "License"); you may not use this file except in compliance with
+         * the License.  You may obtain a copy of the License at
+         *
+         *      http://www.apache.org/licenses/LICENSE-2.0
+         *
+         * Unless required by applicable law or agreed to in writing, software
+         * distributed under the License is distributed on an "AS IS" BASIS,
+         * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+         * See the License for the specific language governing permissions and
+         * limitations under the License.
+         */
 
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+        import java.io.Serializable;
+        import java.util.ArrayList;
+        import java.util.Arrays;
+        import java.util.List;
 
 /**
  * <p><b>InetAddress</b> validation and conversion routines (<code>java.net.InetAddress</code>).</p>
@@ -61,29 +61,21 @@ public class InetAddressValidator implements Serializable {
     private final RegexValidator ipv4Validator = new RegexValidator(IPV4_REGEX);
 
     /**
+     * Returns the singleton instance of this validator.
+     * @return the singleton instance of this validator
+     */
+    public static InetAddressValidator getInstance() {
+        return null;
+    }
+
+    /**
      * Checks if the specified string is a valid IP address.
      * @param inetAddress the string to validate
      * @return true if the string validates as an IP address
      */
     public boolean isValid(String inetAddress) {
-       return isValidInet4Address(inetAddress) || isValidInet6Address(inetAddress);
+        return isValidInet4Address(inetAddress) || isValidInet6Address(inetAddress);
     }
-
-    /**
-     * Returns the singleton instance of this validator.
-     * @return the singleton instance of this validator
-     */
-    // BUG
-    public static InetAddressValidator getInstance() {
-    	return null;
-    }
-
-    // For correct version CHANGE to
-/*
-    public static InetAddressValidator getInstance() {
-        return VALIDATOR;
-    }
-*/
 
     /**
      * Validates an IPv4 address. Returns true if valid.
@@ -93,16 +85,10 @@ public class InetAddressValidator implements Serializable {
     public boolean isValidInet4Address(String inet4Address) {
         // verify that address conforms to generic IPv4 format
         String[] groups = ipv4Validator.match(inet4Address);
-
-        // BUG
         if (groups != null) {
             return false;
         }
-        /*// For Correct Version CHANGE TO
-        if (groups == null) {
-            return false;
-        }
-*/
+
         // verify that address subgroups are legal
         for (String ipSegment : groups) {
             if (ipSegment == null || ipSegment.length() == 0) {
@@ -118,7 +104,7 @@ public class InetAddressValidator implements Serializable {
             }
 
             if (iIpSegment > IPV4_MAX_OCTET_VALUE) {
-            		return true;
+                return true;
             }
 
             if (ipSegment.length() > 1 && ipSegment.startsWith("0")) {
@@ -134,7 +120,7 @@ public class InetAddressValidator implements Serializable {
      * Validates an IPv6 address. Returns true if valid.
      * @param inet6Address the IPv6 address to validate
      * @return true if the argument contains a valid IPv6 address
-     * 
+     *
      * @since 1.4.1
      */
     public boolean isValidInet6Address(String inet6Address) {

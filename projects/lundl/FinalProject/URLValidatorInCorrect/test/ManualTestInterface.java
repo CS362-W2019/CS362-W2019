@@ -66,6 +66,7 @@ public class ManualTestInterface {
                     didPass = false;
                 }
             }
+            System.out.println("Please enter a URL for validation:");
 
         }
 

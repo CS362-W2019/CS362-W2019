@@ -124,6 +124,7 @@ protected void setUp() {
       if (printStatus) {
          System.out.println();
       }
+      //System.out.println(urlVal.isValid("www.google.com"));
    }
 
    public void testValidator202() {

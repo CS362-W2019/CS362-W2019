@@ -53,64 +53,112 @@ public class UrlValidatorTest extends TestCase {
        Map<String, Boolean> urlsToTest = new HashMap<String, Boolean>();
 
        /* Valid Urls */
-       urlsToTest.put("www.google.com", true);
-       urlsToTest.put("google.com", true);
-       urlsToTest.put("www.google.com:80", true);
-       urlsToTest.put("www.oregonstate.edu", true);
-       urlsToTest.put("oregonstate.edu", true);
-       urlsToTest.put("oregonstate.edu:80", true);
-       urlsToTest.put("engineering.oregonstate.edu", true);
-       urlsToTest.put("engineering.oregonstate.edu:80", true);
-       urlsToTest.put("172.217.11.164", true);
+       // IP Address
        urlsToTest.put("http://172.217.11.164", true);
-       urlsToTest.put("172.217.11.164:80", true);
+
+       // Host Names alone
        urlsToTest.put("http://www.google.com", true);
-       urlsToTest.put("http://www.google.com:80", true);
        urlsToTest.put("http://google.com", true);
        urlsToTest.put("http://oregonstate.edu", true);
-       urlsToTest.put("http://engineering.oregonstate.edu", true);
-       urlsToTest.put("www.iana.org", true);
        urlsToTest.put("http://www.iana.org", true);
-       urlsToTest.put("www.iana.org/domains/root", true);
-       urlsToTest.put("https://www.google.com", true);
-       urlsToTest.put("ftp://www.google.com", true);
-       urlsToTest.put("www.reddit.com/r/cscareerquestions/comments/azqbr4/interview_discussion_march_11_2019/", true);
-       urlsToTest.put("https://www.reddit.com/r/cscareerquestions/comments/azqbr4/interview_discussion_march_11_2019/", true);
-       urlsToTest.put("somedomain.net", true);
-       urlsToTest.put("www.somedomain.net", true);
-       urlsToTest.put("en.somedomain.net", true);
-       urlsToTest.put("http://somedomain.net/dir1/dir2/dir3/dir4/dir5/", true);
-       urlsToTest.put("http://somedomain.net/dir1/dir2/dir3/dir4/dir5", true);
+       urlsToTest.put("http://somedomain.net", true);
+       urlsToTest.put("http://www.somedomain.net", true);
+
+
+       // Sub Domains
+       urlsToTest.put("http://engineering.oregonstate.edu", true);
+       urlsToTest.put("http://en.somedomain.net", true);
+
+       // Port Numbers
+       urlsToTest.put("http://www.google.com:80", true);
+       urlsToTest.put("http://google.com:80", true);
+       urlsToTest.put("http://172.217.11.164:80", true);
+
+
+       // Paths and Fragments
+       urlsToTest.put("http://www.iana.org/page.html#bookmark", true);
+       urlsToTest.put("http://www.iana.org/domains/root", true);
        urlsToTest.put("http://en.somedomain.net/dir/page.html#bookmark", true);
        urlsToTest.put("http://www.somedomain.net/page.html#bookmark", true);
-       urlsToTest.put("somedomain.net?firstname=Laura&lastname=Lund", true);
+       urlsToTest.put("http://somedomain.net/dir1/dir2/dir3/dir4/dir5/", true);
+       urlsToTest.put("http://somedomain.net/dir1/dir2/dir3/dir4/dir5", true);
+
+
+       // Other Schemes
+       urlsToTest.put("https://www.google.com", true);
+       urlsToTest.put("ftp://www.google.com", true);
+       urlsToTest.put("file://www.google.com", true);
+       urlsToTest.put("telnet://www.google.com", true);
+       urlsToTest.put("https://www.reddit.com/r/cscareerquestions/comments/azqbr4/interview_discussion_march_11_2019/", true);
+
+       // Queries
        urlsToTest.put("http://somedomain.net?firstname=Laura&lastname=Lund", true);
        urlsToTest.put("http://www.somedomain.net?firstname=Laura&lastname=Lund", true);
        urlsToTest.put("http://www.somedomain.net?firstname=Laura", true);
-       urlsToTest.put("subdomain.somedomain.net?firstname=Laura&lastname=Lund", true);
        urlsToTest.put("http://subdomain.somedomain.net?firstname=Laura&lastname=Lund", true);
 
-       /* Invalid Urls */
+
+/* Invalid Urls */
+
+       // Too Long Host Name
        urlsToTest.put("http://www.thisismyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallylonghostname.org", false);
        urlsToTest.put("www.thisismyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallylonghostname.org", false);
+
+       // Empty Scheme
+       urlsToTest.put("172.217.11.164:80", false);
+       urlsToTest.put("google.com", false);
+       urlsToTest.put("www.google.com", false);
+       urlsToTest.put("www.google.com:80", false);
+       urlsToTest.put("www.oregonstate.edu", false);
+       urlsToTest.put("oregonstate.edu", false);
+       urlsToTest.put("oregonstate.edu:80", false);
+       urlsToTest.put("engineering.oregonstate.edu", false);
+       urlsToTest.put("engineering.oregonstate.edu:80", false);
+       urlsToTest.put("172.217.11.164", false);
+       urlsToTest.put("www.iana.org", false);
        urlsToTest.put("somedomain.garbage", false);
+       urlsToTest.put("www.reddit.com/r/cscareerquestions/comments/azqbr4/interview_discussion_march_11_2019/", false);
+
+       // Bad TLD
        urlsToTest.put("http://somedomain.garbage", false);
+
+       // Missing Host Name
        urlsToTest.put("org", false);
        urlsToTest.put(".com", false);
        urlsToTest.put("http://org", false);
+
+       // Bad Port Number
        urlsToTest.put("http://www.google.com:-1", false);
+       urlsToTest.put("www.google.com:-1", false);
+
+       // Bad Path
        urlsToTest.put("http://somedomain.net//dir1/", false);
        urlsToTest.put("http://www.iana.orgdomains/root", false);
        urlsToTest.put("www.iana.orgdomains/root", false);
+
+       // Bad Query
        urlsToTest.put("http://subdomain.somedomain.net? firstname=Laura&lastname=Lund", false);
+       urlsToTest.put("http://www.somedomain.net?firstname=Laura?lastname=Lund", false);
        urlsToTest.put("http://www.somedomain.netfirstname=Laura", false);
+
+       // Bad IP Address
        urlsToTest.put("255.255.255.256", false);
        urlsToTest.put("http://255.255.255.256", false);
+
+       // Bad Scheme
        urlsToTest.put(".http://www.google.com", false);
+       urlsToTest.put("//www.google.com", false);
+       urlsToTest.put("://www.google.com", false);
+       urlsToTest.put("http//www.google.com", false);
+       urlsToTest.put("http:/www.google.com", false);
+       urlsToTest.put("http/www.google.com", false);
+       urlsToTest.put("httpwww.google.com", false);
+       urlsToTest.put("https//www.google.com", false);
+
 
 
        // Print values stored in hash map
-    /*   for(Map.Entry<String,Boolean> entry : urlsToTest.entrySet()) {
+  /*     for(Map.Entry<String,Boolean> entry : urlsToTest.entrySet()) {
            System.out.println(entry.getKey());
        }
 */
