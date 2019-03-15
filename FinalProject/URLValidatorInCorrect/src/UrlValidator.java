@@ -189,9 +189,7 @@ public class UrlValidator implements Serializable {
     /**
      * If no schemes are provided, default to this set.
      */
-   private static final String[] DEFAULT_SCHEMES = {"http", "https", "ftp"}; // Must be lower-case
-
-
+    private static final String[] DEFAULT_SCHEMES = {"http", "https", "ftp"}; // Must be lower-case
 
     /**
      * Singleton instance of this class with default schemes and options.
