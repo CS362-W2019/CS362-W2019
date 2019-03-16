@@ -1,0 +1,83 @@
+Results for unit and card tests:
+unittest1.c:
+------------------  Testing Function: isGameOver ----------------
+isGameOver PASSED initialize test 
+isGameOver PASSED province test 
+isGameOver PASSED province test 
+isGameOver PASSED province test 
+isGameOver PASSED supply piles test 
+isGameOver PASSED supply piles test 
+isGameOver PASSED supply piles test 
+isGameOver PASSED supply piles test 
+File 'dominion.c'
+Lines executed:17.54% of 570
+Creating 'dominion.c.gcov'
+
+unittest2.c:
+------------------  Testing Function: whoseTurn ----------------
+whoseTurn failed -1 
+whoseTurn failed 0 
+whoseTurn passed 1 
+whoseTurn passed 2 
+whoseTurn passed 3 
+whoseTurn failed 4 
+whoseTurn failed 5 
+File 'dominion.c'
+Lines executed:16.14% of 570
+Creating 'dominion.c.gcov'
+
+unittest3.c:
+------------------  Testing Function: numHandCards ----------------
+numHandCards PASSED initialize test 
+numHandCards PASSED outside bounds test 
+Number of Cards in hand 5, Player Number 0  numHandCards PASSED normal play test 
+Number of Cards in hand 5, Player Number 1  numHandCards PASSED normal play test 
+Number of Cards in hand 5, Player Number 2  numHandCards PASSED normal play test 
+Number of Cards in hand 5, Player Number 3  numHandCards PASSED normal play test 
+File 'dominion.c'
+Lines executed:20.00% of 570
+Creating 'dominion.c.gcov'
+
+unittest4.c:
+------------------  Testing Function: fullDeckCount ----------------
+fullDeckCount PASSED initialize test 
+fullDeckCount PASSED initialize test 
+fullDeckCount PASSED player input test 
+fullDeckCount PASSED player input test 
+fullDeckCount PASSED card input test 
+fullDeckCount PASSED card input test 
+File 'dominion.c'
+Lines executed:17.19% of 570
+Creating 'dominion.c.gcov'
+
+cardtest1.c:
+------------------  Testing Card: Smithy Card ----------------
+Smithy Card FAILED the draw 3 cards test
+File 'dominion.c'
+Lines executed:18.77% of 570
+Creating 'dominion.c.gcov'
+
+cardtest2.c:
+------------------  Testing Card: Adventurer Card ----------------
+Adventurer card FAILED treasure test
+Adventurer card FAILED the shuffle test
+File 'dominion.c'
+Lines executed:23.86% of 570
+Creating 'dominion.c.gcov'
+
+cardtest3.c:
+------------------  Testing Card: Village Card ----------------
+Village card FAILED actions test
+Village card PASSED number cards test
+File 'dominion.c'
+Lines executed:20.88% of 570
+Creating 'dominion.c.gcov'
+
+cardtest4.c:
+------------------  Testing Card: Great Hall Card ----------------
+Great Hall card PASSED actions test
+Great Hall card PASSED number cards test
+File 'dominion.c'
+Lines executed:20.18% of 570
+Creating 'dominion.c.gcov'
+

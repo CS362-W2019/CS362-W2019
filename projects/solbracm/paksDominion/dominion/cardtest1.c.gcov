@@ -1,0 +1,45 @@
+        -:    0:Source:cardtest1.c
+        -:    0:Graph:cardtest1.gcno
+        -:    0:Data:cardtest1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*	Smithy Card Test  	*/
+        -:    2:
+        -:    3:#include "dominion.h"
+        -:    4:#include "dominion_helpers.h"
+        -:    5:#include <string.h>
+        -:    6:#include <stdio.h>
+        -:    7:
+function main called 1 returned 100% blocks executed 88%
+        1:    8:int main(){
+        -:    9:
+        -:   10:       struct gameState state;
+        1:   11:       int k[10]={adventurer, gardens, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy};
+        -:   12:
+        1:   13:        printf("------------------  Testing Card: Smithy Card ----------------\n");
+call    0 returned 100%
+        -:   14:
+        1:   15:	initializeGame(MAX_PLAYERS, k, 5, &state);
+call    0 returned 100%
+        1:   16:	int coin_bonus=0;
+        -:   17:
+        -:   18:	// Check to see if the card draws 3 
+        -:   19:	
+        1:   20:	int i = state.handCount[0];
+        -:   21:
+        1:   22:	cardEffect(1333, -1, -1, -1, &state, 0, &coin_bonus);
+call    0 returned 100%
+        -:   23:
+        1:   24:	int j = state.handCount[0];
+        -:   25:
+        1:   26:	if(i+2 == j)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   27:		printf("Smithy Card PASSED the draw 3 cards test\n");
+call    0 never executed
+        -:   28:	else
+        1:   29:		printf("Smithy Card FAILED the draw 3 cards test\n");
+call    0 returned 100%
+        -:   30:
+        -:   31:
+        -:   32:}

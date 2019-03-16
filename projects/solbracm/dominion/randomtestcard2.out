@@ -1,0 +1,18 @@
+Results for randomtestcard2:
+randomtestcard2.c:
+----------------------- Random Testing: Village Card --------------
+Player 0, handPos 267, Test Failed Draw 1 Card.
+Player 0, handPos 143, Test Failed Draw 1 Card.
+Number of failed Draw 1 Cards Test: 2
+Number of failed Add 2 actions: 0
+File 'dominion.c'
+Lines executed:23.84% of 558
+Creating 'dominion.c.gcov'
+
+File 'dominion.c'
+Lines executed:23.84% of 558
+Branches executed:24.22% of 417
+Taken at least once:16.55% of 417
+Calls executed:11.58% of 95
+Creating 'dominion.c.gcov'
+
