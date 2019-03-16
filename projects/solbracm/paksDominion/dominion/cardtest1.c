@@ -19,7 +19,7 @@ int main(){
 	
 	int i = state.handCount[0];
 
-	cardEffect(12, -1, -1, -1, &state, 0, &coin_bonus);
+	cardEffect(13, -1, -1, -1, &state, 0, &coin_bonus);
 
 	int j = state.handCount[0];
 
