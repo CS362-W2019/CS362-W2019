@@ -1,0 +1,92 @@
+        -:    0:Source:cardtest1.c
+        -:    0:Graph:cardtest1.gcno
+        -:    0:Data:cardtest1.gcda
+        -:    0:Runs:2
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:
+        -:    9:#define TESTCARD "smithy"
+        -:   10:
+function main called 2 returned 100% blocks executed 68%
+        -:   11:int main() {
+        2:   12:    printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
+        2:   13:    int validator = 0;
+        -:   14:    struct gameState G, testG;
+        2:   15:    int numPlayers = 4;
+        2:   16:    int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
+        2:   17:    int seed = 1000;
+        -:   18:    int r;
+        2:   19:    int thisPlayer = 0;
+        -:   20:
+        2:   21:        r = initializeGame(numPlayers, k, seed, &G); // initialize a new game
+        2:   22:    if (r == -1)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   23:    {
+    #####:   24:        validator = 1;
+    #####:   25:        printf("FAIL when initialize a new game.\n");
+    #####:   26:    }
+        -:   27:    // copy the game state to a test case
+        2:   28:    memcpy(&testG, &G, sizeof(struct gameState));
+        2:   29:    printf("\n----------- TEST 1: set initial cards --------------\n");
+        -:   30:    //handcount before smithy play
+        2:   31:    if (G.handCount[thisPlayer] == testG.handCount[thisPlayer]){
+branch  0 taken 100%
+branch  1 taken 0%
+        2:   32:        printf("PASS - handcount before Smithy card is %d and expected %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+        2:   33:    } else {
+    #####:   34:        validator = 1;
+    #####:   35:        printf("FAIL - handcount before Smithy card is %d but expected %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+        -:   36:    }
+        2:   37:    printf("\n----------- TEST 2: give Smithy card --------------\n");
+        -:   38:    // set Smithy card to player
+        2:   39:    testG.hand[thisPlayer][testG.handCount[thisPlayer]] = smithy;
+        2:   40:    testG.handCount[thisPlayer]++; // increment number of card due to smithy card
+        -:   41:
+        2:   42:    if (G.handCount[thisPlayer] + 1 == testG.handCount[thisPlayer]) {
+branch  0 taken 100%
+branch  1 taken 0%
+        2:   43:        printf("PASS - handcount after Smithy card is %d and %d expected\n", G.handCount[thisPlayer] + 1, testG.handCount[thisPlayer]);
+        2:   44:    }
+        -:   45:    else {
+    #####:   46:        validator = 1;
+    #####:   47:        printf("FAIL - handcount after Smithy card is %d but %d expected\n", G.handCount[thisPlayer] + 1, testG.handCount[thisPlayer]);
+        -:   48:    }
+        -:   49:
+        2:   50:    printf("\n----------- TEST 3: play Smithy card --------------\n");
+        -:   51:    // play Smithy card
+        2:   52:    cardEffect(smithy, 0, 0, 0, &testG, 0, 0); //play the smithy card
+        2:   53:    if (G.handCount[thisPlayer] + 3 == testG.handCount[thisPlayer]){
+branch  0 taken 0%
+branch  1 taken 100%
+    #####:   54:        printf("PASS - handcount %d and %d expected.\n", testG.handCount[thisPlayer], G.handCount[thisPlayer] + 3);
+    #####:   55:    }
+        -:   56:    else {
+        2:   57:        validator = 1;
+        2:   58:        printf("FAIL - handcount %d but %d expected.\n", testG.handCount[thisPlayer], G.handCount[thisPlayer] + 3);
+        -:   59:    }
+        -:   60:
+        2:   61:    if (validator == 0) {
+branch  0 taken 0%
+branch  1 taken 100%
+    #####:   62:        printf("\n\n");
+    #####:   63:        printf("*****************************************\n");
+    #####:   64:        printf("*** All tests passed for Smithy card! ***\n");
+    #####:   65:        printf("*****************************************\n");
+    #####:   66:        printf("\n\n");
+    #####:   67:    } else {
+        2:   68:        printf("\n\n");
+        2:   69:        printf("************************************\n");
+        2:   70:        printf("*** There is BUG in Smithy card! ***\n");
+        2:   71:        printf("************************************\n");
+        2:   72:        printf("\n\n");
+        -:   73:    }
+        -:   74:
+        2:   75:    return 0;
+        -:   76:}

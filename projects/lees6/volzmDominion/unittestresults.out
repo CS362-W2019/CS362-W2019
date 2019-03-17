@@ -1,0 +1,910 @@
+TESTING numHandCards():
+Player 1
+numHandCards(): PASS - 0 cards, 0 expexted. 
+numHandCards(): PASS - 1 cards, 1 expexted. 
+numHandCards(): PASS - 2 cards, 2 expexted. 
+numHandCards(): PASS - 3 cards, 3 expexted. 
+numHandCards(): PASS - 4 cards, 4 expexted. 
+Player 2
+numHandCards(): PASS - 0 cards, 0 expexted. 
+numHandCards(): PASS - 1 cards, 1 expexted. 
+numHandCards(): PASS - 2 cards, 2 expexted. 
+numHandCards(): PASS - 3 cards, 3 expexted. 
+numHandCards(): PASS - 4 cards, 4 expexted. 
+Player 3
+numHandCards(): PASS - 0 cards, 0 expexted. 
+numHandCards(): PASS - 1 cards, 1 expexted. 
+numHandCards(): PASS - 2 cards, 2 expexted. 
+numHandCards(): PASS - 3 cards, 3 expexted. 
+numHandCards(): PASS - 4 cards, 4 expexted. 
+Player 4
+numHandCards(): PASS - 0 cards, 0 expexted. 
+numHandCards(): PASS - 1 cards, 1 expexted. 
+numHandCards(): PASS - 2 cards, 2 expexted. 
+numHandCards(): PASS - 3 cards, 3 expexted. 
+numHandCards(): PASS - 4 cards, 4 expexted. 
+
+
+********************************************
+*** All tests passed for numHandCards()! ***
+********************************************
+
+
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: mismatched number of counters (726)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000000)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000000)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000000)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000000)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000000)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x0000000f)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000007)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000001)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000000)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000006)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000000)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000000)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000000)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000000)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000000)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000000)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous GCDA file: corrupt arc tag (0x00000000)
+profiling: /Users/soojlee/Documents/cs362/CS362-W2019/projects/lees6/volzmDominion/dominion.gcda: cannot merge previous run count: corrupt object tag (0x00000000)
+profiling: /Users/VirajithaKarnatapu/Documents/CS362-004-U2018-master/dominion/rngs.gcda: cannot open: Permission denied
+File 'unittest1.c'
+Lines executed:68.57% of 35
+Branches executed:100.00% of 10
+Taken at least once:70.00% of 10
+No calls
+unittest1.c:creating 'unittest1.c.gcov'
+
+        -:    0:Source:unittest1.c
+        -:    0:Graph:unittest1.gcno
+        -:    0:Data:unittest1.gcda
+        -:    0:Runs:7
+        -:    0:Programs:1
+        -:    1:/* -----------------------------------------------------------------------
+        -:    2: * Unit test for numHandCards() function.
+        -:    3: *
+        -:    4: * unittest1: unittest1.c dominion.o rngs.o
+        -:    5: *      gcc -o unittest1 -g  unittest1.c dominion.o rngs.o $(CFLAGS)
+        -:    6: * -----------------------------------------------------------------------
+        -:    7: */
+        -:    8:
+        -:    9:#include "dominion.h"
+        -:   10:#include "dominion_helpers.h"
+        -:   11:#include <string.h>
+        -:   12:#include <stdio.h>
+        -:   13:#include <assert.h>
+        -:   14:#include "rngs.h"
+        -:   15:
+function main called 7 returned 100% blocks executed 83%
+        -:   16:int main() {
+        7:   17:    printf("TESTING numHandCards():\n");
+        7:   18:    int validator = 0;
+        -:   19:    struct gameState G;
+        7:   20:    int numPlayers = 4;
+        7:   21:    int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
+        7:   22:    int seed = 1000;
+        -:   23:    int i;
+        -:   24:    int j;
+        -:   25:    int r;
+        -:   26:
+        7:   27:    r = initializeGame(numPlayers, k, seed, &G); // initialize a new game
+        7:   28:    if (r == -1){
+branch  0 taken 0%
+branch  1 taken 100%
+    #####:   29:        validator = 1;
+    #####:   30:        printf("numHandCards(): FAIL when initialize a new game.\n");
+    #####:   31:    }
+        -:   32:
+       70:   33:    for (i = 0; i < numPlayers; i++)
+branch  0 taken 80%
+branch  1 taken 20%
+        -:   34:    {
+       28:   35:        printf("Player %d\n", i + 1);
+       28:   36:        G.whoseTurn = i;
+      336:   37:        for (j = 0; j < 5; j++)
+branch  0 taken 83%
+branch  1 taken 17%
+        -:   38:        {
+      140:   39:            G.handCount[i] = j;
+        -:   40:
+      140:   41:            if (numHandCards(&G) != j)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   42:            {
+    #####:   43:                validator = 1;
+    #####:   44:                printf("numHandCards(): FAIL - %d cards, %d expexted. \n", numHandCards(&G), j);
+    #####:   45:            }
+        -:   46:            else {
+      140:   47:                printf("numHandCards(): PASS - %d cards, %d expexted. \n", numHandCards(&G), j);
+        -:   48:            }
+      140:   49:        }
+       28:   50:    }
+        -:   51:
+        7:   52:    if (validator == 0)
+branch  0 taken 100%
+branch  1 taken 0%
+        -:   53:    {
+        7:   54:        printf("\n\n");
+        7:   55:        printf("********************************************\n");
+        7:   56:        printf("*** All tests passed for numHandCards()! ***\n");
+        7:   57:        printf("********************************************\n");
+        7:   58:        printf("\n\n");
+        7:   59:    }
+        -:   60:    else
+        -:   61:    {
+    #####:   62:        printf("\n\n");
+    #####:   63:        printf("***************************************\n");
+    #####:   64:        printf("*** There is BUG in numHandCards()! ***\n");
+    #####:   65:        printf("***************************************\n");
+    #####:   66:        printf("\n\n");
+        -:   67:    }
+        -:   68:
+        7:   69:    return 0;
+        -:   70:}
+File 'unittest2.c'
+Lines executed:64.52% of 31
+Branches executed:100.00% of 8
+Taken at least once:62.50% of 8
+No calls
+unittest2.c:creating 'unittest2.c.gcov'
+
+        -:    0:Source:unittest2.c
+        -:    0:Graph:unittest2.gcno
+        -:    0:Data:unittest2.gcda
+        -:    0:Runs:2
+        -:    0:Programs:1
+        -:    1:/* -----------------------------------------------------------------------
+        -:    2: * Unit test for whoseTurn() function.
+        -:    3: *
+        -:    4: * unittest2: unittest2.c dominion.o rngs.o
+        -:    5: *      gcc -o unittest2 -g  unittest2.c dominion.o rngs.o $(CFLAGS)
+        -:    6: * -----------------------------------------------------------------------
+        -:    7: */
+        -:    8:
+        -:    9:#include "dominion.h"
+        -:   10:#include "dominion_helpers.h"
+        -:   11:#include <string.h>
+        -:   12:#include <stdio.h>
+        -:   13:#include <assert.h>
+        -:   14:#include "rngs.h"
+        -:   15:#include <assert.h>
+        -:   16:
+function main called 2 returned 100% blocks executed 78%
+        -:   17:int main()
+        -:   18:{
+        2:   19:    printf("TESTING whoseTurn():\n");
+        2:   20:    int validator = 0;
+        -:   21:    struct gameState G;
+        2:   22:    int numPlayers = 4;
+        2:   23:    int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
+        2:   24:    int seed = 1000;
+        -:   25:    int i;
+        -:   26:    int r;
+        -:   27:
+        2:   28:    r = initializeGame(numPlayers, k, seed, &G); // initialize a new game
+        2:   29:    if (r == -1){
+branch  0 taken 0%
+branch  1 taken 100%
+    #####:   30:        validator = 1;
+    #####:   31:        printf("whoseTurn(): FAIL when initialize a new game.\n");
+    #####:   32:    }
+        -:   33:
+       20:   34:    for (i = 0; i < numPlayers; i++)
+branch  0 taken 80%
+branch  1 taken 20%
+        -:   35:    {
+        8:   36:        G.whoseTurn = i;
+        8:   37:        if (whoseTurn(&G) != i) {
+branch  0 taken 0%
+branch  1 taken 100%
+    #####:   38:            validator = 1;
+    #####:   39:            printf("whoseTurn(): FAIL - Player %d's turn but Player %d expected. \n", whoseTurn(&G), i);
+    #####:   40:        }
+        -:   41:        else {
+        8:   42:            printf("whoseTurn(): PASS - Player %d's turn and Player %d expected. \n", whoseTurn(&G), i);
+        -:   43:        }
+        8:   44:    }
+        -:   45:
+        2:   46:    if (validator == 0)
+branch  0 taken 100%
+branch  1 taken 0%
+        -:   47:    {
+        2:   48:        printf("\n\n");
+        2:   49:        printf("*****************************************\n");
+        2:   50:        printf("*** All tests passed for whoseTurn()! ***\n");
+        2:   51:        printf("*****************************************\n");
+        2:   52:        printf("\n\n");
+        2:   53:    }
+        -:   54:    else
+        -:   55:    {
+    #####:   56:        printf("\n\n");
+    #####:   57:        printf("************************************\n");
+    #####:   58:        printf("*** There is BUG in whoseTurn()! ***\n");
+    #####:   59:        printf("************************************\n");
+    #####:   60:        printf("\n\n");
+        -:   61:    }
+        -:   62:
+        2:   63:    return 0;
+        -:   64:}
+File 'unittest3.c'
+Lines executed:65.85% of 41
+Branches executed:100.00% of 12
+Taken at least once:66.67% of 12
+No calls
+unittest3.c:creating 'unittest3.c.gcov'
+
+        -:    0:Source:unittest3.c
+        -:    0:Graph:unittest3.gcno
+        -:    0:Data:unittest3.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* -----------------------------------------------------------------------
+        -:    2: * Unit test for isGameOver() function.
+        -:    3: * 
+        -:    4: * unittest2: unittest3.c dominion.o rngs.o
+        -:    5: *      gcc -o unittest3 -g  unittest3.c dominion.o rngs.o $(CFLAGS)
+        -:    6: * -----------------------------------------------------------------------
+        -:    7: */
+        -:    8:
+        -:    9:#include "dominion.h"
+        -:   10:#include "dominion_helpers.h"
+        -:   11:#include <string.h>
+        -:   12:#include <stdio.h>
+        -:   13:#include <assert.h>
+        -:   14:#include "rngs.h"
+        -:   15:
+function main called 1 returned 100% blocks executed 78%
+        -:   16:int main()
+        -:   17:{
+        1:   18:    printf("TESTING isGameOver():\n");
+        1:   19:    int validator = 0;
+        -:   20:    struct gameState G;
+        1:   21:    int numPlayers = 4;
+        1:   22:    int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
+        1:   23:    int seed = 1000;
+        -:   24:    int r;
+        -:   25:    int i;
+        -:   26:
+        1:   27:    r = initializeGame(numPlayers, k, seed, &G); // initialize a new game
+        1:   28:    if (r == -1) {
+branch  0 taken 0%
+branch  1 taken 100%
+    #####:   29:        validator = 1;
+    #####:   30:        printf("isGameOver(): FAIL when initialize a new game.\n");
+    #####:   31:    }
+        1:   32:    int provinceCards = G.supplyCount[province];
+        -:   33:
+        -:   34:    // game continues when supply of province is more than 0
+       26:   35:    for (i = 0; i < provinceCards; i++)
+branch  0 taken 92%
+branch  1 taken 8%
+        -:   36:    {
+       12:   37:        printf("Number of Province Cards: %d\n", G.supplyCount[province]);
+       12:   38:        if (isGameOver(&G) == 1)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   39:        {
+    #####:   40:            validator = 1;
+    #####:   41:            printf("isGameOver(): FAIL when there is %d cards.\n", G.supplyCount[province]);
+    #####:   42:        }
+        -:   43:        else
+        -:   44:        {
+       12:   45:            printf("isGameOver(): PASS when there is %d cards.\n", G.supplyCount[province]);
+        -:   46:        }
+       12:   47:        G.supplyCount[province]--;
+        -:   48:
+       12:   49:        if (G.supplyCount[province] == 0) {
+branch  0 taken 8%
+branch  1 taken 92%
+        1:   50:            printf("NO MORE PROVINCE CARDS!\n");
+        1:   51:            if (isGameOver(&G) == 0)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   52:            {
+    #####:   53:                validator = 1;
+    #####:   54:                printf("isGameOver(): FAIL when there is %d cards.\n", G.supplyCount[province]);
+    #####:   55:            }
+        -:   56:            else
+        -:   57:            {
+        1:   58:                printf("isGameOver(): PASS when there is %d cards.\n", G.supplyCount[province]);
+        -:   59:            }
+        1:   60:        }
+       12:   61:    }
+        -:   62:
+        1:   63:    if (validator == 0)
+branch  0 taken 100%
+branch  1 taken 0%
+        -:   64:    {
+        1:   65:        printf("\n\n");
+        1:   66:        printf("******************************************\n");
+        1:   67:        printf("*** All tests passed for isGameOver()! ***\n");
+        1:   68:        printf("******************************************\n");
+        1:   69:        printf("\n\n");
+        1:   70:    }
+        -:   71:    else
+        -:   72:    {
+    #####:   73:        printf("\n\n");
+    #####:   74:        printf("*************************************\n");
+    #####:   75:        printf("*** There is BUG in isGameOver()! ***\n");
+    #####:   76:        printf("*************************************\n");
+    #####:   77:        printf("\n\n");
+        -:   78:    }
+        -:   79:
+        1:   80:    return 0;
+        -:   81:}
+File 'unittest4.c'
+Lines executed:64.52% of 31
+Branches executed:100.00% of 8
+Taken at least once:62.50% of 8
+No calls
+unittest4.c:creating 'unittest4.c.gcov'
+
+        -:    0:Source:unittest4.c
+        -:    0:Graph:unittest4.gcno
+        -:    0:Data:unittest4.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* -----------------------------------------------------------------------
+        -:    2: * Unit test for getcost() function.
+        -:    3: *
+        -:    4: * unittest2: unittest4.c dominion.o rngs.o
+        -:    5: *      gcc -o unittest4 -g  unittest4.c dominion.o rngs.o $(CFLAGS)
+        -:    6: * -----------------------------------------------------------------------
+        -:    7: */
+        -:    8:
+        -:    9:#include "dominion.h"
+        -:   10:#include "dominion_helpers.h"
+        -:   11:#include <string.h>
+        -:   12:#include <stdio.h>
+        -:   13:#include <assert.h>
+        -:   14:#include "rngs.h"
+        -:   15:#include <assert.h>
+        -:   16:
+function main called 1 returned 100% blocks executed 78%
+        -:   17:int main()
+        -:   18:{
+        1:   19:    printf("TESTING getcost():\n");
+        1:   20:    int validator = 0;
+        -:   21:    struct gameState G;
+        1:   22:    int numPlayers = 4;
+        1:   23:    int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
+        -:   24:    enum CARD {curse, estate, duchy, province,
+        -:   25:                copper, silver, gold, adventurer, council_room,
+        -:   26:                feast, gardens, mine, remodel, smithy, village,
+        -:   27:                baron, great_hall, minion, steward, tribute,
+        -:   28:                ambassador, cutpurse, embargo, outpost,
+        -:   29:                salvager, sea_hag, treasure_map};
+        1:   30:    int values[27] = {0, 2, 5, 8,
+        -:   31:                    0, 3, 6, 6, 5,
+        -:   32:                    4, 4, 5, 4, 4, 3,
+        -:   33:                    4, 3, 5, 3, 5,
+        -:   34:                    3, 4, 2, 5,
+        -:   35:                    4, 4, 4};
+        1:   36:    int seed = 1000;
+        -:   37:    int i;
+        -:   38:    int r;
+        -:   39:
+        1:   40:    r = initializeGame(numPlayers, k, seed, &G); // initialize a new game
+        1:   41:    if (r == -1)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   42:    {
+    #####:   43:        validator = 1;
+    #####:   44:        printf("getcost(): FAIL when initialize a new game.\n");
+    #####:   45:    }
+        -:   46:
+       54:   47:    for (i = curse; i < treasure_map; i++)
+branch  0 taken 96%
+branch  1 taken 4%
+        -:   48:    {
+       26:   49:        if (getCost(i) != values[i])
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   50:        {
+    #####:   51:            validator = 1;
+    #####:   52:            printf("getcost(): FAIL - cost is %d but resulted %d\n", getCost(i), values[i]);
+    #####:   53:        }
+        -:   54:        else {
+       26:   55:            printf("getcost(): PASS - cost is %d and resulted %d\n", getCost(i), values[i]);
+        -:   56:        }
+       26:   57:    }
+        -:   58:
+        1:   59:    if (validator == 0)
+branch  0 taken 100%
+branch  1 taken 0%
+        -:   60:    {
+        1:   61:        printf("\n\n");
+        1:   62:        printf("***************************************\n");
+        1:   63:        printf("*** All tests passed for getcost()! ***\n");
+        1:   64:        printf("***************************************\n");
+        1:   65:        printf("\n\n");
+        1:   66:    }
+        -:   67:    else
+        -:   68:    {
+    #####:   69:        printf("\n\n");
+    #####:   70:        printf("**********************************\n");
+    #####:   71:        printf("*** There is BUG in getcost()! ***\n");
+    #####:   72:        printf("**********************************\n");
+    #####:   73:        printf("\n\n");
+        -:   74:    }
+        -:   75:
+        1:   76:    return 0;
+        -:   77:}
+File 'cardtest1.c'
+Lines executed:67.39% of 46
+Branches executed:100.00% of 10
+Taken at least once:50.00% of 10
+No calls
+cardtest1.c:creating 'cardtest1.c.gcov'
+
+        -:    0:Source:cardtest1.c
+        -:    0:Graph:cardtest1.gcno
+        -:    0:Data:cardtest1.gcda
+        -:    0:Runs:2
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:
+        -:    9:#define TESTCARD "smithy"
+        -:   10:
+function main called 2 returned 100% blocks executed 68%
+        -:   11:int main() {
+        2:   12:    printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
+        2:   13:    int validator = 0;
+        -:   14:    struct gameState G, testG;
+        2:   15:    int numPlayers = 4;
+        2:   16:    int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
+        2:   17:    int seed = 1000;
+        -:   18:    int r;
+        2:   19:    int thisPlayer = 0;
+        -:   20:
+        2:   21:        r = initializeGame(numPlayers, k, seed, &G); // initialize a new game
+        2:   22:    if (r == -1)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   23:    {
+    #####:   24:        validator = 1;
+    #####:   25:        printf("FAIL when initialize a new game.\n");
+    #####:   26:    }
+        -:   27:    // copy the game state to a test case
+        2:   28:    memcpy(&testG, &G, sizeof(struct gameState));
+        2:   29:    printf("\n----------- TEST 1: set initial cards --------------\n");
+        -:   30:    //handcount before smithy play
+        2:   31:    if (G.handCount[thisPlayer] == testG.handCount[thisPlayer]){
+branch  0 taken 100%
+branch  1 taken 0%
+        2:   32:        printf("PASS - handcount before Smithy card is %d and expected %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+        2:   33:    } else {
+    #####:   34:        validator = 1;
+    #####:   35:        printf("FAIL - handcount before Smithy card is %d but expected %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+        -:   36:    }
+        2:   37:    printf("\n----------- TEST 2: give Smithy card --------------\n");
+        -:   38:    // set Smithy card to player
+        2:   39:    testG.hand[thisPlayer][testG.handCount[thisPlayer]] = smithy;
+        2:   40:    testG.handCount[thisPlayer]++; // increment number of card due to smithy card
+        -:   41:
+        2:   42:    if (G.handCount[thisPlayer] + 1 == testG.handCount[thisPlayer]) {
+branch  0 taken 100%
+branch  1 taken 0%
+        2:   43:        printf("PASS - handcount after Smithy card is %d and %d expected\n", G.handCount[thisPlayer] + 1, testG.handCount[thisPlayer]);
+        2:   44:    }
+        -:   45:    else {
+    #####:   46:        validator = 1;
+    #####:   47:        printf("FAIL - handcount after Smithy card is %d but %d expected\n", G.handCount[thisPlayer] + 1, testG.handCount[thisPlayer]);
+        -:   48:    }
+        -:   49:
+        2:   50:    printf("\n----------- TEST 3: play Smithy card --------------\n");
+        -:   51:    // play Smithy card
+        2:   52:    cardEffect(smithy, 0, 0, 0, &testG, 0, 0); //play the smithy card
+        2:   53:    if (G.handCount[thisPlayer] + 3 == testG.handCount[thisPlayer]){
+branch  0 taken 0%
+branch  1 taken 100%
+    #####:   54:        printf("PASS - handcount %d and %d expected.\n", testG.handCount[thisPlayer], G.handCount[thisPlayer] + 3);
+    #####:   55:    }
+        -:   56:    else {
+        2:   57:        validator = 1;
+        2:   58:        printf("FAIL - handcount %d but %d expected.\n", testG.handCount[thisPlayer], G.handCount[thisPlayer] + 3);
+        -:   59:    }
+        -:   60:
+        2:   61:    if (validator == 0) {
+branch  0 taken 0%
+branch  1 taken 100%
+    #####:   62:        printf("\n\n");
+    #####:   63:        printf("*****************************************\n");
+    #####:   64:        printf("*** All tests passed for Smithy card! ***\n");
+    #####:   65:        printf("*****************************************\n");
+    #####:   66:        printf("\n\n");
+    #####:   67:    } else {
+        2:   68:        printf("\n\n");
+        2:   69:        printf("************************************\n");
+        2:   70:        printf("*** There is BUG in Smithy card! ***\n");
+        2:   71:        printf("************************************\n");
+        2:   72:        printf("\n\n");
+        -:   73:    }
+        -:   74:
+        2:   75:    return 0;
+        -:   76:}
+File 'cardtest2.c'
+Lines executed:75.38% of 65
+Branches executed:100.00% of 28
+Taken at least once:64.29% of 28
+No calls
+cardtest2.c:creating 'cardtest2.c.gcov'
+
+        -:    0:Source:cardtest2.c
+        -:    0:Graph:cardtest2.gcno
+        -:    0:Data:cardtest2.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:
+        -:    9:#define TESTCARD "adventurer"
+        -:   10:
+function main called 1 returned 100% blocks executed 82%
+        -:   11:int main()
+        -:   12:{
+        1:   13:    printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
+        1:   14:    int validator = 0;
+        -:   15:    struct gameState G, testG;
+        1:   16:    int numPlayers = 2;
+        1:   17:    int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
+        1:   18:    int seed = 1000;
+        -:   19:    int i, r;
+        1:   20:    int thisPlayer = 0;
+        -:   21:    int cardDrawn1, cardDrawn2;
+        1:   22:    int treasureCnt1 = 0;
+        1:   23:    int treasureCnt2 = 0;
+        -:   24:
+        1:   25:    r = initializeGame(numPlayers, k, seed, &G); // initialize a new game
+        1:   26:    if (r == -1)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   27:    {
+    #####:   28:        validator = 1;
+    #####:   29:        printf("FAIL when initialize a new game for %s card.\n", TESTCARD);
+    #####:   30:    }
+        -:   31:    // copy the game state to a test case
+        1:   32:    memcpy(&testG, &G, sizeof(struct gameState));
+        -:   33:
+        1:   34:    printf("\n----------- TEST 1: set initial cards --------------\n");
+        -:   35:    //handcount before adventurer play
+        1:   36:    if (G.handCount[thisPlayer] == testG.handCount[thisPlayer])
+branch  0 taken 100%
+branch  1 taken 0%
+        -:   37:    {
+        1:   38:        printf("PASS - handcount before Adventurer card is %d and expected %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+        1:   39:    }
+        -:   40:    else
+        -:   41:    {
+    #####:   42:        validator = 1;
+    #####:   43:        printf("FAIL - handcount before Adventurer card is %d but expected %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+        -:   44:    }
+        -:   45:
+        1:   46:    printf("\n----------- TEST 2: give %s card --------------\n", TESTCARD);
+        -:   47:    // set adventurer card to player
+        1:   48:    testG.hand[thisPlayer][testG.handCount[thisPlayer]] = adventurer;
+        1:   49:    testG.handCount[thisPlayer]++; // increment number of card due to Adventurer card
+        1:   50:    if (G.handCount[thisPlayer] + 1 == testG.handCount[thisPlayer])
+branch  0 taken 100%
+branch  1 taken 0%
+        -:   51:    {
+        1:   52:        printf("PASS - handcount after Adventurer card is %d and %d expected\n", G.handCount[thisPlayer] + 1, testG.handCount[thisPlayer]);
+        1:   53:    }
+        -:   54:    else
+        -:   55:    {
+    #####:   56:        validator = 1;
+    #####:   57:        printf("FAIL - handcount after Adventurer card is %d but %d expected\n", G.handCount[thisPlayer] + 1, testG.handCount[thisPlayer]);
+        -:   58:    }
+        -:   59:
+        1:   60:    printf("\n----------- TEST 3: play %s card --------------\n", TESTCARD);
+        -:   61:    // play adventurer
+        1:   62:    cardEffect(adventurer, 0, 0, 0, &testG, 0, 0); // play the adventurer card
+        1:   63:    if (G.handCount[thisPlayer] + 3 == testG.handCount[thisPlayer])
+branch  0 taken 100%
+branch  1 taken 0%
+        -:   64:    {
+        1:   65:        printf("PASS - handcount %d and %d expected.\n", testG.handCount[thisPlayer], G.handCount[thisPlayer] + 3);
+        1:   66:    }
+        -:   67:    else
+        -:   68:    {
+    #####:   69:        validator = 1;
+    #####:   70:        printf("FAIL - handcount %d but %d expected.\n", testG.handCount[thisPlayer], G.handCount[thisPlayer] + 3);
+        -:   71:    }
+        -:   72:
+        1:   73:    printf("\n----------- TEST 4: check two treasure cards  --------------\n");
+        -:   74:    //verify that at least 2 new treasure cards were added to hand
+       18:   75:    for (i = 0; i < testG.handCount[thisPlayer]; i++)
+branch  0 taken 89%
+branch  1 taken 11%
+        -:   76:    {
+        8:   77:        cardDrawn1 = testG.hand[thisPlayer][i];
+       12:   78:        if (cardDrawn1 == copper || cardDrawn1 == silver || cardDrawn1 == gold){
+branch  0 taken 25%
+branch  1 taken 75%
+branch  2 taken 100%
+branch  3 taken 0%
+branch  4 taken 0%
+branch  5 taken 100%
+        6:   79:            treasureCnt1++;
+        6:   80:        }
+        8:   81:    }
+       12:   82:    for (i = 0; i < G.handCount[thisPlayer]; i++)
+branch  0 taken 83%
+branch  1 taken 17%
+        -:   83:    {
+        5:   84:        cardDrawn2 = G.hand[thisPlayer][i];
+        7:   85:        if (cardDrawn2 == copper || cardDrawn2 == silver || cardDrawn2 == gold)
+branch  0 taken 20%
+branch  1 taken 80%
+branch  2 taken 100%
+branch  3 taken 0%
+branch  4 taken 0%
+branch  5 taken 100%
+        4:   86:            treasureCnt2++;
+        5:   87:    }
+        1:   88:    if ((treasureCnt1 - treasureCnt2) == 2){
+branch  0 taken 100%
+branch  1 taken 0%
+        1:   89:        printf("PASS - %d additional treasure cards drawn.\n", (treasureCnt1 - treasureCnt2));
+        1:   90:    }
+        -:   91:    else{
+    #####:   92:        validator = 1;
+    #####:   93:        printf("FAIL - 2 treasure cards expected but %d treasure cards added.\n", (treasureCnt1 - treasureCnt2));
+        -:   94:    }
+        -:   95:
+        -:   96:
+        1:   97:    if (validator == 0)
+branch  0 taken 100%
+branch  1 taken 0%
+        -:   98:    {
+        1:   99:        printf("\n\n");
+        1:  100:        printf("*********************************************\n");
+        1:  101:        printf("*** All tests passed for Adventurer card! ***\n");
+        1:  102:        printf("*********************************************\n");
+        1:  103:        printf("\n\n");
+        1:  104:    }
+        -:  105:    else
+        -:  106:    {
+    #####:  107:        printf("\n\n");
+    #####:  108:        printf("****************************************\n");
+    #####:  109:        printf("*** There is BUG in Adventurer card! ***\n");
+    #####:  110:        printf("****************************************\n");
+    #####:  111:        printf("\n\n");
+        -:  112:    }
+        -:  113:
+        1:  114:    return 0;
+        -:  115:}
+File 'cardtest3.c'
+Lines executed:68.09% of 47
+Branches executed:100.00% of 10
+Taken at least once:50.00% of 10
+No calls
+cardtest3.c:creating 'cardtest3.c.gcov'
+
+        -:    0:Source:cardtest3.c
+        -:    0:Graph:cardtest3.gcno
+        -:    0:Data:cardtest3.gcda
+        -:    0:Runs:2
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:
+        -:    9:#define TESTCARD "village"
+        -:   10:
+function main called 2 returned 100% blocks executed 68%
+        -:   11:int main()
+        -:   12:{
+        2:   13:    printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
+        2:   14:    int validator = 0;
+        -:   15:    struct gameState G, testG;
+        2:   16:    int numPlayers = 2;
+        2:   17:    int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
+        2:   18:    int seed = 1000;
+        -:   19:    int r;
+        2:   20:    int thisPlayer = 0;
+        -:   21:
+        2:   22:    r = initializeGame(numPlayers, k, seed, &G); // initialize a new game
+        2:   23:    if (r == -1)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   24:    {
+    #####:   25:        validator = 1;
+    #####:   26:        printf("FAIL when initialize a new game.\n");
+    #####:   27:    }
+        -:   28:    // copy the game state to a test case
+        2:   29:    memcpy(&testG, &G, sizeof(struct gameState));
+        2:   30:    printf("\n----------- TEST 1: set initial cards --------------\n");
+        -:   31:    //handcount before village play
+        2:   32:    if (G.handCount[thisPlayer] == testG.handCount[thisPlayer])
+branch  0 taken 100%
+branch  1 taken 0%
+        -:   33:    {
+        2:   34:        printf("PASS - handcount before village card is %d and expected %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+        2:   35:    }
+        -:   36:    else
+        -:   37:    {
+    #####:   38:        validator = 1;
+    #####:   39:        printf("FAIL - handcount before village card is %d but expected %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+        -:   40:    }
+        2:   41:    testG.handCount[thisPlayer]++; // increment number of card due to village card
+        -:   42:
+        2:   43:    printf("\n----------- TEST 2: check handCount after village card --------------\n");
+        -:   44:    // play village card
+        2:   45:    cardEffect(village, 0, 0, 0, &testG, 0, 0); //play the village card
+        2:   46:    if (G.handCount[G.whoseTurn] + 1 == testG.handCount[testG.whoseTurn])
+branch  0 taken 100%
+branch  1 taken 0%
+        -:   47:    {
+        2:   48:        printf("PASS - Expected: %d, handCount: %d\n", G.handCount[G.whoseTurn] + 1, testG.handCount[testG.whoseTurn]);
+        2:   49:    } else {
+    #####:   50:        validator = 1;
+    #####:   51:        printf("FAIL - Expected: %d, handCount: %d\n", G.handCount[G.whoseTurn] + 1, testG.handCount[testG.whoseTurn]);
+        -:   52:    }
+        -:   53:
+        2:   54:    memcpy(&testG, &G, sizeof(struct gameState));
+        2:   55:    cardEffect(village, 0, 0, 0, &testG, 0, 0); //play the village card
+        -:   56:
+        2:   57:    printf("\n----------- TEST 3: check number of action card --------------\n");
+        -:   58:
+        2:   59:    if (G.numActions + 2 == testG.numActions)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   60:    {
+    #####:   61:        printf("PASS - Expected: %d, Action card: %d\n", G.numActions + 2, testG.numActions);
+    #####:   62:    }
+        -:   63:    else
+        -:   64:    {
+        2:   65:        validator = 1;
+        2:   66:        printf("FAIL - Expected: %d, Action card: %d\n", G.numActions + 2, testG.numActions);
+        -:   67:    }
+        -:   68:
+        2:   69:    if (validator == 0)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   70:    {
+    #####:   71:        printf("\n\n");
+    #####:   72:        printf("******************************************\n");
+    #####:   73:        printf("*** All tests passed for village card! ***\n");
+    #####:   74:        printf("******************************************\n");
+    #####:   75:        printf("\n\n");
+    #####:   76:    }
+        -:   77:    else
+        -:   78:    {
+        2:   79:        printf("\n\n");
+        2:   80:        printf("*************************************\n");
+        2:   81:        printf("*** There is BUG in village card! ***\n");
+        2:   82:        printf("*************************************\n");
+        2:   83:        printf("\n\n");
+        -:   84:    }
+        -:   85:
+        2:   86:    return 0;
+        -:   87:}
+File 'cardtest4.c'
+Lines executed:68.09% of 47
+Branches executed:100.00% of 10
+Taken at least once:50.00% of 10
+No calls
+cardtest4.c:creating 'cardtest4.c.gcov'
+
+        -:    0:Source:cardtest4.c
+        -:    0:Graph:cardtest4.gcno
+        -:    0:Data:cardtest4.gcda
+        -:    0:Runs:2
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:
+        -:    9:#define TESTCARD "council_room"
+        -:   10:
+function main called 2 returned 100% blocks executed 68%
+        -:   11:int main()
+        -:   12:{
+        2:   13:    printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
+        2:   14:    int validator = 0;
+        -:   15:    struct gameState G, testG;
+        2:   16:    int numPlayers = 2;
+        2:   17:    int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
+        2:   18:    int seed = 1000;
+        -:   19:    int r;
+        2:   20:    int thisPlayer = 0;
+        -:   21:
+        2:   22:    r = initializeGame(numPlayers, k, seed, &G); // initialize a new game
+        2:   23:    if (r == -1)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   24:    {
+    #####:   25:        validator = 1;
+    #####:   26:        printf("FAIL when initialize a new game.\n");
+    #####:   27:    }
+        -:   28:    // copy the game state to a test case
+        2:   29:    memcpy(&testG, &G, sizeof(struct gameState));
+        2:   30:    printf("\n----------- TEST 1: set initial cards --------------\n");
+        -:   31:    //handcount before council_room play
+        2:   32:    if (G.handCount[thisPlayer] == testG.handCount[thisPlayer])
+branch  0 taken 100%
+branch  1 taken 0%
+        -:   33:    {
+        2:   34:        printf("PASS - handcount before council_room card is %d and expected %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+        2:   35:    }
+        -:   36:    else
+        -:   37:    {
+    #####:   38:        validator = 1;
+    #####:   39:        printf("FAIL - handcount before council_room card is %d but expected %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer]);
+        -:   40:    }
+        2:   41:    testG.handCount[thisPlayer]++; // increment number of card due to council_room card
+        -:   42:
+        2:   43:    printf("\n----------- TEST 2: check handCount after council_room card --------------\n");
+        -:   44:    // play council_room card
+        2:   45:    cardEffect(council_room, 0, 0, 0, &testG, 0, 0); //play the council_room card
+        2:   46:    if (G.handCount[G.whoseTurn] + 4 == testG.handCount[testG.whoseTurn])
+branch  0 taken 100%
+branch  1 taken 0%
+        -:   47:    {
+        2:   48:        printf("PASS - Expected: %d, handCount: %d\n", G.handCount[G.whoseTurn] + 4, testG.handCount[testG.whoseTurn]);
+        2:   49:    }
+        -:   50:    else
+        -:   51:    {
+    #####:   52:        validator = 1;
+    #####:   53:        printf("FAIL - Expected: %d, handCount: %d\n", G.handCount[G.whoseTurn] + 4, testG.handCount[testG.whoseTurn]);
+        -:   54:    }
+        -:   55:
+        2:   56:    memcpy(&testG, &G, sizeof(struct gameState));
+        2:   57:    cardEffect(council_room, 0, 0, 0, &testG, 0, 0); //play the council_room card
+        -:   58:
+        2:   59:    printf("\n----------- TEST 3: check number of buy card --------------\n");
+        2:   60:    if (G.numBuys + 1 == testG.numBuys)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   61:    {
+    #####:   62:        printf("PASS - Expected: %d, Buy card: %d\n", G.numBuys + 1, testG.numBuys);
+    #####:   63:    }
+        -:   64:    else
+        -:   65:    {
+        2:   66:        validator = 1;
+        2:   67:        printf("FAIL - Expected: %d, Buy card: %d\n", G.numBuys + 1, testG.numBuys);
+        -:   68:    }
+        -:   69:
+        2:   70:    if (validator == 0)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   71:    {
+    #####:   72:        printf("\n\n");
+    #####:   73:        printf("***********************************************\n");
+    #####:   74:        printf("*** All tests passed for council_room card! ***\n");
+    #####:   75:        printf("***********************************************\n");
+    #####:   76:        printf("\n\n");
+    #####:   77:    }
+        -:   78:    else
+        -:   79:    {
+        2:   80:        printf("\n\n");
+        2:   81:        printf("******************************************\n");
+        2:   82:        printf("*** There is BUG in council_room card! ***\n");
+        2:   83:        printf("******************************************\n");
+        2:   84:        printf("\n\n");
+        -:   85:    }
+        -:   86:
+        2:   87:    return 0;
+        -:   88:}
