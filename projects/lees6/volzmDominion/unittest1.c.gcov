@@ -1,0 +1,86 @@
+        -:    0:Source:unittest1.c
+        -:    0:Graph:unittest1.gcno
+        -:    0:Data:unittest1.gcda
+        -:    0:Runs:7
+        -:    0:Programs:1
+        -:    1:/* -----------------------------------------------------------------------
+        -:    2: * Unit test for numHandCards() function.
+        -:    3: *
+        -:    4: * unittest1: unittest1.c dominion.o rngs.o
+        -:    5: *      gcc -o unittest1 -g  unittest1.c dominion.o rngs.o $(CFLAGS)
+        -:    6: * -----------------------------------------------------------------------
+        -:    7: */
+        -:    8:
+        -:    9:#include "dominion.h"
+        -:   10:#include "dominion_helpers.h"
+        -:   11:#include <string.h>
+        -:   12:#include <stdio.h>
+        -:   13:#include <assert.h>
+        -:   14:#include "rngs.h"
+        -:   15:
+function main called 7 returned 100% blocks executed 83%
+        -:   16:int main() {
+        7:   17:    printf("TESTING numHandCards():\n");
+        7:   18:    int validator = 0;
+        -:   19:    struct gameState G;
+        7:   20:    int numPlayers = 4;
+        7:   21:    int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
+        7:   22:    int seed = 1000;
+        -:   23:    int i;
+        -:   24:    int j;
+        -:   25:    int r;
+        -:   26:
+        7:   27:    r = initializeGame(numPlayers, k, seed, &G); // initialize a new game
+        7:   28:    if (r == -1){
+branch  0 taken 0%
+branch  1 taken 100%
+    #####:   29:        validator = 1;
+    #####:   30:        printf("numHandCards(): FAIL when initialize a new game.\n");
+    #####:   31:    }
+        -:   32:
+       70:   33:    for (i = 0; i < numPlayers; i++)
+branch  0 taken 80%
+branch  1 taken 20%
+        -:   34:    {
+       28:   35:        printf("Player %d\n", i + 1);
+       28:   36:        G.whoseTurn = i;
+      336:   37:        for (j = 0; j < 5; j++)
+branch  0 taken 83%
+branch  1 taken 17%
+        -:   38:        {
+      140:   39:            G.handCount[i] = j;
+        -:   40:
+      140:   41:            if (numHandCards(&G) != j)
+branch  0 taken 0%
+branch  1 taken 100%
+        -:   42:            {
+    #####:   43:                validator = 1;
+    #####:   44:                printf("numHandCards(): FAIL - %d cards, %d expexted. \n", numHandCards(&G), j);
+    #####:   45:            }
+        -:   46:            else {
+      140:   47:                printf("numHandCards(): PASS - %d cards, %d expexted. \n", numHandCards(&G), j);
+        -:   48:            }
+      140:   49:        }
+       28:   50:    }
+        -:   51:
+        7:   52:    if (validator == 0)
+branch  0 taken 100%
+branch  1 taken 0%
+        -:   53:    {
+        7:   54:        printf("\n\n");
+        7:   55:        printf("********************************************\n");
+        7:   56:        printf("*** All tests passed for numHandCards()! ***\n");
+        7:   57:        printf("********************************************\n");
+        7:   58:        printf("\n\n");
+        7:   59:    }
+        -:   60:    else
+        -:   61:    {
+    #####:   62:        printf("\n\n");
+    #####:   63:        printf("***************************************\n");
+    #####:   64:        printf("*** There is BUG in numHandCards()! ***\n");
+    #####:   65:        printf("***************************************\n");
+    #####:   66:        printf("\n\n");
+        -:   67:    }
+        -:   68:
+        7:   69:    return 0;
+        -:   70:}
