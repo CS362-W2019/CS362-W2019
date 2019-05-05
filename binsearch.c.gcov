@@ -1,0 +1,79 @@
+        -:    0:Source:binsearch.c
+        -:    0:Graph:binsearch.gcno
+        -:    0:Data:binsearch.gcda
+        -:    0:Runs:2
+        -:    0:Programs:1
+        -:    1:#include <stdio.h>
+        -:    2:#include <assert.h>
+function binsearch called 10 returned 100% blocks executed 100%
+       10:    3:int binsearch(int a[], int n, int x)
+        -:    4:{
+       10:    5:        int low = 0;
+       10:    6:        int high = n-1;
+        -:    7:        int mid;
+       40:    8:        while(low <=  high)
+branch  0 taken 93%
+branch  1 taken 7% (fallthrough)
+        -:    9:        {
+       28:   10:                mid = (low + high) / 2;
+       28:   11:                if(a[mid] == x)
+branch  0 taken 29% (fallthrough)
+branch  1 taken 71%
+        -:   12:                {
+        8:   13:                        return mid;
+        -:   14:                }
+       20:   15:                else if (x<a[mid])
+branch  0 taken 40% (fallthrough)
+branch  1 taken 60%
+        -:   16:                {
+        8:   17:                        high = mid - 1;
+        -:   18:                }
+        -:   19:                else
+        -:   20:                {
+       12:   21:                        low = mid + 1;
+        -:   22:                }
+        -:   23:        }
+        2:   24:        return -1;
+        -:   25:}
+function test called 2 returned 100% blocks executed 69%
+        2:   26:void test()
+        -:   27:{
+        2:   28:        int a[7] = {2,4,6,8,10,12,14};
+        2:   29:        int element_index = binsearch(a,7,4);
+call    0 returned 100%
+        2:   30:        assert(element_index == 1);
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        2:   31:        element_index = binsearch(a,7,2);
+call    0 returned 100%
+        2:   32:        assert(element_index == 0);
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        2:   33:        element_index = binsearch(a,7,10);
+call    0 returned 100%
+        2:   34:        assert(element_index == 4);
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        2:   35:        element_index = binsearch(a,7,14);
+call    0 returned 100%
+        2:   36:        assert(element_index == 6);
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        2:   37:        element_index = binsearch(a,7,28);
+call    0 returned 100%
+        2:   38:        assert(element_index == -1);
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        2:   39:}
+function main called 2 returned 100% blocks executed 100%
+        2:   40:int main()
+        -:   41:{
+        2:   42:        test();
+call    0 returned 100%
+        2:   43:        return 0;
+        -:   44:}
