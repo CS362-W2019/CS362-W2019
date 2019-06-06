@@ -1,0 +1,1926 @@
+        -:    0:Source:dominion.c
+        -:    0:Graph:dominion.gcno
+        -:    0:Data:dominion.gcda
+        -:    0:Runs:10
+        -:    0:Programs:8
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include "rngs.h"
+        -:    4:#include <stdio.h>
+        -:    5:#include <math.h>
+        -:    6:#include <stdlib.h>
+        -:    7:
+function compare called 1830 returned 100% blocks executed 83%
+     1830:    8:int compare(const void* a, const void* b) {
+     1830:    9:  if (*(int*)a > *(int*)b)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   10:    return 1;
+     1830:   11:  if (*(int*)a < *(int*)b)
+branch  0 taken 27% (fallthrough)
+branch  1 taken 73%
+      488:   12:    return -1;
+     1342:   13:  return 0;
+        -:   14:}
+        -:   15:
+function newGame called 0 returned 0% blocks executed 0%
+    #####:   16:struct gameState* newGame() {
+    #####:   17:  struct gameState* g = malloc(sizeof(struct gameState));
+    #####:   18:  return g;
+        -:   19:}
+        -:   20:
+function kingdomCards called 2 returned 100% blocks executed 100%
+        2:   21:int* kingdomCards(int k1, int k2, int k3, int k4, int k5, int k6, int k7,
+        -:   22:		  int k8, int k9, int k10) {
+        2:   23:  int* k = malloc(10 * sizeof(int));
+        2:   24:  k[0] = k1;
+        2:   25:  k[1] = k2;
+        2:   26:  k[2] = k3;
+        2:   27:  k[3] = k4;
+        2:   28:  k[4] = k5;
+        2:   29:  k[5] = k6;
+        2:   30:  k[6] = k7;
+        2:   31:  k[7] = k8;
+        2:   32:  k[8] = k9;
+        2:   33:  k[9] = k10;
+        2:   34:  return k;
+        -:   35:}
+        -:   36:
+function initializeGame called 57 returned 100% blocks executed 95%
+       57:   37:int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
+        -:   38:		   struct gameState *state) {
+        -:   39:
+        -:   40:  int i;
+        -:   41:  int j;
+        -:   42:  int it;			
+        -:   43:  //set up random number generator
+       57:   44:  SelectStream(1);
+call    0 returned 100%
+       57:   45:  PutSeed((long)randomSeed);
+call    0 returned 100%
+        -:   46:  
+        -:   47:  //check number of players
+       57:   48:  if (numPlayers > MAX_PLAYERS || numPlayers < 2)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+        -:   49:    {
+    #####:   50:      return -1;
+        -:   51:    }
+        -:   52:
+        -:   53:  //set number of players
+       57:   54:  state->numPlayers = numPlayers;
+        -:   55:
+        -:   56:  //check selected kingdom cards are different
+      618:   57:  for (i = 0; i < 10; i++)
+branch  0 taken 91%
+branch  1 taken 9% (fallthrough)
+        -:   58:    {
+     6179:   59:      for (j = 0; j < 10; j++)
+branch  0 taken 91%
+branch  1 taken 9% (fallthrough)
+        -:   60:        {
+     5618:   61:	  if (j != i && kingdomCards[j] == kingdomCards[i])
+branch  0 taken 90% (fallthrough)
+branch  1 taken 10%
+branch  2 taken 1% (fallthrough)
+branch  3 taken 99%
+        -:   62:	    {
+        1:   63:	      return -1;
+        -:   64:	    }
+        -:   65:        }
+        -:   66:    }
+        -:   67:
+        -:   68:
+        -:   69:  //initialize supply
+        -:   70:  ///////////////////////////////
+        -:   71:
+        -:   72:  //set number of Curse cards
+       56:   73:  if (numPlayers == 2)
+branch  0 taken 91% (fallthrough)
+branch  1 taken 9%
+        -:   74:    {
+       51:   75:      state->supplyCount[curse] = 10;
+        -:   76:    }
+        5:   77:  else if (numPlayers == 3)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -:   78:    {
+    #####:   79:      state->supplyCount[curse] = 20;
+        -:   80:    }
+        -:   81:  else
+        -:   82:    {
+        5:   83:      state->supplyCount[curse] = 30;
+        -:   84:    }
+        -:   85:
+        -:   86:  //set number of Victory cards
+       56:   87:  if (numPlayers == 2)
+branch  0 taken 91% (fallthrough)
+branch  1 taken 9%
+        -:   88:    {
+       51:   89:      state->supplyCount[estate] = 8;
+       51:   90:      state->supplyCount[duchy] = 8;
+       51:   91:      state->supplyCount[province] = 8;
+        -:   92:    }
+        -:   93:  else
+        -:   94:    {
+        5:   95:      state->supplyCount[estate] = 12;
+        5:   96:      state->supplyCount[duchy] = 12;
+        5:   97:      state->supplyCount[province] = 12;
+        -:   98:    }
+        -:   99:
+        -:  100:  //set number of Treasure cards
+       56:  101:  state->supplyCount[copper] = 60 - (7 * numPlayers);
+       56:  102:  state->supplyCount[silver] = 40;
+       56:  103:  state->supplyCount[gold] = 30;
+        -:  104:
+        -:  105:  //set number of Kingdom cards
+     1176:  106:  for (i = adventurer; i <= treasure_map; i++)       	//loop all cards
+branch  0 taken 95%
+branch  1 taken 5% (fallthrough)
+        -:  107:    {
+     9240:  108:      for (j = 0; j < 10; j++)           		//loop chosen cards
+branch  0 taken 94%
+branch  1 taken 6% (fallthrough)
+        -:  109:	{
+     8680:  110:	  if (kingdomCards[j] == i)
+branch  0 taken 6% (fallthrough)
+branch  1 taken 94%
+        -:  111:	    {
+        -:  112:	      //check if card is a 'Victory' Kingdom card
+      560:  113:	      if (kingdomCards[j] == great_hall || kingdomCards[j] == gardens)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+branch  2 taken 10% (fallthrough)
+branch  3 taken 90%
+        -:  114:		{
+      112:  115:		  if (numPlayers == 2){ 
+branch  0 taken 91% (fallthrough)
+branch  1 taken 9%
+       51:  116:		    state->supplyCount[i] = 8; 
+        -:  117:		  }
+        5:  118:		  else{ state->supplyCount[i] = 12; }
+        -:  119:		}
+        -:  120:	      else
+        -:  121:		{
+      504:  122:		  state->supplyCount[i] = 10;
+        -:  123:		}
+      560:  124:	      break;
+        -:  125:	    }
+        -:  126:	  else    //card is not in the set choosen for the game
+        -:  127:	    {
+     8120:  128:	      state->supplyCount[i] = -1;
+        -:  129:	    }
+        -:  130:	}
+        -:  131:
+        -:  132:    }
+        -:  133:
+        -:  134:  ////////////////////////
+        -:  135:  //supply intilization complete
+        -:  136:
+        -:  137:  //set player decks
+      178:  138:  for (i = 0; i < numPlayers; i++)
+branch  0 taken 69%
+branch  1 taken 31% (fallthrough)
+        -:  139:    {
+      122:  140:      state->deckCount[i] = 0;
+      488:  141:      for (j = 0; j < 3; j++)
+branch  0 taken 75%
+branch  1 taken 25% (fallthrough)
+        -:  142:	{
+      366:  143:	  state->deck[i][j] = estate;
+      366:  144:	  state->deckCount[i]++;
+        -:  145:	}
+      976:  146:      for (j = 3; j < 10; j++)
+branch  0 taken 88%
+branch  1 taken 13% (fallthrough)
+        -:  147:	{
+      854:  148:	  state->deck[i][j] = copper;
+      854:  149:	  state->deckCount[i]++;		
+        -:  150:	}
+        -:  151:    }
+        -:  152:
+        -:  153:  //shuffle player decks
+      178:  154:  for (i = 0; i < numPlayers; i++)
+branch  0 taken 69%
+branch  1 taken 31% (fallthrough)
+        -:  155:    {
+      122:  156:      if ( shuffle(i, state) < 0 )
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+        -:  157:	{
+    #####:  158:	  return -1;
+        -:  159:	}
+        -:  160:    }
+        -:  161:
+        -:  162:  //draw player hands
+      178:  163:  for (i = 0; i < numPlayers; i++)
+branch  0 taken 69%
+branch  1 taken 31% (fallthrough)
+        -:  164:    {  
+        -:  165:      //initialize hand size to zero
+      122:  166:      state->handCount[i] = 0;
+      122:  167:      state->discardCount[i] = 0;
+        -:  168:      //draw 5 cards
+        -:  169:      // for (j = 0; j < 5; j++)
+        -:  170:      //	{
+        -:  171:      //	  drawCard(i, state);
+        -:  172:      //	}
+        -:  173:    }
+        -:  174:  
+        -:  175:  //set embargo tokens to 0 for all supply piles
+     1568:  176:  for (i = 0; i <= treasure_map; i++)
+branch  0 taken 96%
+branch  1 taken 4% (fallthrough)
+        -:  177:    {
+     1512:  178:      state->embargoTokens[i] = 0;
+        -:  179:    }
+        -:  180:
+        -:  181:  //initialize first player's turn
+       56:  182:  state->outpostPlayed = 0;
+       56:  183:  state->phase = 0;
+       56:  184:  state->numActions = 1;
+       56:  185:  state->numBuys = 1;
+       56:  186:  state->playedCardCount = 0;
+       56:  187:  state->whoseTurn = 0;
+       56:  188:  state->handCount[state->whoseTurn] = 0;
+        -:  189:  //int it; move to top
+        -:  190:
+        -:  191:  //Moved draw cards to here, only drawing at the start of a turn
+      336:  192:  for (it = 0; it < 5; it++){
+branch  0 taken 83%
+branch  1 taken 17% (fallthrough)
+      280:  193:    drawCard(state->whoseTurn, state);
+call    0 returned 100%
+        -:  194:  }
+        -:  195:
+       56:  196:  updateCoins(state->whoseTurn, state, 0);
+call    0 returned 100%
+        -:  197:
+       56:  198:  return 0;
+        -:  199:}
+        -:  200:
+function shuffle called 130 returned 100% blocks executed 100%
+      130:  201:int shuffle(int player, struct gameState *state) {
+        -:  202: 
+        -:  203:
+        -:  204:  int newDeck[MAX_DECK];
+      130:  205:  int newDeckPos = 0;
+        -:  206:  int card;
+        -:  207:  int i;
+        -:  208:
+      130:  209:  if (state->deckCount[player] < 1)
+branch  0 taken 6% (fallthrough)
+branch  1 taken 94%
+        8:  210:    return -1;
+      122:  211:  qsort ((void*)(state->deck[player]), state->deckCount[player], sizeof(int), compare); 
+call    0 returned 100%
+        -:  212:  /* SORT CARDS IN DECK TO ENSURE DETERMINISM! */
+        -:  213:
+     1464:  214:  while (state->deckCount[player] > 0) {
+branch  0 taken 91%
+branch  1 taken 9% (fallthrough)
+     1220:  215:    card = floor(Random() * state->deckCount[player]);
+call    0 returned 100%
+     1220:  216:    newDeck[newDeckPos] = state->deck[player][card];
+     1220:  217:    newDeckPos++;
+     4056:  218:    for (i = card; i < state->deckCount[player]-1; i++) {
+branch  0 taken 70%
+branch  1 taken 30% (fallthrough)
+     2836:  219:      state->deck[player][i] = state->deck[player][i+1];
+        -:  220:    }
+     1220:  221:    state->deckCount[player]--;
+        -:  222:  }
+     1342:  223:  for (i = 0; i < newDeckPos; i++) {
+branch  0 taken 91%
+branch  1 taken 9% (fallthrough)
+     1220:  224:    state->deck[player][i] = newDeck[i];
+     1220:  225:    state->deckCount[player]++;
+        -:  226:  }
+        -:  227:
+      122:  228:  return 0;
+        -:  229:}
+        -:  230:
+function playCard called 14 returned 100% blocks executed 100%
+       14:  231:int playCard(int handPos, int choice1, int choice2, int choice3, struct gameState *state) 
+        -:  232:{	
+        -:  233:  int card;
+       14:  234:  int coin_bonus = 0; 		//tracks coins gain from actions
+        -:  235:
+        -:  236:  //check if it is the right phase
+       14:  237:  if (state->phase != 0)
+branch  0 taken 7% (fallthrough)
+branch  1 taken 93%
+        -:  238:    {
+        1:  239:      return -1;
+        -:  240:    }
+        -:  241:	
+        -:  242:  //check if player has enough actions
+       13:  243:  if ( state->numActions < 1 )
+branch  0 taken 8% (fallthrough)
+branch  1 taken 92%
+        -:  244:    {
+        1:  245:      return -1;
+        -:  246:    }
+        -:  247:	
+        -:  248:  //get card played
+       12:  249:  card = handCard(handPos, state);
+call    0 returned 100%
+        -:  250:	
+        -:  251:  //check if selected card is an action
+       12:  252:  if ( card < adventurer || card > treasure_map )
+branch  0 taken 92% (fallthrough)
+branch  1 taken 8%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+        -:  253:    {
+        1:  254:      return -1;
+        -:  255:    }
+        -:  256:	
+        -:  257:  //play card
+       11:  258:  if ( cardEffect(card, choice1, choice2, choice3, state, handPos, &coin_bonus) < 0 )
+call    0 returned 100%
+branch  1 taken 36% (fallthrough)
+branch  2 taken 64%
+        -:  259:    {
+        4:  260:      return -1;
+        -:  261:    }
+        -:  262:	
+        -:  263:  //reduce number of actions
+        7:  264:  state->numActions--;
+        -:  265:
+        -:  266:  //update coins (Treasure cards may be added with card draws)
+        7:  267:  updateCoins(state->whoseTurn, state, coin_bonus);
+call    0 returned 100%
+        -:  268:	
+        7:  269:  return 0;
+        -:  270:}
+        -:  271:
+function buyCard called 0 returned 0% blocks executed 0%
+    #####:  272:int buyCard(int supplyPos, struct gameState *state) {
+        -:  273:  int who;
+        -:  274:  if (DEBUG){
+        -:  275:    printf("Entering buyCard...\n");
+        -:  276:  }
+        -:  277:
+        -:  278:  // I don't know what to do about the phase thing.
+        -:  279:
+    #####:  280:  who = state->whoseTurn;
+        -:  281:
+    #####:  282:  if (state->numBuys < 1){
+branch  0 never executed
+branch  1 never executed
+        -:  283:    if (DEBUG)
+        -:  284:      printf("You do not have any buys left\n");
+    #####:  285:    return -1;
+    #####:  286:  } else if (supplyCount(supplyPos, state) <1){
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  287:    if (DEBUG)
+        -:  288:      printf("There are not any of that type of card left\n");
+    #####:  289:    return -1;
+    #####:  290:  } else if (state->coins < getCost(supplyPos)){
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  291:    if (DEBUG) 
+        -:  292:      printf("You do not have enough money to buy that. You have %d coins.\n", state->coins);
+    #####:  293:    return -1;
+        -:  294:  } else {
+    #####:  295:    state->phase=1;
+        -:  296:    //state->supplyCount[supplyPos]--;
+    #####:  297:    gainCard(supplyPos, state, 0, who); //card goes in discard, this might be wrong.. (2 means goes into hand, 0 goes into discard)
+call    0 never executed
+        -:  298:  
+    #####:  299:    state->coins = (state->coins) - (getCost(supplyPos));
+call    0 never executed
+    #####:  300:    state->numBuys--;
+        -:  301:    if (DEBUG)
+        -:  302:      printf("You bought card number %d for %d coins. You now have %d buys and %d coins.\n", supplyPos, getCost(supplyPos), state->numBuys, state->coins);
+        -:  303:  }
+        -:  304:
+        -:  305:  //state->discard[who][state->discardCount[who]] = supplyPos;
+        -:  306:  //state->discardCount[who]++;
+        -:  307:    
+    #####:  308:  return 0;
+        -:  309:}
+        -:  310:
+function numHandCards called 0 returned 0% blocks executed 0%
+    #####:  311:int numHandCards(struct gameState *state) {
+    #####:  312:  return state->handCount[ whoseTurn(state) ];
+call    0 never executed
+        -:  313:}
+        -:  314:
+function handCard called 21 returned 100% blocks executed 100%
+       21:  315:int handCard(int handPos, struct gameState *state) {
+       21:  316:  int currentPlayer = whoseTurn(state);
+call    0 returned 100%
+       21:  317:  return state->hand[currentPlayer][handPos];
+        -:  318:}
+        -:  319:
+function supplyCount called 29 returned 100% blocks executed 100%
+       29:  320:int supplyCount(int card, struct gameState *state) {
+       29:  321:  return state->supplyCount[card];
+        -:  322:}
+        -:  323:
+function fullDeckCount called 0 returned 0% blocks executed 0%
+    #####:  324:int fullDeckCount(int player, int card, struct gameState *state) {
+        -:  325:  int i;
+    #####:  326:  int count = 0;
+        -:  327:
+    #####:  328:  for (i = 0; i < state->deckCount[player]; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  329:    {
+    #####:  330:      if (state->deck[player][i] == card) count++;
+branch  0 never executed
+branch  1 never executed
+        -:  331:    }
+        -:  332:
+    #####:  333:  for (i = 0; i < state->handCount[player]; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  334:    {
+    #####:  335:      if (state->hand[player][i] == card) count++;
+branch  0 never executed
+branch  1 never executed
+        -:  336:    }
+        -:  337:
+    #####:  338:  for (i = 0; i < state->discardCount[player]; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  339:    {
+    #####:  340:      if (state->discard[player][i] == card) count++;
+branch  0 never executed
+branch  1 never executed
+        -:  341:    }
+        -:  342:
+    #####:  343:  return count;
+        -:  344:}
+        -:  345:
+function whoseTurn called 84 returned 100% blocks executed 100%
+       84:  346:int whoseTurn(struct gameState *state) {
+       84:  347:  return state->whoseTurn;
+        -:  348:}
+        -:  349:
+function endTurn called 0 returned 0% blocks executed 0%
+    #####:  350:int endTurn(struct gameState *state) {
+        -:  351:  int k;
+        -:  352:  int i;
+    #####:  353:  int currentPlayer = whoseTurn(state);
+call    0 never executed
+        -:  354:  
+        -:  355:  //Discard hand
+    #####:  356:  for (i = 0; i < state->handCount[currentPlayer]; i++){
+branch  0 never executed
+branch  1 never executed
+    #####:  357:    state->discard[currentPlayer][state->discardCount[currentPlayer]++] = state->hand[currentPlayer][i];//Discard
+    #####:  358:    state->hand[currentPlayer][i] = -1;//Set card to -1
+        -:  359:  }
+    #####:  360:  state->handCount[currentPlayer] = 0;//Reset hand count
+        -:  361:    
+        -:  362:  //Code for determining the player
+    #####:  363:  if (currentPlayer < (state->numPlayers - 1)){ 
+branch  0 never executed
+branch  1 never executed
+    #####:  364:    state->whoseTurn = currentPlayer + 1;//Still safe to increment
+        -:  365:  }
+        -:  366:  else{
+    #####:  367:    state->whoseTurn = 0;//Max player has been reached, loop back around to player 1
+        -:  368:  }
+        -:  369:
+    #####:  370:  state->outpostPlayed = 0;
+    #####:  371:  state->phase = 0;
+    #####:  372:  state->numActions = 1;
+    #####:  373:  state->coins = 0;
+    #####:  374:  state->numBuys = 1;
+    #####:  375:  state->playedCardCount = 0;
+    #####:  376:  state->handCount[state->whoseTurn] = 0;
+        -:  377:
+        -:  378:  //int k; move to top
+        -:  379:  //Next player draws hand
+    #####:  380:  for (k = 0; k < 5; k++){
+branch  0 never executed
+branch  1 never executed
+    #####:  381:    drawCard(state->whoseTurn, state);//Draw a card
+call    0 never executed
+        -:  382:  }
+        -:  383:
+        -:  384:  //Update money
+    #####:  385:  updateCoins(state->whoseTurn, state , 0);
+call    0 never executed
+        -:  386:
+    #####:  387:  return 0;
+        -:  388:}
+        -:  389:
+function isGameOver called 0 returned 0% blocks executed 0%
+    #####:  390:int isGameOver(struct gameState *state) {
+        -:  391:  int i;
+        -:  392:  int j;
+        -:  393:	
+        -:  394:  //if stack of Province cards is empty, the game ends
+    #####:  395:  if (state->supplyCount[province] == 0)
+branch  0 never executed
+branch  1 never executed
+        -:  396:    {
+    #####:  397:      return 1;
+        -:  398:    }
+        -:  399:
+        -:  400:  //if three supply pile are at 0, the game ends
+    #####:  401:  j = 0;
+    #####:  402:  for (i = 0; i < 25; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  403:    {
+    #####:  404:      if (state->supplyCount[i] == 0)
+branch  0 never executed
+branch  1 never executed
+        -:  405:	{
+    #####:  406:	  j++;
+        -:  407:	}
+        -:  408:    }
+    #####:  409:  if ( j >= 3)
+branch  0 never executed
+branch  1 never executed
+        -:  410:    {
+    #####:  411:      return 1;
+        -:  412:    }
+        -:  413:
+    #####:  414:  return 0;
+        -:  415:}
+        -:  416:
+function scoreFor called 0 returned 0% blocks executed 0%
+    #####:  417:int scoreFor (int player, struct gameState *state) {
+        -:  418:
+        -:  419:  int i;
+    #####:  420:  int score = 0;
+        -:  421:  //score from hand
+    #####:  422:  for (i = 0; i < state->handCount[player]; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  423:    {
+    #####:  424:      if (state->hand[player][i] == curse) { score = score - 1; };
+branch  0 never executed
+branch  1 never executed
+    #####:  425:      if (state->hand[player][i] == estate) { score = score + 1; };
+branch  0 never executed
+branch  1 never executed
+    #####:  426:      if (state->hand[player][i] == duchy) { score = score + 3; };
+branch  0 never executed
+branch  1 never executed
+    #####:  427:      if (state->hand[player][i] == province) { score = score + 6; };
+branch  0 never executed
+branch  1 never executed
+    #####:  428:      if (state->hand[player][i] == great_hall) { score = score + 1; };
+branch  0 never executed
+branch  1 never executed
+    #####:  429:      if (state->hand[player][i] == gardens) { score = score + ( fullDeckCount(player, 0, state) / 10 ); };
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+        -:  430:    }
+        -:  431:
+        -:  432:  //score from discard
+    #####:  433:  for (i = 0; i < state->discardCount[player]; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  434:    {
+    #####:  435:      if (state->discard[player][i] == curse) { score = score - 1; };
+branch  0 never executed
+branch  1 never executed
+    #####:  436:      if (state->discard[player][i] == estate) { score = score + 1; };
+branch  0 never executed
+branch  1 never executed
+    #####:  437:      if (state->discard[player][i] == duchy) { score = score + 3; };
+branch  0 never executed
+branch  1 never executed
+    #####:  438:      if (state->discard[player][i] == province) { score = score + 6; };
+branch  0 never executed
+branch  1 never executed
+    #####:  439:      if (state->discard[player][i] == great_hall) { score = score + 1; };
+branch  0 never executed
+branch  1 never executed
+    #####:  440:      if (state->discard[player][i] == gardens) { score = score + ( fullDeckCount(player, 0, state) / 10 ); };
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+        -:  441:    }
+        -:  442:
+        -:  443:  //score from deck
+    #####:  444:  for (i = 0; i < state->discardCount[player]; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  445:    {
+    #####:  446:      if (state->deck[player][i] == curse) { score = score - 1; };
+branch  0 never executed
+branch  1 never executed
+    #####:  447:      if (state->deck[player][i] == estate) { score = score + 1; };
+branch  0 never executed
+branch  1 never executed
+    #####:  448:      if (state->deck[player][i] == duchy) { score = score + 3; };
+branch  0 never executed
+branch  1 never executed
+    #####:  449:      if (state->deck[player][i] == province) { score = score + 6; };
+branch  0 never executed
+branch  1 never executed
+    #####:  450:      if (state->deck[player][i] == great_hall) { score = score + 1; };
+branch  0 never executed
+branch  1 never executed
+    #####:  451:      if (state->deck[player][i] == gardens) { score = score + ( fullDeckCount(player, 0, state) / 10 ); };
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+        -:  452:    }
+        -:  453:
+    #####:  454:  return score;
+        -:  455:}
+        -:  456:
+function getWinners called 0 returned 0% blocks executed 0%
+    #####:  457:int getWinners(int players[MAX_PLAYERS], struct gameState *state) {
+        -:  458:  int i;	
+        -:  459:  int j;
+        -:  460:  int highScore;
+        -:  461:  int currentPlayer;
+        -:  462:
+        -:  463:  //get score for each player
+    #####:  464:  for (i = 0; i < MAX_PLAYERS; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  465:    {
+        -:  466:      //set unused player scores to -9999
+    #####:  467:      if (i >= state->numPlayers)
+branch  0 never executed
+branch  1 never executed
+        -:  468:	{
+    #####:  469:	  players[i] = -9999;
+        -:  470:	}
+        -:  471:      else
+        -:  472:	{
+    #####:  473:	  players[i] = scoreFor (i, state);
+call    0 never executed
+        -:  474:	}
+        -:  475:    }
+        -:  476:
+        -:  477:  //find highest score
+    #####:  478:  j = 0;
+    #####:  479:  for (i = 0; i < MAX_PLAYERS; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  480:    {
+    #####:  481:      if (players[i] > players[j])
+branch  0 never executed
+branch  1 never executed
+        -:  482:	{
+    #####:  483:	  j = i;
+        -:  484:	}
+        -:  485:    }
+    #####:  486:  highScore = players[j];
+        -:  487:
+        -:  488:  //add 1 to players who had less turns
+    #####:  489:  currentPlayer = whoseTurn(state);
+call    0 never executed
+    #####:  490:  for (i = 0; i < MAX_PLAYERS; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  491:    {
+    #####:  492:      if ( players[i] == highScore && i > currentPlayer )
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  493:	{
+    #####:  494:	  players[i]++;
+        -:  495:	}
+        -:  496:    }
+        -:  497:
+        -:  498:  //find new highest score
+    #####:  499:  j = 0;
+    #####:  500:  for (i = 0; i < MAX_PLAYERS; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  501:    {
+    #####:  502:      if ( players[i] > players[j] )
+branch  0 never executed
+branch  1 never executed
+        -:  503:	{
+    #####:  504:	  j = i;
+        -:  505:	}
+        -:  506:    }
+    #####:  507:  highScore = players[j];
+        -:  508:
+        -:  509:  //set winners in array to 1 and rest to 0
+    #####:  510:  for (i = 0; i < MAX_PLAYERS; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  511:    {
+    #####:  512:      if ( players[i] == highScore )
+branch  0 never executed
+branch  1 never executed
+        -:  513:	{
+    #####:  514:	  players[i] = 1;
+        -:  515:	}
+        -:  516:      else
+        -:  517:	{
+    #####:  518:	  players[i] = 0;
+        -:  519:	}
+        -:  520:    }
+        -:  521:
+    #####:  522:  return 0;
+        -:  523:}
+        -:  524:
+function drawCard called 471 returned 100% blocks executed 85%
+      471:  525:int drawCard(int player, struct gameState *state)
+        -:  526:{	int count;
+        -:  527:  int deckCounter;
+      471:  528:  if (state->deckCount[player] <= 0){//Deck is empty
+branch  0 taken 2% (fallthrough)
+branch  1 taken 98%
+        -:  529:    
+        -:  530:    //Step 1 Shuffle the discard pile back into a deck
+        -:  531:    int i;
+        -:  532:    //Move discard to deck
+        8:  533:    for (i = 0; i < state->discardCount[player];i++){
+branch  0 taken 0%
+branch  1 taken 100% (fallthrough)
+    #####:  534:      state->deck[player][i] = state->discard[player][i];
+    #####:  535:      state->discard[player][i] = -1;
+        -:  536:    }
+        -:  537:
+        8:  538:    state->deckCount[player] = state->discardCount[player];
+        8:  539:    state->discardCount[player] = 0;//Reset discard
+        -:  540:
+        -:  541:    //Shufffle the deck
+        8:  542:    shuffle(player, state);//Shuffle the deck up and make it so that we can draw
+call    0 returned 100%
+        -:  543:   
+        -:  544:    if (DEBUG){//Debug statements
+        -:  545:      printf("Deck count now: %d\n", state->deckCount[player]);
+        -:  546:    }
+        -:  547:    
+        8:  548:    state->discardCount[player] = 0;
+        -:  549:
+        -:  550:    //Step 2 Draw Card
+        8:  551:    count = state->handCount[player];//Get current player's hand count
+        -:  552:    
+        -:  553:    if (DEBUG){//Debug statements
+        -:  554:      printf("Current hand count: %d\n", count);
+        -:  555:    }
+        -:  556:    
+        8:  557:    deckCounter = state->deckCount[player];//Create a holder for the deck count
+        -:  558:
+        8:  559:    if (deckCounter == 0)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        8:  560:      return -1;
+        -:  561:
+    #####:  562:    state->hand[player][count] = state->deck[player][deckCounter - 1];//Add card to hand
+    #####:  563:    state->deckCount[player]--;
+    #####:  564:    state->handCount[player]++;//Increment hand count
+        -:  565:  }
+        -:  566:
+        -:  567:  else{
+      463:  568:    int count = state->handCount[player];//Get current hand count for player
+        -:  569:    int deckCounter;
+        -:  570:    if (DEBUG){//Debug statements
+        -:  571:      printf("Current hand count: %d\n", count);
+        -:  572:    }
+        -:  573:
+      463:  574:    deckCounter = state->deckCount[player];//Create holder for the deck count
+      463:  575:    state->hand[player][count] = state->deck[player][deckCounter - 1];//Add card to the hand
+      463:  576:    state->deckCount[player]--;
+      463:  577:    state->handCount[player]++;//Increment hand count
+        -:  578:  }
+        -:  579:
+      463:  580:  return 0;
+        -:  581:}
+        -:  582:
+function getCost called 6 returned 100% blocks executed 13%
+        6:  583:int getCost(int cardNumber)
+        -:  584:{
+        6:  585:  switch( cardNumber ) 
+branch  0 taken 0%
+branch  1 taken 0%
+branch  2 taken 33%
+branch  3 taken 0%
+branch  4 taken 67%
+branch  5 taken 0%
+branch  6 taken 0%
+branch  7 taken 0%
+branch  8 taken 0%
+branch  9 taken 0%
+branch 10 taken 0%
+branch 11 taken 0%
+branch 12 taken 0%
+branch 13 taken 0%
+branch 14 taken 0%
+branch 15 taken 0%
+branch 16 taken 0%
+branch 17 taken 0%
+branch 18 taken 0%
+branch 19 taken 0%
+branch 20 taken 0%
+branch 21 taken 0%
+branch 22 taken 0%
+branch 23 taken 0%
+branch 24 taken 0%
+branch 25 taken 0%
+branch 26 taken 0%
+branch 27 taken 0%
+        -:  586:    {
+        -:  587:    case curse:
+    #####:  588:      return 0;
+        -:  589:    case estate:
+    #####:  590:      return 2;
+        -:  591:    case duchy:
+        2:  592:      return 5;
+        -:  593:    case province:
+    #####:  594:      return 8;
+        -:  595:    case copper:
+        4:  596:      return 0;
+        -:  597:    case silver:
+    #####:  598:      return 3;
+        -:  599:    case gold:
+    #####:  600:      return 6;
+        -:  601:    case adventurer:
+    #####:  602:      return 6;
+        -:  603:    case council_room:
+    #####:  604:      return 5;
+        -:  605:    case feast:
+    #####:  606:      return 4;
+        -:  607:    case gardens:
+    #####:  608:      return 4;
+        -:  609:    case mine:
+    #####:  610:      return 5;
+        -:  611:    case remodel:
+    #####:  612:      return 4;
+        -:  613:    case smithy:
+    #####:  614:      return 4;
+        -:  615:    case village:
+    #####:  616:      return 3;
+        -:  617:    case baron:
+    #####:  618:      return 4;
+        -:  619:    case great_hall:
+    #####:  620:      return 3;
+        -:  621:    case minion:
+    #####:  622:      return 5;
+        -:  623:    case steward:
+    #####:  624:      return 3;
+        -:  625:    case tribute:
+    #####:  626:      return 5;
+        -:  627:    case ambassador:
+    #####:  628:      return 3;
+        -:  629:    case cutpurse:
+    #####:  630:      return 4;
+        -:  631:    case embargo: 
+    #####:  632:      return 2;
+        -:  633:    case outpost:
+    #####:  634:      return 5;
+        -:  635:    case salvager:
+    #####:  636:      return 4;
+        -:  637:    case sea_hag:
+    #####:  638:      return 4;
+        -:  639:    case treasure_map:
+    #####:  640:      return 4;
+        -:  641:    }
+        -:  642:	
+    #####:  643:  return -1;
+        -:  644:}
+        -:  645:
+        -:  646://declarations of the card functions
+        -:  647:int adventurerAction(int currentPlayer, struct gameState *state);
+        -:  648:int smithyAction(int currentPlayer, struct gameState *state, int handPos);
+        -:  649:int council_roomAction(int currentPlayer, struct gameState *state, int handPos);
+        -:  650:int feastAction(int currentPlayer, struct gameState *state, int choice1);
+        -:  651:int remodelAction(int currentPlayer, struct gameState *state, int choice1, int choice2, int handPos);
+        -:  652:
+        -:  653:
+        -:  654:
+function cardEffect called 59 returned 100% blocks executed 19%
+       59:  655:int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
+        -:  656:{
+        -:  657:  int i;
+        -:  658:  int j;
+        -:  659:  int k;
+        -:  660://  int x;
+        -:  661:  int index;
+       59:  662:  int currentPlayer = whoseTurn(state);
+call    0 returned 100%
+       59:  663:  int nextPlayer = currentPlayer + 1;
+        -:  664:
+       59:  665:  int tributeRevealedCards[2] = {-1, -1};
+        -:  666://  int temphand[MAX_HAND];// moved above the if statement
+        -:  667://  int drawntreasure=0;
+        -:  668://  int cardDrawn;
+        -:  669://  int z = 0;// this is the counter for the temp hand
+       59:  670:  if (nextPlayer > (state->numPlayers - 1)){
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  671:    nextPlayer = 0;
+        -:  672:  }
+        -:  673:  
+        -:  674:	
+        -:  675:  //uses switch to select card and perform actions
+       59:  676:  switch( card ) 
+branch  0 taken 17%
+branch  1 taken 36%
+branch  2 taken 0%
+branch  3 taken 2%
+branch  4 taken 0%
+branch  5 taken 3%
+branch  6 taken 17%
+branch  7 taken 3%
+branch  8 taken 0%
+branch  9 taken 7%
+branch 10 taken 0%
+branch 11 taken 3%
+branch 12 taken 0%
+branch 13 taken 0%
+branch 14 taken 0%
+branch 15 taken 0%
+branch 16 taken 3%
+branch 17 taken 3%
+branch 18 taken 0%
+branch 19 taken 5%
+branch 20 taken 0%
+        -:  677:    {
+        -:  678:    case adventurer:
+       10:  679:    	adventurerAction(currentPlayer, state);
+call    0 returned 100%
+       10:  680:	return 0;
+        -:  681:    case council_room:
+       21:  682: 	council_roomAction(currentPlayer, state, handPos);
+call    0 returned 100%
+       21:  683:      	return 0;
+        -:  684:			
+        -:  685:    case feast:
+    #####:  686:	feastAction(currentPlayer, state, choice1);	
+call    0 never executed
+    #####:  687:      	return 0;
+        -:  688:			
+        -:  689:    case gardens:
+        1:  690:      return -1;
+        -:  691:			
+        -:  692:    case mine:
+    #####:  693:      j = state->hand[currentPlayer][choice1];  //store card we will trash
+        -:  694:
+    #####:  695:      if (state->hand[currentPlayer][choice1] < copper || state->hand[currentPlayer][choice1] > gold)
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  696:	{
+    #####:  697:	  return -1;
+        -:  698:	}
+        -:  699:		
+    #####:  700:      if (choice2 > treasure_map || choice2 < curse)
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  701:	{
+    #####:  702:	  return -1;
+        -:  703:	}
+        -:  704:
+    #####:  705:      if ( (getCost(state->hand[currentPlayer][choice1]) + 3) > getCost(choice2) )
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  706:	{
+    #####:  707:	  return -1;
+        -:  708:	}
+        -:  709:
+    #####:  710:      gainCard(choice2, state, 2, currentPlayer);
+call    0 never executed
+        -:  711:
+        -:  712:      //discard card from hand
+    #####:  713:      discardCard(handPos, currentPlayer, state, 0);
+call    0 never executed
+        -:  714:
+        -:  715:      //discard trashed card
+    #####:  716:      for (i = 0; i < state->handCount[currentPlayer]; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  717:	{
+    #####:  718:	  if (state->hand[currentPlayer][i] == j)
+branch  0 never executed
+branch  1 never executed
+        -:  719:	    {
+    #####:  720:	      discardCard(i, currentPlayer, state, 0);			
+call    0 never executed
+    #####:  721:	      break;
+        -:  722:	    }
+        -:  723:	}
+        -:  724:			
+    #####:  725:      return 0;
+        -:  726:			
+        -:  727:    case remodel:
+        2:  728:      remodelAction(currentPlayer, state, choice1, choice2, handPos);
+call    0 returned 100%
+        2:  729:      return 0;
+        -:  730:		
+        -:  731:    case smithy:
+        -:  732:      //+3 Cards
+       10:  733:      smithyAction(currentPlayer, state, handPos);
+call    0 returned 100%
+       10:  734:      return 0;
+        -:  735:		
+        -:  736:    case village:
+        -:  737:      //+1 Card
+        2:  738:      drawCard(currentPlayer, state);
+call    0 returned 100%
+        -:  739:			
+        -:  740:      //+2 Actions
+        2:  741:      state->numActions = state->numActions + 2;
+        -:  742:			
+        -:  743:      //discard played card from hand
+        2:  744:      discardCard(handPos, currentPlayer, state, 0);
+call    0 returned 100%
+        2:  745:      return 0;
+        -:  746:		
+        -:  747:    case baron:
+    #####:  748:      state->numBuys++;//Increase buys by 1!
+    #####:  749:      if (choice1 > 0){//Boolean true or going to discard an estate
+branch  0 never executed
+branch  1 never executed
+    #####:  750:	int p = 0;//Iterator for hand!
+    #####:  751:	int card_not_discarded = 1;//Flag for discard set!
+    #####:  752:	while(card_not_discarded){
+branch  0 never executed
+branch  1 never executed
+    #####:  753:	  if (state->hand[currentPlayer][p] == estate){//Found an estate card!
+branch  0 never executed
+branch  1 never executed
+    #####:  754:	    state->coins += 4;//Add 4 coins to the amount of coins
+    #####:  755:	    state->discard[currentPlayer][state->discardCount[currentPlayer]] = state->hand[currentPlayer][p];
+    #####:  756:	    state->discardCount[currentPlayer]++;
+    #####:  757:	    for (;p < state->handCount[currentPlayer]; p++){
+branch  0 never executed
+branch  1 never executed
+    #####:  758:	      state->hand[currentPlayer][p] = state->hand[currentPlayer][p+1];
+        -:  759:	    }
+    #####:  760:	    state->hand[currentPlayer][state->handCount[currentPlayer]] = -1;
+    #####:  761:	    state->handCount[currentPlayer]--;
+    #####:  762:	    card_not_discarded = 0;//Exit the loop
+        -:  763:	  }
+    #####:  764:	  else if (p > state->handCount[currentPlayer]){
+branch  0 never executed
+branch  1 never executed
+        -:  765:	    if(DEBUG) {
+        -:  766:	      printf("No estate cards in your hand, invalid choice\n");
+        -:  767:	      printf("Must gain an estate if there are any\n");
+        -:  768:	    }
+    #####:  769:	    if (supplyCount(estate, state) > 0){
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  770:	      gainCard(estate, state, 0, currentPlayer);
+call    0 never executed
+    #####:  771:	      state->supplyCount[estate]--;//Decrement estates
+    #####:  772:	      if (supplyCount(estate, state) == 0){
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  773:		isGameOver(state);
+call    0 never executed
+        -:  774:	      }
+        -:  775:	    }
+    #####:  776:	    card_not_discarded = 0;//Exit the loop
+        -:  777:	  }
+        -:  778:			    
+        -:  779:	  else{
+    #####:  780:	    p++;//Next card
+        -:  781:	  }
+        -:  782:	}
+        -:  783:      }
+        -:  784:			    
+        -:  785:      else{
+    #####:  786:	if (supplyCount(estate, state) > 0){
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  787:	  gainCard(estate, state, 0, currentPlayer);//Gain an estate
+call    0 never executed
+    #####:  788:	  state->supplyCount[estate]--;//Decrement Estates
+    #####:  789:	  if (supplyCount(estate, state) == 0){
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  790:	    isGameOver(state);
+call    0 never executed
+        -:  791:	  }
+        -:  792:	}
+        -:  793:      }
+        -:  794:	    
+        -:  795:      
+    #####:  796:      return 0;
+        -:  797:		
+        -:  798:    case great_hall:
+        -:  799:      //+1 Card
+        4:  800:      drawCard(currentPlayer, state);
+call    0 returned 100%
+        -:  801:			
+        -:  802:      //+1 Actions
+        4:  803:      state->numActions++;
+        -:  804:			
+        -:  805:      //discard card from hand
+        4:  806:      discardCard(handPos, currentPlayer, state, 0);
+call    0 returned 100%
+        4:  807:      return 0;
+        -:  808:		
+        -:  809:    case minion:
+        -:  810:      //+1 action
+    #####:  811:      state->numActions++;
+        -:  812:			
+        -:  813:      //discard card from hand
+    #####:  814:      discardCard(handPos, currentPlayer, state, 0);
+call    0 never executed
+        -:  815:			
+    #####:  816:      if (choice1)		//+2 coins
+branch  0 never executed
+branch  1 never executed
+        -:  817:	{
+    #####:  818:	  state->coins = state->coins + 2;
+        -:  819:	}
+        -:  820:			
+    #####:  821:      else if (choice2)		//discard hand, redraw 4, other players with 5+ cards discard hand and draw 4
+branch  0 never executed
+branch  1 never executed
+        -:  822:	{
+        -:  823:	  //discard hand
+    #####:  824:	  while(numHandCards(state) > 0)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  825:	    {
+    #####:  826:	      discardCard(handPos, currentPlayer, state, 0);
+call    0 never executed
+        -:  827:	    }
+        -:  828:				
+        -:  829:	  //draw 4
+    #####:  830:	  for (i = 0; i < 4; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  831:	    {
+    #####:  832:	      drawCard(currentPlayer, state);
+call    0 never executed
+        -:  833:	    }
+        -:  834:				
+        -:  835:	  //other players discard hand and redraw if hand size > 4
+    #####:  836:	  for (i = 0; i < state->numPlayers; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  837:	    {
+    #####:  838:	      if (i != currentPlayer)
+branch  0 never executed
+branch  1 never executed
+        -:  839:		{
+    #####:  840:		  if ( state->handCount[i] > 4 )
+branch  0 never executed
+branch  1 never executed
+        -:  841:		    {
+        -:  842:		      //discard hand
+    #####:  843:		      while( state->handCount[i] > 0 )
+branch  0 never executed
+branch  1 never executed
+        -:  844:			{
+    #####:  845:			  discardCard(handPos, i, state, 0);
+call    0 never executed
+        -:  846:			}
+        -:  847:							
+        -:  848:		      //draw 4
+    #####:  849:		      for (j = 0; j < 4; j++)
+branch  0 never executed
+branch  1 never executed
+        -:  850:			{
+    #####:  851:			  drawCard(i, state);
+call    0 never executed
+        -:  852:			}
+        -:  853:		    }
+        -:  854:		}
+        -:  855:	    }
+        -:  856:				
+        -:  857:	}
+    #####:  858:      return 0;
+        -:  859:		
+        -:  860:    case steward:
+        2:  861:      if (choice1 == 1)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:  862:	{
+        -:  863:	  //+2 cards
+        2:  864:	  drawCard(currentPlayer, state);
+call    0 returned 100%
+        2:  865:	  drawCard(currentPlayer, state);
+call    0 returned 100%
+        -:  866:	}
+    #####:  867:      else if (choice1 == 2)
+branch  0 never executed
+branch  1 never executed
+        -:  868:	{
+        -:  869:	  //+2 coins
+    #####:  870:	  state->coins = state->coins + 2;
+        -:  871:	}
+        -:  872:      else
+        -:  873:	{
+        -:  874:	  //trash 2 cards in hand
+    #####:  875:	  discardCard(choice2, currentPlayer, state, 1);
+call    0 never executed
+    #####:  876:	  discardCard(choice3, currentPlayer, state, 1);
+call    0 never executed
+        -:  877:	}
+        -:  878:			
+        -:  879:      //discard card from hand
+        2:  880:      discardCard(handPos, currentPlayer, state, 0);
+call    0 returned 100%
+        2:  881:      return 0;
+        -:  882:		
+        -:  883:    case tribute:
+    #####:  884:      if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1){
+branch  0 never executed
+branch  1 never executed
+    #####:  885:	if (state->deckCount[nextPlayer] > 0){
+branch  0 never executed
+branch  1 never executed
+    #####:  886:	  tributeRevealedCards[0] = state->deck[nextPlayer][state->deckCount[nextPlayer]-1];
+    #####:  887:	  state->deckCount[nextPlayer]--;
+        -:  888:	}
+    #####:  889:	else if (state->discardCount[nextPlayer] > 0){
+branch  0 never executed
+branch  1 never executed
+    #####:  890:	  tributeRevealedCards[0] = state->discard[nextPlayer][state->discardCount[nextPlayer]-1];
+    #####:  891:	  state->discardCount[nextPlayer]--;
+        -:  892:	}
+        -:  893:	else{
+        -:  894:	  //No Card to Reveal
+        -:  895:	  if (DEBUG){
+        -:  896:	    printf("No cards to reveal\n");
+        -:  897:	  }
+        -:  898:	}
+        -:  899:      }
+        -:  900:	    
+        -:  901:      else{
+    #####:  902:	if (state->deckCount[nextPlayer] == 0){
+branch  0 never executed
+branch  1 never executed
+    #####:  903:	  for (i = 0; i < state->discardCount[nextPlayer]; i++){
+branch  0 never executed
+branch  1 never executed
+    #####:  904:	    state->deck[nextPlayer][i] = state->discard[nextPlayer][i];//Move to deck
+    #####:  905:	    state->deckCount[nextPlayer]++;
+    #####:  906:	    state->discard[nextPlayer][i] = -1;
+    #####:  907:	    state->discardCount[nextPlayer]--;
+        -:  908:	  }
+        -:  909:			    
+    #####:  910:	  shuffle(nextPlayer,state);//Shuffle the deck
+call    0 never executed
+        -:  911:	} 
+    #####:  912:	tributeRevealedCards[0] = state->deck[nextPlayer][state->deckCount[nextPlayer]-1];
+    #####:  913:	state->deck[nextPlayer][state->deckCount[nextPlayer]--] = -1;
+    #####:  914:	state->deckCount[nextPlayer]--;
+    #####:  915:	tributeRevealedCards[1] = state->deck[nextPlayer][state->deckCount[nextPlayer]-1];
+    #####:  916:	state->deck[nextPlayer][state->deckCount[nextPlayer]--] = -1;
+    #####:  917:	state->deckCount[nextPlayer]--;
+        -:  918:      }    
+        -:  919:		       
+    #####:  920:      if (tributeRevealedCards[0] == tributeRevealedCards[1]){//If we have a duplicate card, just drop one 
+branch  0 never executed
+branch  1 never executed
+    #####:  921:	state->playedCards[state->playedCardCount] = tributeRevealedCards[1];
+    #####:  922:	state->playedCardCount++;
+    #####:  923:	tributeRevealedCards[1] = -1;
+        -:  924:      }
+        -:  925:
+    #####:  926:      for (i = 0; i <= 2; i ++){
+branch  0 never executed
+branch  1 never executed
+    #####:  927:	if (tributeRevealedCards[i] == copper || tributeRevealedCards[i] == silver || tributeRevealedCards[i] == gold){//Treasure cards
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  928:	  state->coins += 2;
+        -:  929:	}
+        -:  930:		    
+    #####:  931:	else if (tributeRevealedCards[i] == estate || tributeRevealedCards[i] == duchy || tributeRevealedCards[i] == province || tributeRevealedCards[i] == gardens || tributeRevealedCards[i] == great_hall){//Victory Card Found
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+    #####:  932:	  drawCard(currentPlayer, state);
+call    0 never executed
+    #####:  933:	  drawCard(currentPlayer, state);
+call    0 never executed
+        -:  934:	}
+        -:  935:	else{//Action Card
+    #####:  936:	  state->numActions = state->numActions + 2;
+        -:  937:	}
+        -:  938:      }
+        -:  939:	    
+    #####:  940:      return 0;
+        -:  941:		
+        -:  942:    case ambassador:
+    #####:  943:      j = 0;		//used to check if player has enough cards to discard
+        -:  944:
+    #####:  945:      if (choice2 > 2 || choice2 < 0)
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  946:	{
+    #####:  947:	  return -1;				
+        -:  948:	}
+        -:  949:
+    #####:  950:      if (choice1 == handPos)
+branch  0 never executed
+branch  1 never executed
+        -:  951:	{
+    #####:  952:	  return -1;
+        -:  953:	}
+        -:  954:
+    #####:  955:      for (i = 0; i < state->handCount[currentPlayer]; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  956:	{
+    #####:  957:	  if (i != handPos && i == state->hand[currentPlayer][choice1] && i != choice1)
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:  958:	    {
+    #####:  959:	      j++;
+        -:  960:	    }
+        -:  961:	}
+    #####:  962:      if (j < choice2)
+branch  0 never executed
+branch  1 never executed
+        -:  963:	{
+    #####:  964:	  return -1;				
+        -:  965:	}
+        -:  966:
+        -:  967:      if (DEBUG) 
+        -:  968:	printf("Player %d reveals card number: %d\n", currentPlayer, state->hand[currentPlayer][choice1]);
+        -:  969:
+        -:  970:      //increase supply count for choosen card by amount being discarded
+    #####:  971:      state->supplyCount[state->hand[currentPlayer][choice1]] += choice2;
+        -:  972:			
+        -:  973:      //each other player gains a copy of revealed card
+    #####:  974:      for (i = 0; i < state->numPlayers; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  975:	{
+    #####:  976:	  if (i != currentPlayer)
+branch  0 never executed
+branch  1 never executed
+        -:  977:	    {
+    #####:  978:	      gainCard(state->hand[currentPlayer][choice1], state, 0, i);
+call    0 never executed
+        -:  979:	    }
+        -:  980:	}
+        -:  981:
+        -:  982:      //discard played card from hand
+    #####:  983:      discardCard(handPos, currentPlayer, state, 0);			
+call    0 never executed
+        -:  984:
+        -:  985:      //trash copies of cards returned to supply
+    #####:  986:      for (j = 0; j < choice2; j++)
+branch  0 never executed
+branch  1 never executed
+        -:  987:	{
+    #####:  988:	  for (i = 0; i < state->handCount[currentPlayer]; i++)
+branch  0 never executed
+branch  1 never executed
+        -:  989:	    {
+    #####:  990:	      if (state->hand[currentPlayer][i] == state->hand[currentPlayer][choice1])
+branch  0 never executed
+branch  1 never executed
+        -:  991:		{
+    #####:  992:		  discardCard(i, currentPlayer, state, 1);
+call    0 never executed
+    #####:  993:		  break;
+        -:  994:		}
+        -:  995:	    }
+        -:  996:	}			
+        -:  997:
+    #####:  998:      return 0;
+        -:  999:		
+        -: 1000:    case cutpurse:
+        -: 1001:
+    #####: 1002:      updateCoins(currentPlayer, state, 2);
+call    0 never executed
+    #####: 1003:      for (i = 0; i < state->numPlayers; i++)
+branch  0 never executed
+branch  1 never executed
+        -: 1004:	{
+    #####: 1005:	  if (i != currentPlayer)
+branch  0 never executed
+branch  1 never executed
+        -: 1006:	    {
+    #####: 1007:	      for (j = 0; j < state->handCount[i]; j++)
+branch  0 never executed
+branch  1 never executed
+        -: 1008:		{
+    #####: 1009:		  if (state->hand[i][j] == copper)
+branch  0 never executed
+branch  1 never executed
+        -: 1010:		    {
+    #####: 1011:		      discardCard(j, i, state, 0);
+call    0 never executed
+    #####: 1012:		      break;
+        -: 1013:		    }
+    #####: 1014:		  if (j == state->handCount[i])
+branch  0 never executed
+branch  1 never executed
+        -: 1015:		    {
+    #####: 1016:		      for (k = 0; k < state->handCount[i]; k++)
+branch  0 never executed
+branch  1 never executed
+        -: 1017:			{
+        -: 1018:			  if (DEBUG)
+        -: 1019:			    printf("Player %d reveals card number %d\n", i, state->hand[i][k]);
+        -: 1020:			}	
+    #####: 1021:		      break;
+        -: 1022:		    }		
+        -: 1023:		}
+        -: 1024:					
+        -: 1025:	    }
+        -: 1026:				
+        -: 1027:	}				
+        -: 1028:
+        -: 1029:      //discard played card from hand
+    #####: 1030:      discardCard(handPos, currentPlayer, state, 0);			
+call    0 never executed
+        -: 1031:
+    #####: 1032:      return 0;
+        -: 1033:
+        -: 1034:		
+        -: 1035:    case embargo: 
+        -: 1036:      //+2 Coins
+    #####: 1037:      state->coins = state->coins + 2;
+        -: 1038:			
+        -: 1039:      //see if selected pile is in play
+    #####: 1040:      if ( state->supplyCount[choice1] == -1 )
+branch  0 never executed
+branch  1 never executed
+        -: 1041:	{
+    #####: 1042:	  return -1;
+        -: 1043:	}
+        -: 1044:			
+        -: 1045:      //add embargo token to selected supply pile
+    #####: 1046:      state->embargoTokens[choice1]++;
+        -: 1047:			
+        -: 1048:      //trash card
+    #####: 1049:      discardCard(handPos, currentPlayer, state, 1);		
+call    0 never executed
+    #####: 1050:      return 0;
+        -: 1051:		
+        -: 1052:    case outpost:
+        -: 1053:      //set outpost flag
+        2: 1054:      state->outpostPlayed++;
+        -: 1055:			
+        -: 1056:      //discard card
+        2: 1057:      discardCard(handPos, currentPlayer, state, 0);
+call    0 returned 100%
+        2: 1058:      return 0;
+        -: 1059:		
+        -: 1060:    case salvager:
+        -: 1061:      //+1 buy
+        2: 1062:      state->numBuys++;
+        -: 1063:			
+        2: 1064:      if (choice1)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -: 1065:	{
+        -: 1066:	  //gain coins equal to trashed card
+        2: 1067:	  state->coins = state->coins + getCost( handCard(choice1, state) );
+call    0 returned 100%
+call    1 returned 100%
+        -: 1068:	  //trash card
+        2: 1069:	  discardCard(choice1, currentPlayer, state, 1);	
+call    0 returned 100%
+        -: 1070:	}
+        -: 1071:			
+        -: 1072:      //discard card
+        2: 1073:      discardCard(handPos, currentPlayer, state, 0);
+call    0 returned 100%
+        2: 1074:      return 0;
+        -: 1075:		
+        -: 1076:    case sea_hag:
+    #####: 1077:      for (i = 0; i < state->numPlayers; i++){
+branch  0 never executed
+branch  1 never executed
+    #####: 1078:	if (i != currentPlayer){
+branch  0 never executed
+branch  1 never executed
+    #####: 1079:	  state->discard[i][state->discardCount[i]] = state->deck[i][state->deckCount[i]--];			    state->deckCount[i]--;
+    #####: 1080:	  state->discardCount[i]++;
+    #####: 1081:	  state->deck[i][state->deckCount[i]--] = curse;//Top card now a curse
+        -: 1082:	}
+        -: 1083:      }
+    #####: 1084:      return 0;
+        -: 1085:		
+        -: 1086:    case treasure_map:
+        -: 1087:      //search hand for another treasure_map
+        3: 1088:      index = -1;
+       18: 1089:      for (i = 0; i < state->handCount[currentPlayer]; i++)
+branch  0 taken 83%
+branch  1 taken 17% (fallthrough)
+        -: 1090:	{
+       15: 1091:	  if (state->hand[currentPlayer][i] == treasure_map && i != handPos)
+branch  0 taken 20% (fallthrough)
+branch  1 taken 80%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+        -: 1092:	    {
+    #####: 1093:	      index = i;
+    #####: 1094:	      break;
+        -: 1095:	    }
+        -: 1096:	}
+        3: 1097:      if (index > -1)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -: 1098:	{
+        -: 1099:	  //trash both treasure cards
+    #####: 1100:	  discardCard(handPos, currentPlayer, state, 1);
+call    0 never executed
+    #####: 1101:	  discardCard(index, currentPlayer, state, 1);
+call    0 never executed
+        -: 1102:
+        -: 1103:	  //gain 4 Gold cards
+    #####: 1104:	  for (i = 0; i < 4; i++)
+branch  0 never executed
+branch  1 never executed
+        -: 1105:	    {
+    #####: 1106:	      gainCard(gold, state, 1, currentPlayer);
+call    0 never executed
+        -: 1107:	    }
+        -: 1108:				
+        -: 1109:	  //return success
+    #####: 1110:	  return 1;
+        -: 1111:	}
+        -: 1112:			
+        -: 1113:      //no second treasure_map found in hand
+        3: 1114:      return -1;
+        -: 1115:    }
+        -: 1116:	
+    #####: 1117:  return -1;
+        -: 1118:}
+        -: 1119:
+function discardCard called 49 returned 100% blocks executed 78%
+       49: 1120:int discardCard(int handPos, int currentPlayer, struct gameState *state, int trashFlag)
+        -: 1121:{
+        -: 1122:	
+        -: 1123:  //if card is not trashed, added to Played pile 
+       49: 1124:  if (trashFlag < 1)
+branch  0 taken 76% (fallthrough)
+branch  1 taken 24%
+        -: 1125:    {
+        -: 1126:      //add card to played pile
+       37: 1127:      state->playedCards[state->playedCardCount] = state->hand[currentPlayer][handPos]; 
+       37: 1128:      state->playedCardCount++;
+        -: 1129:    }
+        -: 1130:	
+        -: 1131:  //set played card to -1
+       49: 1132:  state->hand[currentPlayer][handPos] = -1;
+        -: 1133:	
+        -: 1134:  //remove card from player's hand
+       49: 1135:  if ( handPos == (state->handCount[currentPlayer] - 1) ) 	//last card in hand array is played
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -: 1136:    {
+        -: 1137:      //reduce number of cards in hand
+    #####: 1138:      state->handCount[currentPlayer]--;
+        -: 1139:    }
+       49: 1140:  else if ( state->handCount[currentPlayer] == 1 ) //only one card in hand
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -: 1141:    {
+        -: 1142:      //reduce number of cards in hand
+    #####: 1143:      state->handCount[currentPlayer]--;
+        -: 1144:    }
+        -: 1145:  else 	
+        -: 1146:    {
+        -: 1147:      //replace discarded card with last card in hand
+       49: 1148:      state->hand[currentPlayer][handPos] = state->hand[currentPlayer][ (state->handCount[currentPlayer] - 1)];
+        -: 1149:      //set last card to -1
+       49: 1150:      state->hand[currentPlayer][state->handCount[currentPlayer] - 1] = -1;
+        -: 1151:      //reduce number of cards in hand
+       49: 1152:      state->handCount[currentPlayer]--;
+        -: 1153:    }
+        -: 1154:	
+       49: 1155:  return 0;
+        -: 1156:}
+        -: 1157:
+function gainCard called 2 returned 100% blocks executed 70%
+        2: 1158:int gainCard(int supplyPos, struct gameState *state, int toFlag, int player)
+        -: 1159:{
+        -: 1160:  //Note: supplyPos is enum of choosen card
+        -: 1161:	
+        -: 1162:  //check if supply pile is empty (0) or card is not used in game (-1)
+        2: 1163:  if ( supplyCount(supplyPos, state) < 1 )
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+        -: 1164:    {
+    #####: 1165:      return -1;
+        -: 1166:    }
+        -: 1167:	
+        -: 1168:  //added card for [whoseTurn] current player:
+        -: 1169:  // toFlag = 0 : add to discard
+        -: 1170:  // toFlag = 1 : add to deck
+        -: 1171:  // toFlag = 2 : add to hand
+        -: 1172:
+        2: 1173:  if (toFlag == 1)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -: 1174:    {
+    #####: 1175:      state->deck[ player ][ state->deckCount[player] ] = supplyPos;
+    #####: 1176:      state->deckCount[player]++;
+        -: 1177:    }
+        2: 1178:  else if (toFlag == 2)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -: 1179:    {
+    #####: 1180:      state->hand[ player ][ state->handCount[player] ] = supplyPos;
+    #####: 1181:      state->handCount[player]++;
+        -: 1182:    }
+        -: 1183:  else
+        -: 1184:    {
+        2: 1185:      state->discard[player][ state->discardCount[player] ] = supplyPos;
+        2: 1186:      state->discardCount[player]++;
+        -: 1187:    }
+        -: 1188:	
+        -: 1189:  //decrease number in supply pile
+        2: 1190:  state->supplyCount[supplyPos]--;
+        -: 1191:	 
+        2: 1192:  return 0;
+        -: 1193:}
+        -: 1194:
+function updateCoins called 70 returned 100% blocks executed 82%
+       70: 1195:int updateCoins(int player, struct gameState *state, int bonus)
+        -: 1196:{
+        -: 1197:  int i;
+        -: 1198:	
+        -: 1199:  //reset coin count
+       70: 1200:  state->coins = 0;
+        -: 1201:
+        -: 1202:  //add coins for each Treasure card in player's hand
+      412: 1203:  for (i = 0; i < state->handCount[player]; i++)
+branch  0 taken 83%
+branch  1 taken 17% (fallthrough)
+        -: 1204:    {
+      342: 1205:      if (state->hand[player][i] == copper)
+branch  0 taken 74% (fallthrough)
+branch  1 taken 26%
+        -: 1206:	{
+      254: 1207:	  state->coins += 1;
+        -: 1208:	}
+       88: 1209:      else if (state->hand[player][i] == silver)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -: 1210:	{
+    #####: 1211:	  state->coins += 2;
+        -: 1212:	}
+       88: 1213:      else if (state->hand[player][i] == gold)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -: 1214:	{
+    #####: 1215:	  state->coins += 3;
+        -: 1216:	}	
+        -: 1217:    }	
+        -: 1218:
+        -: 1219:  //add bonus
+       70: 1220:  state->coins += bonus;
+        -: 1221:
+       70: 1222:  return 0;
+        -: 1223:}
+        -: 1224:
+function adventurerAction called 10 returned 100% blocks executed 93%
+       10: 1225:int adventurerAction(int currentPlayer, struct gameState *state)
+        -: 1226:{
+        -: 1227:	int cardDrawn;
+       10: 1228:	int drawntreasure = 0;
+        -: 1229:	int temphand[MAX_HAND];
+       10: 1230:	int z = 0; //this is the counter for the temp hand
+       43: 1231:	while(drawntreasure<2){
+branch  0 taken 70%
+branch  1 taken 30% (fallthrough)
+       23: 1232:		if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####: 1233:			shuffle(currentPlayer, state);
+call    0 never executed
+        -: 1234:		}
+       23: 1235:		drawCard(currentPlayer, state);
+call    0 returned 100%
+       23: 1236:		cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
+       23: 1237:		if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+branch  0 taken 13% (fallthrough)
+branch  1 taken 87%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0%
+branch  4 taken 0% (fallthrough)
+branch  5 taken 100%
+       20: 1238:			drawntreasure++;
+        -: 1239:		else{
+        3: 1240:			temphand[z]=cardDrawn;
+        -: 1241:			/********************** BUG ***************************************/
+        -: 1242:			/* Do not remove the top card. So the player have two copies of cardDrawn */
+        -: 1243:			//state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
+        3: 1244:			z++;
+        -: 1245:		}
+        -: 1246:      }
+       23: 1247:      while(z-1>=0){
+branch  0 taken 23%
+branch  1 taken 77% (fallthrough)
+        3: 1248:      		state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
+        3: 1249:		z=z-1;
+        -: 1250:      }
+       10: 1251:      return 0;
+        -: 1252:}	
+        -: 1253:
+        -: 1254:
+function smithyAction called 10 returned 100% blocks executed 100%
+       10: 1255:int smithyAction(int currentPlayer, struct gameState *state, int handPos)
+        -: 1256:{      
+        -: 1257:	int i;
+       40: 1258:	for (i = 0; i < 3; i++)
+branch  0 taken 75%
+branch  1 taken 25% (fallthrough)
+        -: 1259:	{
+       30: 1260:	  drawCard(currentPlayer, state);
+call    0 returned 100%
+        -: 1261:	}
+        -: 1262:			
+        -: 1263:	//discard card from hand
+        -: 1264:	/************************** BUG *************************/
+        -: 1265:	/* Trash the card instead of put the card in the discard pile */
+        -: 1266:	//discardCard(handPos, currentPlayer, state, 0);
+       10: 1267:	discardCard(handPos, currentPlayer, state, 1);
+call    0 returned 100%
+       10: 1268:	return 0;
+        -: 1269:}     
+        -: 1270:
+        -: 1271:
+function council_roomAction called 21 returned 100% blocks executed 100%
+       21: 1272:int council_roomAction(int currentPlayer, struct gameState *state, int handPos)
+        -: 1273:{
+        -: 1274:	int i;
+        -: 1275:	//+4 Cards
+      105: 1276:	for (i = 0; i < 4; i++)
+branch  0 taken 80%
+branch  1 taken 20% (fallthrough)
+        -: 1277:	{
+       84: 1278:		drawCard(currentPlayer, state);
+call    0 returned 100%
+        -: 1279:	}
+        -: 1280:			
+        -: 1281:	//+1 Buy
+       21: 1282:	state->numBuys++;
+        -: 1283:			
+        -: 1284:	//Each other player draws a card
+       65: 1285:	for (i = 0; i < state->numPlayers; i++)
+branch  0 taken 68%
+branch  1 taken 32% (fallthrough)
+        -: 1286:	{
+        -: 1287:	  /*************************** BUG *****************************/
+        -: 1288:	  /* every player draws a card */
+        -: 1289:	 // if ( i != currentPlayer )
+        -: 1290:	   // {
+       44: 1291:	    	drawCard(i, state);
+call    0 returned 100%
+        -: 1292:	   // }
+        -: 1293:	}
+        -: 1294:			
+        -: 1295:	//put played card in played card pile
+       21: 1296:	discardCard(handPos, currentPlayer, state, 0);
+call    0 returned 100%
+       21: 1297:	return 0;
+        -: 1298:}
+        -: 1299:
+function feastAction called 0 returned 0% blocks executed 0%
+    #####: 1300:int feastAction(int currentPlayer, struct gameState *state, int choice1)
+        -: 1301:{
+        -: 1302:	int i;
+        -: 1303:	int temphand[MAX_HAND];
+        -: 1304:	//gain card with cost up to 5
+        -: 1305:	//Backup hand  OFF-By-ONE??????????????
+    #####: 1306:	for (i = 0; i <= state->handCount[currentPlayer]; i++){
+branch  0 never executed
+branch  1 never executed
+    #####: 1307:		temphand[i] = state->hand[currentPlayer][i];//Backup card
+    #####: 1308:		state->hand[currentPlayer][i] = -1;//Set to nothing
+        -: 1309:	}
+        -: 1310:	//Backup hand
+        -: 1311:
+        -: 1312:	//Update Coins for Buy
+    #####: 1313:	updateCoins(currentPlayer, state, 5);
+call    0 never executed
+    #####: 1314:	int x = 1;//Condition to loop on
+    #####: 1315:	while( x == 1) {//Buy one card
+branch  0 never executed
+branch  1 never executed
+    #####: 1316:		if (supplyCount(choice1, state) <= 0){
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -: 1317:			if (DEBUG)
+        -: 1318:		    		printf("None of that card left, sorry!\n");
+        -: 1319:
+        -: 1320:			if (DEBUG){
+        -: 1321:		   		 printf("Cards Left: %d\n", supplyCount(choice1, state));
+        -: 1322:		  	}
+        -: 1323:		}
+    #####: 1324:		else if (state->coins < getCost(choice1)){
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####: 1325:		  	printf("That card is too expensive!\n");
+call    0 never executed
+        -: 1326:
+        -: 1327:		  	if (DEBUG){
+        -: 1328:		    	printf("Coins: %d < %d\n", state->coins, getCost(choice1));
+        -: 1329:		  	}
+        -: 1330:		}	
+        -: 1331:		else{
+        -: 1332:			if (DEBUG){
+        -: 1333:		    		printf("Deck Count: %d\n", state->handCount[currentPlayer] + state->deckCount[currentPlayer] + state->discardCount[currentPlayer]);
+        -: 1334:		  	}
+        -: 1335:
+    #####: 1336:		  	gainCard(choice1, state, 0, currentPlayer);//Gain the card
+call    0 never executed
+        -: 1337:			/************************* BUG *************************************/
+        -: 1338:			/* infinite loop */
+        -: 1339:		  	//x = 0;//No more buying cards
+        -: 1340:
+        -: 1341:		  	if (DEBUG){
+        -: 1342:		    		printf("Deck Count: %d\n", state->handCount[currentPlayer] + state->deckCount[currentPlayer] + state->discardCount[currentPlayer]);
+        -: 1343:	  		}
+        -: 1344:
+        -: 1345:		}
+        -: 1346:	}	     
+        -: 1347:
+        -: 1348:	//Reset Hand
+    #####: 1349:	for (i = 0; i <= state->handCount[currentPlayer]; i++){
+branch  0 never executed
+branch  1 never executed
+    #####: 1350:		state->hand[currentPlayer][i] = temphand[i];
+    #####: 1351:		temphand[i] = -1;
+        -: 1352:	}
+    #####: 1353:	return 0;
+        -: 1354:}
+        -: 1355:
+function remodelAction called 2 returned 100% blocks executed 93%
+        2: 1356:int remodelAction(int currentPlayer, struct gameState *state, int choice1, int choice2, int handPos)
+        -: 1357:{
+        -: 1358:	int i;
+        2: 1359:	int j = state->hand[currentPlayer][choice1];  //store card we will trash
+        -: 1360:
+        2: 1361:	if ( (getCost(state->hand[currentPlayer][choice1]) + 2) > getCost(choice2) )
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+        -: 1362:	{
+    #####: 1363:	  return -1;
+        -: 1364:	}
+        -: 1365:
+        2: 1366:	gainCard(choice2, state, 0, currentPlayer);
+call    0 returned 100%
+        -: 1367:
+        -: 1368:	//discard card from hand
+        2: 1369:	discardCard(handPos, currentPlayer, state, 0);
+call    0 returned 100%
+        -: 1370:
+        -: 1371:	//discard trashed card
+        4: 1372:	for (i = 0; i < state->handCount[currentPlayer]; i++)
+branch  0 taken 100%
+branch  1 taken 0% (fallthrough)
+        -: 1373:	{
+        4: 1374:	  if (state->hand[currentPlayer][i] == j)
+branch  0 taken 50% (fallthrough)
+branch  1 taken 50%
+        -: 1375:	    {
+        2: 1376:	      discardCard(i, currentPlayer, state, 0);			
+call    0 returned 100%
+        2: 1377:	      break;
+        -: 1378:	    }
+        -: 1379:	}
+        2: 1380:	return 0;
+        -: 1381:}
+        -: 1382:
+        -: 1383://end of dominion.c
+        -: 1384:
